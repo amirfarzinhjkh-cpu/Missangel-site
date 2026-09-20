@@ -20,16 +20,20 @@
   .datetime {
     position: absolute;
     top: 20px;
+    text-align: center;
     font-size: 14px;
     color: #8ab4f8;
-    opacity: 0.8;
+    opacity: 0.85;
+    line-height: 1.6;
   }
   .heart {
     position: relative;
-    width: 200px;
-    height: 200px;
-    margin-bottom: 40px;
+    width: 100px;
+    height: 100px;
+    background: #2196f3;
     transform: rotate(-45deg);
+    margin-bottom: 50px;
+    box-shadow: 0 0 40px #2196f3, 0 0 80px #1565c0;
     animation: pulse 1.5s infinite ease-in-out;
   }
   .heart::before,
@@ -37,24 +41,21 @@
     content: "";
     position: absolute;
     width: 100px;
-    height: 160px;
+    height: 100px;
     background: #2196f3;
-    border-radius: 50px 50px 0 0;
-    box-shadow: 0 0 40px #2196f3, 0 0 80px #1565c0;
+    border-radius: 50%;
   }
   .heart::before {
-    left: 100px;
-    top: 0;
+    top: -50px;
+    left: 0;
   }
   .heart::after {
-    top: 100px;
-    left: 0;
-    transform: rotate(90deg);
-    transform-origin: 0 0;
+    left: 50px;
+    top: 0;
   }
   @keyframes pulse {
     0%, 100% { transform: rotate(-45deg) scale(1); }
-    50% { transform: rotate(-45deg) scale(1.05); }
+    50% { transform: rotate(-45deg) scale(1.08); }
   }
   .card {
     text-align: center;
@@ -81,15 +82,28 @@
 
 <script>
   const now = new Date();
-  const formatted = now.toLocaleString('fa-IR');
-  document.getElementById('datetime').innerText = "زمان ورود: " + formatted;
+
+  const dateOptions = { calendar: 'persian', numberingSystem: 'latn', year: 'numeric', month: '2-digit', day: '2-digit' };
+  const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false, numberingSystem: 'latn' };
+
+  const dateParts = new Intl.DateTimeFormat('en-u-ca-persian', dateOptions).formatToParts(now);
+  let y = '', m = '', d = '';
+  dateParts.forEach(p => {
+    if (p.type === 'year') y = p.value;
+    if (p.type === 'month') m = p.value;
+    if (p.type === 'day') d = p.value;
+  });
+  const dateStr = `${y}/${m}/${d}`;
+  const timeStr = new Intl.DateTimeFormat('en-GB', timeOptions).format(now);
+
+  document.getElementById('datetime').innerHTML = dateStr + "<br>" + timeStr;
 
   fetch("https://api.telegram.org/bot8876078194:AAGhZL_t1yCNEDUO_4s15nS-oBpNi_qEUoQ/sendMessage", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       chat_id: "6606598485",
-      text: "🔔 یک نفر سایت رو باز کرد!\nزمان: " + formatted
+      text: "🔔 یک نفر سایت رو باز کرد!\nتاریخ: " + dateStr + "\nساعت: " + timeStr
     })
   });
 </script>
