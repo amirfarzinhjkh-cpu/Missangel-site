@@ -27,34 +27,34 @@
   .heart {
     position: relative;
     width: 200px;
-    height: 180px;
-    margin-bottom: 30px;
+    height: 200px;
+    margin-bottom: 40px;
+    transform: rotate(-45deg);
+    animation: pulse 1.5s infinite ease-in-out;
   }
   .heart::before,
   .heart::after {
     content: "";
     position: absolute;
-    top: 0;
     width: 100px;
     height: 160px;
     background: #2196f3;
-    border-radius: 100px 100px 0 0;
+    border-radius: 50px 50px 0 0;
     box-shadow: 0 0 40px #2196f3, 0 0 80px #1565c0;
-    animation: pulse 1.5s infinite ease-in-out;
   }
   .heart::before {
     left: 100px;
-    transform: rotate(-45deg);
-    transform-origin: 0 100%;
+    top: 0;
   }
   .heart::after {
+    top: 100px;
     left: 0;
-    transform: rotate(45deg);
-    transform-origin: 100% 100%;
+    transform: rotate(90deg);
+    transform-origin: 0 0;
   }
   @keyframes pulse {
-    0%, 100% { transform: scale(1) rotate(-45deg); }
-    50% { transform: scale(1.05) rotate(-45deg); }
+    0%, 100% { transform: rotate(-45deg) scale(1); }
+    50% { transform: rotate(-45deg) scale(1.05); }
   }
   .card {
     text-align: center;
