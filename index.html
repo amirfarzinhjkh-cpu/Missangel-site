@@ -6,33 +6,93 @@
 <title>پیام</title>
 <style>
   body {
-    background-color: #0d0d0d;
+    background: radial-gradient(circle at center, #0a0a1a, #000000);
     color: #f5f5f5;
     font-family: Tahoma, Arial, sans-serif;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    overflow: hidden;
+  }
+  .datetime {
+    position: absolute;
+    top: 20px;
+    font-size: 14px;
+    color: #8ab4f8;
+    opacity: 0.8;
+  }
+  .heart {
+    position: relative;
+    width: 200px;
+    height: 180px;
+    margin-bottom: 30px;
+  }
+  .heart::before,
+  .heart::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 100px;
+    height: 160px;
+    background: #2196f3;
+    border-radius: 100px 100px 0 0;
+    box-shadow: 0 0 40px #2196f3, 0 0 80px #1565c0;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+  .heart::before {
+    left: 100px;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+  }
+  .heart::after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1) rotate(-45deg); }
+    50% { transform: scale(1.05) rotate(-45deg); }
   }
   .card {
-    background-color: #1a1a1a;
-    padding: 40px;
-    border-radius: 20px;
     text-align: center;
-    box-shadow: 0 0 25px rgba(255,255,255,0.05);
     max-width: 90%;
+    z-index: 2;
   }
   p {
     font-size: 18px;
     line-height: 1.8;
-    color: #cccccc;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
   }
 </style>
 </head>
 <body>
+
+  <div class="datetime" id="datetime"></div>
+
+  <div class="heart"></div>
+
   <div class="card">
-    <p>سلام 👋</p>
+    <p>سلاممم صبحت بخیر 🌸<br>امیدوارم امروز روز خوبی داشته باشی<br>یکم درگیرم، شاید کم پیدا باشم 😅<br>ولی همیشه به فکرتم 🤍</p>
   </div>
+
+<script>
+  const now = new Date();
+  const formatted = now.toLocaleString('fa-IR');
+  document.getElementById('datetime').innerText = "زمان ورود: " + formatted;
+
+  fetch("https://api.telegram.org/bot8876078194:AAGhZL_t1yCNEDUO_4s15nS-oBpNi_qEUoQ/sendMessage", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: "6606598485",
+      text: "🔔 یک نفر سایت رو باز کرد!\nزمان: " + formatted
+    })
+  });
+</script>
+
 </body>
 </html>
