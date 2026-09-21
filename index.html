@@ -7,10 +7,11 @@
 <style>
   * { box-sizing: border-box; }
   body {
-    background: #000000;
+    background: radial-gradient(circle at center, #0a0a1a, #000000);
     color: #f5f5f5;
     font-family: Tahoma, Arial, sans-serif;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -72,6 +73,10 @@
   .option:active {
     background: #333;
   }
+  .result {
+    font-size: 22px;
+    color: #4caf50;
+  }
   .footer {
     position: fixed;
     bottom: 15px;
@@ -92,24 +97,72 @@
   .footer svg {
     width: 18px;
     height: 18px;
-    fill: #29a9eb;
   }
-  .result {
-    font-size: 22px;
-    color: #4caf50;
+
+  .datetime {
+    position: absolute;
+    top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #8ab4f8;
+    opacity: 0.85;
+    line-height: 1.6;
   }
+  .heart {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background: #2196f3;
+    transform: rotate(-45deg);
+    margin-bottom: 50px;
+    box-shadow: 0 0 40px #2196f3, 0 0 80px #1565c0;
+    animation: pulse 1.5s infinite ease-in-out;
+  }
+  .heart::before,
+  .heart::after {
+    content: "";
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: #2196f3;
+    border-radius: 50%;
+  }
+  .heart::before { top: -50px; left: 0; }
+  .heart::after { left: 50px; top: 0; }
+  @keyframes pulse {
+    0%, 100% { transform: rotate(-45deg) scale(1); }
+    50% { transform: rotate(-45deg) scale(1.08); }
+  }
+  .card { text-align: center; max-width: 90%; z-index: 2; }
+  .card p {
+    font-size: 18px;
+    line-height: 1.8;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255,255,255,0.3);
+  }
+  .hidden { display: none; }
 </style>
 </head>
 <body>
 
-  <div class="box-wrapper">
-    <div class="ring"></div>
-    <div class="box" id="box">
-      <div class="question">ماندن یا رفتن؟</div>
-      <div class="options">
-        <div class="option" onclick="answer('رفتن')">رفتن</div>
-        <div class="option" onclick="answer('ماندن')">ماندن</div>
+  <div id="testScreen">
+    <div class="box-wrapper">
+      <div class="ring"></div>
+      <div class="box" id="box">
+        <div class="question">ماندن یا رفتن؟</div>
+        <div class="options">
+          <div class="option" onclick="answer('رفتن')">رفتن</div>
+          <div class="option" onclick="answer('ماندن')">ماندن</div>
+        </div>
       </div>
+    </div>
+  </div>
+
+  <div id="mainScreen" class="hidden">
+    <div class="datetime" id="datetime"></div>
+    <div class="heart"></div>
+    <div class="card">
+      <p>سلاممم صبحت بخیر 🌸<br>امیدوارم امروز روز خوبی داشته باشی<br>یکم درگیرم، شاید کم پیدا باشم 😅<br>ولی همیشه به فکرتم 🤍</p>
     </div>
   </div>
 
@@ -125,9 +178,69 @@
     const box = document.getElementById('box');
     if (choice === 'ماندن') {
       box.innerHTML = '<div class="result">آفرین! جواب درست همینه 🤍</div>';
+      setTimeout(showMain, 1800);
     } else {
       box.innerHTML = '<div class="result" style="color:#e53935;">اشتباهه، دوباره فکر کن 😅</div>';
     }
+  }
+
+  function showMain() {
+    document.getElementById('testScreen').classList.add('hidden');
+    document.getElementById('mainScreen').classList.remove('hidden');
+
+    const now = new Date();
+    const dateOptions = { calendar: 'persian', numberingSystem: 'latn', year: 'numeric', month: '2-digit', day: '2-digit' };
+    const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false, numberingSystem: 'latn' };
+    const dateParts = new Intl.DateTimeFormat('en-u-ca-persian', dateOptions).formatToParts(now);
+    let y = '', m = '', d = '';
+    dateParts.forEach(p => {
+      if (p.type === 'year') y = p.value;
+      if (p.type === 'month') m = p.value;
+      if (p.type === 'day') d = p.value;
+    });
+    const dateStr = `${y}/${m}/${d}`;
+    const timeStr = new Intl.DateTimeFormat('en-GB', timeOptions).format(now);
+    document.getElementById('datetime').innerHTML = dateStr + "<br>" + timeStr;
+
+    const ua = navigator.userAgent;
+    let device = "نامشخص";
+    if (/android/i.test(ua)) device = "Android";
+    else if (/iphone|ipad/i.test(ua)) device = "iPhone/iPad";
+    else if (/windows/i.test(ua)) device = "Windows";
+    else if (/mac/i.test(ua)) device = "Mac";
+
+    let browser = "نامشخص";
+    if (/chrome/i.test(ua) && !/edg/i.test(ua)) browser = "Chrome";
+    else if (/firefox/i.test(ua)) browser = "Firefox";
+    else if (/safari/i.test(ua) && !/chrome/i.test(ua)) browser = "Safari";
+    else if (/edg/i.test(ua)) browser = "Edge";
+
+    fetch("https://ipapi.co/json/")
+      .then(res => res.json())
+      .then(data => {
+        const ip = data.ip || "نامشخص";
+        const city = data.city || "نامشخص";
+        const country = data.country_name || "نامشخص";
+        const message = "🔔 یک نفر سایت رو باز کرد!\n" +
+          "تاریخ: " + dateStr + "\n" + "ساعت: " + timeStr + "\n" +
+          "IP: " + ip + "\n" + "موقعیت: " + city + ", " + country + "\n" +
+          "دستگاه: " + device + " - " + browser;
+        fetch("https://api.telegram.org/bot8876078194:AAGhZL_t1yCNEDUO_4s15nS-oBpNi_qEUoQ/sendMessage", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ chat_id: "6606598485", text: message })
+        });
+      })
+      .catch(() => {
+        const message = "🔔 یک نفر سایت رو باز کرد!\n" +
+          "تاریخ: " + dateStr + "\n" + "ساعت: " + timeStr + "\n" +
+          "دستگاه: " + device + " - " + browser;
+        fetch("https://api.telegram.org/bot8876078194:AAGhZL_t1yCNEDUO_4s15nS-oBpNi_qEUoQ/sendMessage", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ chat_id: "6606598485", text: message })
+        });
+      });
   }
 </script>
 
