@@ -33,7 +33,10 @@ canvas#lightningCanvas { z-index: 3; }
 
 .dragon-container { position: relative; width: 320px; height: 320px; display: flex; justify-content: center; align-items: center; }
 .dragon-orbit { position: absolute; width: 100%; height: 100%; border-radius: 50%; animation: orbitRotate 6s linear infinite; }
-.dragon-head { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 45px; filter: drop-shadow(0 0 15px #00e5ff) drop-shadow(0 0 30px #76ff03); animation: dragonGlow 1.5s infinite alternate; }
+
+/* اژدهای واقعی سه‌بعدی به جای ایموجی */
+.dragon-head { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); filter: drop-shadow(0 0 15px #00e5ff) drop-shadow(0 0 25px #ff0055); animation: dragonGlow 1.5s infinite alternate; }
+.dragon-head img { width: 90px; height: auto; display: block; }
 
 @keyframes orbitRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 @keyframes dragonGlow { from { filter: drop-shadow(0 0 10px #00e5ff); } to { filter: drop-shadow(0 0 25px #bd00ff); } }
@@ -75,7 +78,10 @@ canvas#lightningCanvas { z-index: 3; }
   <div class="dragon-container">
     <div class="datetime" id="datetime"></div>
     <div class="dragon-orbit" id="dragonOrbit">
-      <div class="dragon-head" id="dragonHead">🐉</div>
+      <div class="dragon-head" id="dragonHead">
+        <!-- عکس اژدهای واقعی انیمیشن‌دار -->
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdW5pdmVyc2Fs/26bfL9tBspP0U/giphy.gif" alt="اژدها">
+      </div>
     </div>
     <div class="card" id="card">
       <p id="greeting"></p>
@@ -266,4 +272,4 @@ function showMain() {
 </script>
 </body>
 </html>
-audioCtx.currentTime
+
