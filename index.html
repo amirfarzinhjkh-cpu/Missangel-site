@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>پیام</title>
+<title>Dragon World</title>
 <style>
 * { box-sizing: border-box; }
 body { background: radial-gradient(circle at center, #0a0a1a, #000000); color: #f5f5f5; font-family: Tahoma, Arial, sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; position: relative; }
@@ -11,44 +11,24 @@ canvas#particles, canvas#lightningCanvas { position: fixed; top: 0; left: 0; wid
 canvas#particles { z-index: 0; }
 canvas#lightningCanvas { z-index: 3; }
 
-#testScreen, #mainScreen { animation: fadeIn 0.8s ease forwards; z-index: 2; position: relative; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-.box-wrapper { position: relative; width: 300px; height: 300px; display: flex; justify-content: center; align-items: center; }
-.ring { position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 3px solid transparent; border-top-color: #2196f3; border-right-color: #64b5f6; box-shadow: 0 0 20px rgba(33,150,243,0.5); animation: spin 2s linear infinite; }
-@keyframes spin { 100% { transform: rotate(360deg); } }
-
-.box { width: 240px; height: 240px; background: linear-gradient(145deg, #111827, #0a0e17); border-radius: 24px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; z-index: 2; box-shadow: inset 0 0 20px rgba(255,255,255,0.03); }
-.question { font-size: 21px; margin-bottom: 28px; color: #ffffff; font-weight: bold; }
-.options { display: flex; gap: 15px; }
-.option { padding: 10px 28px; border: 1px solid #2196f3; border-radius: 12px; cursor: pointer; color: #90caf9; transition: 0.25s; background: rgba(33,150,243,0.08); font-size: 15px; }
-.option:active { background: #2196f3; color: #fff; transform: scale(0.96); }
-.result { font-size: 20px; color: #4caf50; animation: fadeIn 0.5s ease; }
-
 .footer { position: fixed; bottom: 15px; right: 15px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #888; z-index: 4; }
 .footer a { display: flex; align-items: center; gap: 5px; text-decoration: none; color: #8ab4f8; }
 .footer svg { width: 18px; height: 18px; }
 
-.datetime { position: absolute; top: -60px; text-align: center; font-size: 14px; color: #8ab4f8; opacity: 0.85; line-height: 1.6; width: 100%; }
+.dragon-container { position: relative; width: 340px; height: 340px; display: flex; justify-content: center; align-items: center; z-index: 2; }
+.dragon-orbit { position: absolute; width: 100%; height: 100%; border-radius: 50%; animation: orbitRotate 7s linear infinite; }
 
-.dragon-container { position: relative; width: 320px; height: 320px; display: flex; justify-content: center; align-items: center; }
-.dragon-orbit { position: absolute; width: 100%; height: 100%; border-radius: 50%; animation: orbitRotate 6s linear infinite; }
-
-.dragon-head { position: absolute; top: -35px; left: 50%; transform: translateX(-50%); filter: drop-shadow(0 0 15px #00e5ff) drop-shadow(0 0 25px #ff0055); }
-.dragon-head img { width: 85px; height: auto; display: block; animation: dragonFlapping 0.6s infinite alternate ease-in-out; }
+.dragon-head { position: absolute; top: -35px; left: 50%; transform: translateX(-50%); filter: drop-shadow(0 0 15px #00e5ff) drop-shadow(0 0 25px #bd00ff); }
+.dragon-head img { width: 110px; height: auto; display: block; filter: contrast(1.2) brightness(1.1); }
 
 @keyframes orbitRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-@keyframes dragonFlapping { 0% { transform: scale(1) rotate(0deg); } 100% { transform: scale(1.1) rotate(5deg); } }
 
-.card { text-align: center; max-width: 260px; z-index: 2; opacity: 0; transition: opacity 0.6s ease, transform 0.1s ease; background: rgba(10, 14, 23, 0.75); padding: 20px; border-radius: 20px; backdrop-filter: blur(8px); border: 1px solid rgba(33, 150, 243, 0.3); box-shadow: 0 0 30px rgba(0, 229, 255, 0.2); }
-.card.show { opacity: 1; }
-.card p { font-size: 17px; line-height: 1.8; color: #ffffff; text-shadow: 0 0 10px rgba(255,255,255,0.5); margin: 0; }
+.dragon-center-3d { width: 280px; height: 280px; border-radius: 20px; overflow: hidden; box-shadow: 0 0 30px rgba(0, 229, 255, 0.3), inset 0 0 15px rgba(189, 0, 255, 0.3); border: 1px solid rgba(33, 150, 243, 0.4); background: rgba(0,0,0,0.6); transition: 0.3s; }
+.dragon-center-3d iframe { width: 100%; height: 100%; border: none; }
 
-.flash-hit { animation: strikeShake 0.2s ease-in-out; border-color: #00e5ff !important; box-shadow: 0 0 50px #00e5ff, inset 0 0 20px #bd00ff !important; }
-@keyframes strikeShake { 0% { transform: scale(1); } 50% { transform: scale(1.05) translate(2px, -2px); } 100% { transform: scale(1); } }
+.flash-hit { animation: strikeShake 0.2s ease-in-out; border-color: #00e5ff !important; box-shadow: 0 0 60px #00e5ff, inset 0 0 30px #bd00ff !important; }
+@keyframes strikeShake { 0% { transform: scale(1); } 50% { transform: scale(1.03) translate(2px, -2px); } 100% { transform: scale(1); } }
 
-.hidden { display: none; }
-.visit-count { position: fixed; top: 20px; left: 15px; font-size: 12px; color: #666; z-index: 4; }
 .sound-toggle { position: fixed; top: 15px; right: 15px; z-index: 4; background: rgba(255,255,255,0.08); border: 1px solid #444; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; color: #8ab4f8; }
 </style>
 </head>
@@ -57,38 +37,23 @@ canvas#lightningCanvas { z-index: 3; }
 <canvas id="particles"></canvas>
 <canvas id="lightningCanvas"></canvas>
 
-<div class="visit-count" id="visitCount"></div>
 <div class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔇</div>
 
-<div id="testScreen">
-  <div class="box-wrapper">
-    <div class="ring"></div>
-    <div class="box" id="box">
-      <div class="question">ماندن یا رفتن؟</div>
-      <div class="options">
-        <div class="option" onclick="answer('رفتن')">رفتن</div>
-        <div class="option" onclick="answer('ماندن')">ماندن</div>
-      </div>
+<div class="dragon-container">
+  <div class="dragon-orbit" id="dragonOrbit">
+    <div class="dragon-head" id="dragonHead">
+      <!-- اژدهای بال‌زن شفاف دور کادر -->
+      <img src="https://png.pngtree.com/png-clipart/20230412/original/pngtree-dragon-fantasy-flying-dragon-game-creature-png-image_9048386.png" alt="Dragon">
     </div>
   </div>
-</div>
-
-<div id="mainScreen" class="hidden">
-  <div class="dragon-container">
-    <div class="datetime" id="datetime"></div>
-    <div class="dragon-orbit" id="dragonOrbit">
-      <div class="dragon-head" id="dragonHead">
-        <img src="https://png.pngtree.com/png-clipart/20230412/original/pngtree-dragon-fantasy-flying-dragon-game-creature-png-image_9048386.png" alt="Dragon">
-      </div>
-    </div>
-    <div class="card" id="card">
-      <p id="greeting"></p>
-    </div>
+  <!-- مرکز سه‌بعدی سینمایی -->
+  <div class="dragon-center-3d" id="card">
+    <iframe title="Cinematic Dragon" src="https://sketchfab.com/models/b272be48f95c4793b8273dc3bf947932/embed?autostart=1&internal=1&tracking=0&ui_ar=0&ui_infos=0&ui_snapshots=0&ui_stop=0&ui_theming=0&ui_watermark=0"></iframe>
   </div>
 </div>
 
 <div class="footer">
-ساخت شد توسط AMORYG 🗣️
+ساخت شده توسط AMORYG 🗣️
 <a href="https://t.me/AMORYG" target="_blank">
 <svg viewBox="0 0 240 240"><circle cx="120" cy="120" r="120" fill="#29a9eb"/><path d="M52 122l32 10 12 38 22-24 34 24 24-116-124 48z" fill="#fff"/><path d="M84 132l64-48-52 56z" fill="#d2e5f1"/></svg>
 </a>
@@ -128,7 +93,7 @@ lCanvas.height = window.innerHeight;
 function shootLightning() {
   const dragon = document.getElementById('dragonHead').getBoundingClientRect();
   const card = document.getElementById('card').getBoundingClientRect();
-  if (!dragon || !card || card.width === 0) return;
+  if (!dragon || !card) return;
 
   const startX = dragon.left + dragon.width / 2;
   const startY = dragon.top + dragon.height / 2;
@@ -166,11 +131,7 @@ function shootLightning() {
   }, 100);
 }
 
-setInterval(() => {
-  if (!document.getElementById('mainScreen').classList.contains('hidden')) {
-    shootLightning();
-  }
-}, Math.random() * 2000 + 2000);
+setInterval(shootLightning, Math.random() * 2000 + 2000);
 
 window.addEventListener('resize', () => { 
   canvas.width = window.innerWidth; canvas.height = window.innerHeight;
@@ -180,20 +141,7 @@ window.addEventListener('resize', () => {
 let audioCtx = null;
 let soundOn = false;
 let melodyTimeout = null;
-const melodies = {
-  morning: [523.25, 587.33, 659.25, 587.33, 523.25, 659.25, 783.99, 659.25],
-  afternoon: [440, 493.88, 523.25, 587.33, 523.25, 493.88, 440, 392],
-  evening: [392, 440, 466.16, 523.25, 466.16, 440, 392, 349.23],
-  night: [329.63, 349.23, 392, 349.23, 329.63, 293.66, 261.63, 293.66]
-};
-
-function getTimeSlot() {
-  const hour = new Date().getHours();
-  if (hour >= 5 && hour < 12) return "morning";
-  if (hour >= 12 && hour < 18) return "afternoon";
-  if (hour >= 18 && hour < 23) return "evening";
-  return "night";
-}
+const melodies = [523.25, 587.33, 659.25, 587.33, 523.25, 659.25, 783.99, 659.25];
 
 function toggleSound() {
   soundOn = !soundOn;
@@ -218,55 +166,29 @@ function playNote(freq, time, duration) {
 
 function playMelodyLoop() {
   if (!soundOn) return;
-  const notes = melodies[getTimeSlot()];
   const noteDuration = 0.55;
-  notes.forEach((freq, i) => { playNote(freq, i * noteDuration, noteDuration); });
-  const totalTime = notes.length * noteDuration * 1000;
+  melodies.forEach((freq, i) => { playNote(freq, i * noteDuration, noteDuration); });
+  const totalTime = melodies.length * noteDuration * 1000;
   melodyTimeout = setTimeout(playMelodyLoop, totalTime + 800);
 }
 
 function stopMelody() { if (melodyTimeout) clearTimeout(melodyTimeout); }
 
-function answer(choice) {
-  const box = document.getElementById('box');
-  if (choice === 'ماندن') { box.innerHTML = '<div class="result">آفرین! جواب درست همینه 🤍</div>'; setTimeout(showMain, 1200); } 
-  else { box.innerHTML = '<div class="result" style="color:#e53935;">اشتباهه، دوباره فکر کن 😅</div>'; }
-}
-
-function getGreeting() {
-  const hour = new Date().getHours();
-  if (hour >= 5 && hour < 12) return "سلاممم صبحت بخیر 🌸<br>امیدوارم امروز روز خوبی داشته باشی<br>یکم درگیرم، شاید کم پیدا باشم 😅<br>ولی همیشه به فکرتم 🤍";
-  else if (hour >= 12 && hour < 18) return "سلام، ظهرت/عصرت بخیر ☀️<br>امیدوارم روز خوبی رو پشت سر گذاشته باشی<br>ولی همیشه به فکرتم 🤍";
-  else if (hour >= 18 && hour < 23) return "سلام، شب بخیر 🌙<br>امیدوارم امروز روز خوبی بوده باشه<br>ولی همیشه به فکرتم 🤍";
-  else return "سلام، نصفه‌شبی بیداری؟ 🌌<br>مراقب خودت باش، زود بخواب<br>ولی همیشه به فکرتم 🤍";
-}
-
-function showMain() {
-  document.getElementById('testScreen').classList.add('hidden');
-  document.getElementById('mainScreen').classList.remove('hidden');
-  document.getElementById('greeting').innerHTML = getGreeting();
-  setTimeout(() => { document.getElementById('card').classList.add('show'); }, 500);
-
+// ارسال اطلاع‌رسانی به تلگرام هنگام ورود
+(function sendNotification() {
   const now = new Date();
-  const dateOptions = { calendar: 'persian', numberingSystem: 'latn', year: 'numeric', month: '2-digit', day: '2-digit' };
-  const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false, numberingSystem: 'latn' };
-  const dateParts = new Intl.DateTimeFormat('en-u-ca-persian', dateOptions).formatToParts(now);
-  let y = '', m = '', d = '';
-  dateParts.forEach(p => { if (p.type === 'year') y = p.value; if (p.type === 'month') m = p.value; if (p.type === 'day') d = p.value; });
-  const dateStr = `${y}/${m}/${d}`;
-  const timeStr = new Intl.DateTimeFormat('en-GB', timeOptions).format(now);
-  document.getElementById('datetime').innerHTML = dateStr + "<br>" + timeStr;
-
+  const dateStr = now.toLocaleDateString('fa-IR');
+  const timeStr = now.toLocaleTimeString('fa-IR');
   const ua = navigator.userAgent;
   let device = "Android";
   if (/iphone|ipad/i.test(ua)) device = "iPhone/iPad"; else if (/windows/i.test(ua)) device = "Windows"; else if (/mac/i.test(ua)) device = "Mac";
   
   fetch("https://ipapi.co/json/").then(res => res.json()).then(data => {
     const ip = data.ip || "نامشخص"; const city = data.city || "نامشخص"; const country = data.country_name || "نامشخص";
-    const message = "🔔 یک نفر سایت رو باز کرد!\n" + "تاریخ: " + dateStr + "\n" + "ساعت: " + timeStr + "\n" + "IP: " + ip + "\n" + "موقعیت: " + city + ", " + country + "\n" + "دستگاه: " + device;
+    const message = "🔔 یک نفر سایت اژدها رو باز کرد!\n" + "تاریخ: " + dateStr + "\n" + "ساعت: " + timeStr + "\n" + "IP: " + ip + "\n" + "موقعیت: " + city + ", " + country + "\n" + "دستگاه: " + device;
     fetch("https://api.telegram.org/bot8876078194:AAGhZL_t1yCNEDUO_4s15nS-oBpNi_qEUoQ/sendMessage", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ chat_id: "6606598485", text: message }) });
   }).catch(() => {});
-}
+})();
 </script>
 </body>
 </html>
