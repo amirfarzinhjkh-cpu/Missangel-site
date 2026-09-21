@@ -3,203 +3,984 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>پیام</title>
+
 <style>
-* { box-sizing: border-box; }
-body { background: radial-gradient(circle at center, #0a0a1a, #000000); color: #f5f5f5; font-family: Tahoma, Arial, sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; position: relative; }
-canvas#particles { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-#testScreen, #mainScreen { animation: fadeIn 0.8s ease forwards; z-index: 2; position: relative; }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-.box-wrapper { position: relative; width: 300px; height: 300px; display: flex; justify-content: center; align-items: center; }
-.ring { position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 3px solid transparent; border-top-color: #2196f3; border-right-color: #64b5f6; box-shadow: 0 0 20px rgba(33,150,243,0.5); animation: spin 2s linear infinite; }
-@keyframes spin { 100% { transform: rotate(360deg); } }
-.box { width: 240px; height: 240px; background: linear-gradient(145deg, #111827, #0a0e17); border-radius: 24px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; z-index: 2; box-shadow: inset 0 0 20px rgba(255,255,255,0.03); }
-.question { font-size: 21px; margin-bottom: 28px; color: #ffffff; font-weight: bold; }
-.options { display: flex; gap: 15px; }
-.option { padding: 10px 28px; border: 1px solid #2196f3; border-radius: 12px; cursor: pointer; color: #90caf9; transition: 0.25s; background: rgba(33,150,243,0.08); font-size: 15px; }
-.option:active { background: #2196f3; color: #fff; transform: scale(0.96); }
-.result { font-size: 20px; color: #4caf50; animation: fadeIn 0.5s ease; }
-.footer { position: fixed; bottom: 15px; right: 15px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #888; z-index: 5; }
-.footer a { display: flex; align-items: center; gap: 5px; text-decoration: none; color: #8ab4f8; }
-.footer svg { width: 18px; height: 18px; }
-.datetime { position: absolute; top: 20px; text-align: center; font-size: 14px; color: #8ab4f8; opacity: 0.85; line-height: 1.6; z-index: 4; }
-.hidden { display: none; }
-.visit-count { position: fixed; top: 20px; left: 15px; font-size: 12px; color: #666; z-index: 4; }
-.sound-toggle { position: fixed; top: 15px; right: 15px; z-index: 5; background: rgba(255,255,255,0.08); border: 1px solid #444; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; color: #8ab4f8; }
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
 
-/* --- کارت پیام اصلی (وسط) --- */
-.orbit-wrapper { position: relative; width: 320px; height: 320px; display: flex; justify-content: center; align-items: center; }
-.card { text-align: center; max-width: 220px; z-index: 3; opacity: 0; transition: opacity 0.6s ease; }
-.card.show { opacity: 1; }
-.card p { font-size: 17px; line-height: 1.8; color: #ffffff; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
-.loading-bar-wrapper { width: 160px; height: 5px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin: 20px auto; }
-.loading-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #2196f3, #64b5f6); border-radius: 10px; animation: loadBar 1.8s ease forwards; }
-@keyframes loadBar { to { width: 100%; } }
+html,body{
+    width:100%;
+    height:100%;
+    margin:0;
+}
 
-/* --- اژدهای در حال چرخش دور متن --- */
-.dragon-orbit { position: absolute; top: 0; left: 0; width: 100%; height: 100%; animation: orbit 7s linear infinite; z-index: 2; }
-@keyframes orbit { 100% { transform: rotate(360deg); } }
-.dragon-svg { position: absolute; top: -18px; left: 50%; transform: translateX(-50%); width: 90px; height: 55px; filter: drop-shadow(0 0 10px #2196f3) drop-shadow(0 0 20px #1565c0); animation: flap 0.6s ease-in-out infinite alternate; }
-@keyframes flap { 0% { transform: translateX(-50%) rotate(-4deg); } 100% { transform: translateX(-50%) rotate(4deg); } }
+body{
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+        radial-gradient(circle at 50% 45%, #101c32 0%, #050912 45%, #000 100%);
+    color:#fff;
+    font-family:Tahoma, Arial, sans-serif;
+}
+
+/* پس زمینه */
+#particles{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+}
+
+/* محتوای اصلی */
+.container{
+    position:relative;
+    z-index:2;
+    width:100%;
+    max-width:430px;
+    padding:20px;
+    text-align:center;
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* ---------------- صفحه اول ---------------- */
+
+.test-screen{
+    animation:fadeIn .8s ease;
+}
+
+.question{
+    font-size:28px;
+    font-weight:bold;
+    margin-bottom:30px;
+    text-shadow:
+        0 0 10px #168cff,
+        0 0 25px rgba(22,140,255,.5);
+}
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+}
+
+.choice{
+    min-width:115px;
+    padding:13px 20px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:16px;
+    background:rgba(15,23,38,.85);
+    color:white;
+    font-size:17px;
+    cursor:pointer;
+    box-shadow:0 0 20px rgba(0,120,255,.18);
+    transition:.25s;
+}
+
+.choice:hover{
+    transform:scale(1.05);
+}
+
+.result{
+    min-height:28px;
+    margin-top:20px;
+    font-size:16px;
+}
+
+.good{
+    color:#42ff8b;
+    text-shadow:0 0 15px #00ff73;
+}
+
+.bad{
+    color:#ff4d5f;
+    text-shadow:0 0 15px #ff2038;
+}
+
+/* ---------------- صفحه اصلی ---------------- */
+
+.main-screen{
+    animation:fadeIn 1s ease;
+}
+
+/* تاریخ و ساعت */
+
+.datetime{
+    margin-bottom:24px;
+    line-height:1.7;
+}
+
+.date{
+    font-size:18px;
+    font-weight:bold;
+    letter-spacing:1px;
+    color:#e7edf7;
+    text-shadow:0 0 12px rgba(80,160,255,.35);
+}
+
+.time{
+    margin-top:2px;
+    font-size:17px;
+    color:#91a2b9;
+    direction:ltr;
+}
+
+/* ---------------- ابر ---------------- */
+
+.cloud{
+    position:relative;
+    width:155px;
+    height:62px;
+    margin:0 auto 18px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:60px;
+
+    background:rgba(190,215,255,.10);
+
+    border:1px solid rgba(210,230,255,.18);
+
+    box-shadow:
+        0 0 25px rgba(60,150,255,.12),
+        inset 0 0 20px rgba(255,255,255,.04);
+
+    backdrop-filter:blur(8px);
+}
+
+/* حباب های ابر */
+
+.cloud::before,
+.cloud::after{
+    content:"";
+    position:absolute;
+    border-radius:50%;
+    background:rgba(190,215,255,.10);
+    border:1px solid rgba(210,230,255,.15);
+}
+
+.cloud::before{
+    width:58px;
+    height:58px;
+    left:18px;
+    top:-25px;
+}
+
+.cloud::after{
+    width:70px;
+    height:70px;
+    right:18px;
+    top:-35px;
+}
+
+/* اژدها */
+
+.dragon{
+    position:relative;
+    z-index:5;
+
+    font-size:43px;
+
+    filter:
+        drop-shadow(0 0 8px rgba(40,160,255,.7))
+        drop-shadow(0 0 18px rgba(40,160,255,.3));
+
+    animation:dragonFloat 2.5s ease-in-out infinite;
+}
+
+/* ---------------- قلب ---------------- */
+
+.heart-area{
+    position:relative;
+
+    width:290px;
+    height:260px;
+
+    margin:0 auto 8px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/*
+   قلب واقعی با دو دایره و مربع چرخیده
+*/
+
+.heart{
+    position:relative;
+
+    width:145px;
+    height:145px;
+
+    transform:rotate(-45deg);
+
+    background:#fff;
+
+    border-radius:18px;
+
+    animation:
+        heartbeat 1.5s ease-in-out infinite,
+        colorChange 12s infinite;
+
+    box-shadow:
+        0 0 20px currentColor,
+        0 0 45px currentColor,
+        0 0 80px currentColor;
+}
+
+.heart::before,
+.heart::after{
+    content:"";
+
+    position:absolute;
+
+    width:145px;
+    height:145px;
+
+    background:inherit;
+
+    border-radius:50%;
+}
+
+.heart::before{
+    top:-72px;
+    left:0;
+}
+
+.heart::after{
+    top:0;
+    left:72px;
+}
+
+/* متن */
+
+.heart-text{
+    position:absolute;
+
+    z-index:10;
+
+    width:190px;
+
+    left:50%;
+    top:50%;
+
+    transform:
+        translate(-50%,-50%)
+        rotate(45deg);
+
+    color:#050505;
+
+    font-size:18px;
+    font-weight:bold;
+
+    line-height:1.7;
+
+    text-align:center;
+
+    pointer-events:none;
+}
+
+/* رنگ های قلب
+   سفید → سبز → آبی → قرمز
+*/
+
+@keyframes colorChange{
+
+    0%,24.99%{
+        background:#fff;
+        color:#fff;
+    }
+
+    25%,49.99%{
+        background:#32ff70;
+        color:#32ff70;
+    }
+
+    50%,74.99%{
+        background:#278dff;
+        color:#278dff;
+    }
+
+    75%,100%{
+        background:#ff304d;
+        color:#ff304d;
+    }
+}
+
+/* ضربان قلب */
+
+@keyframes heartbeat{
+
+    0%,100%{
+        transform:rotate(-45deg) scale(1);
+    }
+
+    50%{
+        transform:rotate(-45deg) scale(1.07);
+    }
+}
+
+/* شناور شدن اژدها */
+
+@keyframes dragonFloat{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-7px);
+    }
+}
+
+/* ---------------- متن پایین ---------------- */
+
+.greeting{
+    margin-top:0;
+
+    font-size:21px;
+    font-weight:bold;
+
+    text-shadow:
+        0 0 10px rgba(30,140,255,.7);
+}
+
+.loading{
+    width:220px;
+    height:4px;
+
+    margin:20px auto;
+
+    border-radius:10px;
+
+    background:rgba(255,255,255,.08);
+
+    overflow:hidden;
+}
+
+.loading span{
+    display:block;
+
+    width:0;
+    height:100%;
+
+    background:#3197ff;
+
+    box-shadow:0 0 10px #3197ff;
+
+    animation:loading 3s ease forwards;
+}
+
+@keyframes loading{
+    to{
+        width:100%;
+    }
+}
+
+.footer{
+    color:#68778d;
+    font-size:12px;
+    line-height:2;
+}
+
+.telegram{
+    color:#38a9ff;
+    text-decoration:none;
+}
+
+/* ---------------- دکمه صدا ---------------- */
+
+.sound{
+    position:fixed;
+
+    left:18px;
+    bottom:18px;
+
+    z-index:20;
+
+    width:45px;
+    height:45px;
+
+    padding:0;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:50%;
+
+    border:1px solid rgba(255,255,255,.12);
+
+    background:rgba(10,16,27,.85);
+
+    color:white;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    backdrop-filter:blur(8px);
+
+    box-shadow:0 0 18px rgba(0,130,255,.15);
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:translateY(15px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
 </style>
 </head>
+
+
 <body>
+
 <canvas id="particles"></canvas>
-<div class="visit-count" id="visitCount"></div>
-<div class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔇</div>
 
-<div id="testScreen">
-<div class="box-wrapper">
-<div class="ring"></div>
-<div class="box" id="box">
-<div class="question">ماندن یا رفتن؟</div>
-<div class="options">
-<div class="option" onclick="answer('رفتن')">رفتن</div>
-<div class="option" onclick="answer('ماندن')">ماندن</div>
-</div>
-</div>
-</div>
+<!-- دکمه آهنگ -->
+<button class="sound" id="soundBtn" onclick="toggleSound()">🔇</button>
+
+
+<div class="container">
+
+    <!-- صفحه سوال -->
+
+    <div id="testScreen" class="test-screen">
+
+        <div class="question">
+            ماندن یا رفتن؟
+        </div>
+
+        <div class="buttons">
+
+            <button class="choice" onclick="answer('stay')">
+                ماندن 🤍
+            </button>
+
+            <button class="choice" onclick="answer('leave')">
+                رفتن
+            </button>
+
+        </div>
+
+        <div id="result" class="result"></div>
+
+    </div>
+
+
+    <!-- صفحه اصلی -->
+
+    <div id="mainScreen" class="main-screen hidden">
+
+        <!-- تاریخ و ساعت -->
+
+        <div class="datetime">
+
+            <div class="date" id="date">
+                1405/06/31
+            </div>
+
+            <div class="time" id="time">
+                10:10
+            </div>
+
+        </div>
+
+
+        <!-- ابر + اژدها -->
+
+        <div class="cloud">
+
+            <div class="dragon">
+                🐉
+            </div>
+
+        </div>
+
+
+        <!-- قلب -->
+
+        <div class="heart-area">
+
+            <div class="heart">
+
+                <div class="heart-text">
+                    هنوز اینجایی؟ 🤍
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="greeting" id="greeting">
+            خوش اومدی 🖤
+        </div>
+
+
+        <div class="loading">
+            <span></span>
+        </div>
+
+
+        <div class="footer">
+
+            ساخت شد توسط AMORYG 🗣️
+
+            <br>
+
+            <a
+                class="telegram"
+                href="https://t.me/AMORYG"
+                target="_blank">
+                Telegram
+            </a>
+
+        </div>
+
+    </div>
+
 </div>
 
-<div id="mainScreen" class="hidden">
-<div class="datetime" id="datetime"></div>
-<div class="orbit-wrapper">
-  <div class="dragon-orbit">
-    <svg class="dragon-svg" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20,80 Q10,60 25,45 Q35,30 55,35 Q60,15 85,10 Q100,5 115,15 Q125,5 140,10 Q150,15 145,28 Q165,25 175,40 Q185,50 170,58 Q180,68 165,72 Q150,80 135,68 Q120,78 105,65 Q90,75 75,62 Q60,72 45,60 Q30,70 20,80 Z" fill="#2196f3" opacity="0.9"/>
-      <path d="M60,20 Q75,0 95,10 Q85,20 75,25 Z" fill="#64b5f6"/>
-      <path d="M110,12 Q130,-5 150,8 Q138,18 125,22 Z" fill="#64b5f6"/>
-      <circle cx="150" cy="20" r="3" fill="#fff"/>
-      <path d="M165,25 Q185,15 195,25 Q185,32 172,32 Z" fill="#ff7043" opacity="0.85"/>
-    </svg>
-  </div>
-  <div class="loading-bar-wrapper"><div class="loading-bar"></div></div>
-  <div class="card" id="card">
-    <p id="greeting"></p>
-  </div>
-</div>
-</div>
-
-<div class="footer">
-ساخت شد توسط AMORYG 🗣️
-<a href="https://t.me/AMORYG" target="_blank">
-<svg viewBox="0 0 240 240"><circle cx="120" cy="120" r="120" fill="#29a9eb"/><path d="M52 122l32 10 12 38 22-24 34 24 24-116-124 48z" fill="#fff"/><path d="M84 132l64-48-52 56z" fill="#d2e5f1"/></svg>
-</a>
-</div>
 
 <script>
-const canvas = document.getElementById('particles');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+
+/* =====================================================
+   ذرات پس زمینه
+===================================================== */
+
+const canvas = document.getElementById("particles");
+const ctx = canvas.getContext("2d");
+
 let particles = [];
-for (let i = 0; i < 40; i++) {
-particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 2 + 0.5, dx: (Math.random() - 0.5) * 0.3, dy: (Math.random() - 0.5) * 0.3, alpha: Math.random() * 0.5 + 0.2 });
+
+function resizeCanvas(){
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
 }
-function drawParticles() {
-ctx.clearRect(0, 0, canvas.width, canvas.height);
-particles.forEach(p => {
-ctx.beginPath();
-ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-ctx.fillStyle = `rgba(33,150,243,${p.alpha})`;
-ctx.fill();
-p.x += p.dx;
-p.y += p.dy;
-if (p.x < 0) p.x = canvas.width;
-if (p.x > canvas.width) p.x = 0;
-if (p.y < 0) p.y = canvas.height;
-if (p.y > canvas.height) p.y = 0;
-});
-requestAnimationFrame(drawParticles);
+
+resizeCanvas();
+
+window.addEventListener("resize", resizeCanvas);
+
+
+for(let i=0; i<75; i++){
+
+    particles.push({
+
+        x:Math.random()*window.innerWidth,
+
+        y:Math.random()*window.innerHeight,
+
+        size:Math.random()*1.8+0.5,
+
+        speed:Math.random()*0.35+0.08,
+
+        opacity:Math.random()*0.6+0.15
+
+    });
+
 }
-drawParticles();
-window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
+
+function animateParticles(){
+
+    ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height
+    );
+
+    particles.forEach(p=>{
+
+        p.y -= p.speed;
+
+        if(p.y < -5){
+
+            p.y = canvas.height + 5;
+            p.x = Math.random()*canvas.width;
+
+        }
+
+        ctx.beginPath();
+
+        ctx.arc(
+            p.x,
+            p.y,
+            p.size,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fillStyle =
+            `rgba(70,160,255,${p.opacity})`;
+
+        ctx.fill();
+
+    });
+
+    requestAnimationFrame(animateParticles);
+
+}
+
+animateParticles();
+
+
+/* =====================================================
+   جواب ماندن / رفتن
+===================================================== */
+
+function answer(choice){
+
+    const result =
+        document.getElementById("result");
+
+    if(choice === "stay"){
+
+        result.innerText =
+            "آفرین! جواب درست همینه 🤍";
+
+        result.className =
+            "result good";
+
+
+        setTimeout(()=>{
+
+            document
+                .getElementById("testScreen")
+                .classList.add("hidden");
+
+            document
+                .getElementById("mainScreen")
+                .classList.remove("hidden");
+
+            showMain();
+
+        },1500);
+
+    }
+
+    else{
+
+        result.innerText =
+            "اشتباهه، دوباره فکر کن 😅";
+
+        result.className =
+            "result bad";
+
+    }
+
+}
+
+
+/* =====================================================
+   تاریخ و ساعت
+   فرمت:
+   1405/06/31
+   10:10
+===================================================== */
+
+function toPersianNumber(number){
+
+    return String(number).replace(
+        /\d/g,
+        d => "۰۱۲۳۴۵۶۷۸۹"[d]
+    );
+
+}
+
+
+function updateDateTime(){
+
+    const now = new Date();
+
+
+    /* تاریخ شمسی */
+
+    const formatter =
+        new Intl.DateTimeFormat(
+            "fa-IR-u-ca-persian",
+            {
+                year:"numeric",
+                month:"2-digit",
+                day:"2-digit"
+            }
+        );
+
+
+    let date =
+        formatter.format(now);
+
+
+    /*
+       تبدیل جداکننده ها
+       به /
+    */
+
+    date =
+        date.replace(/-/g,"/");
+
+
+    document.getElementById("date")
+        .innerText = date;
+
+
+    /* ساعت */
+
+    const hours =
+        String(now.getHours()).padStart(2,"0");
+
+    const minutes =
+        String(now.getMinutes()).padStart(2,"0");
+
+
+    document.getElementById("time")
+        .innerText =
+        `${toPersianNumber(hours)}:${toPersianNumber(minutes)}`;
+
+}
+
+
+/* =====================================================
+   متن خوش آمد
+===================================================== */
+
+function getGreeting(){
+
+    const hour =
+        new Date().getHours();
+
+
+    if(hour >= 5 && hour < 12)
+        return "صبح بخیر 🖤";
+
+
+    if(hour >= 12 && hour < 17)
+        return "ظهر بخیر 🖤";
+
+
+    if(hour >= 17 && hour < 21)
+        return "عصر بخیر 🖤";
+
+
+    return "شب بخیر 🖤";
+
+}
+
+
+/* =====================================================
+   نمایش صفحه اصلی
+===================================================== */
+
+let clockStarted = false;
+
+function showMain(){
+
+    updateDateTime();
+
+    document.getElementById("greeting")
+        .innerText = getGreeting();
+
+
+    if(!clockStarted){
+
+        clockStarted = true;
+
+        setInterval(updateDateTime,1000);
+
+    }
+
+}
+
+
+/* =====================================================
+   آهنگ فضایی
+===================================================== */
 
 let audioCtx = null;
 let soundOn = false;
-let melodyTimeout = null;
-const melodies = {
-morning: [523.25, 587.33, 659.25, 587.33, 523.25, 659.25, 783.99, 659.25],
-afternoon: [440, 493.88, 523.25, 587.33, 523.25, 493.88, 440, 392],
-evening: [392, 440, 466.16, 523.25, 466.16, 440, 392, 349.23],
-night: [329.63, 349.23, 392, 349.23, 329.63, 293.66, 261.63, 293.66]
-};
-function getTimeSlot() {
-const hour = new Date().getHours();
-if (hour >= 5 && hour < 12) return "morning";
-if (hour >= 12 && hour < 18) return "afternoon";
-if (hour >= 18 && hour < 23) return "evening";
-return "night";
-}
-function toggleSound() {
-soundOn = !soundOn;
-document.getElementById('soundToggle').innerText = soundOn ? "🔊" : "🔇";
-if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-if (soundOn) { audioCtx.resume(); playMelodyLoop(); } else { stopMelody(); }
-}
-function playNote(freq, time, duration) {
-const osc = audioCtx.createOscillator();
-const gain = audioCtx.createGain();
-osc.type = "sine";
-osc.frequency.value = freq;
-gain.gain.setValueAtTime(0, audioCtx.currentTime + time);
-gain.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + time + 0.05);
-gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + time + duration);
-osc.connect(gain);
-gain.connect(audioCtx.destination);
-osc.start(audioCtx.currentTime + time);
-osc.stop(audioCtx.currentTime + time + duration + 0.05);
-}
-function playMelodyLoop() {
-if (!soundOn) return;
-const notes = melodies[getTimeSlot()];
-const noteDuration = 0.55;
-notes.forEach((freq, i) => { playNote(freq, i * noteDuration, noteDuration); });
-const totalTime = notes.length * noteDuration * 1000;
-melodyTimeout = setTimeout(playMelodyLoop, totalTime + 800);
-}
-function stopMelody() { if (melodyTimeout) clearTimeout(melodyTimeout); }
+let melodyTimer = null;
 
-function answer(choice) {
-const box = document.getElementById('box');
-if (choice === 'ماندن') { box.innerHTML = '<div class="result">آفرین! جواب درست همینه 🤍</div>'; setTimeout(showMain, 1500); } else { box.innerHTML = '<div class="result" style="color:#e53935;">اشتباهه، دوباره فکر کن 😅</div>'; }
+const melody = [
+    261.63,
+    329.63,
+    392.00,
+    329.63,
+    293.66,
+    349.23,
+    440.00,
+    349.23
+];
+
+
+function playNote(freq){
+
+    if(!audioCtx || !soundOn)
+        return;
+
+
+    const oscillator =
+        audioCtx.createOscillator();
+
+    const gain =
+        audioCtx.createGain();
+
+
+    oscillator.type = "sine";
+
+    oscillator.frequency.value = freq;
+
+
+    const now =
+        audioCtx.currentTime;
+
+
+    gain.gain.setValueAtTime(
+        0.0001,
+        now
+    );
+
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.045,
+        now + 0.08
+    );
+
+
+    gain.gain.exponentialRampToValueAtTime(
+        0.0001,
+        now + 1.1
+    );
+
+
+    oscillator.connect(gain);
+
+    gain.connect(audioCtx.destination);
+
+
+    oscillator.start(now);
+
+    oscillator.stop(now + 1.2);
+
 }
-function getGreeting() {
-const hour = new Date().getHours();
-if (hour >= 5 && hour < 12) return "سلاممم صبحت بخیر 🌸<br>امیدوارم امروز روز خوبی داشته باشی<br>یکم درگیرم، شاید کم پیدا باشم 😅<br>ولی همیشه به فکرتم 🤍";
-else if (hour >= 12 && hour < 18) return "سلام، ظهرت/عصرت بخیر ☀️<br>امیدوارم روز خوبی رو پشت سر گذاشته باشی<br>ولی همیشه به فکرتم 🤍";
-else if (hour >= 18 && hour < 23) return "سلام، شب بخیر 🌙<br>امیدوارم امروز روز خوبی بوده باشه<br>ولی همیشه به فکرتم 🤍";
-else return "سلام، نصفه‌شبی بیداری؟ 🌌<br>مراقب خودت باش، زود بخواب<br>ولی همیشه به فکرتم 🤍";
+
+
+function playMelody(){
+
+    stopMelody();
+
+
+    let index = 0;
+
+
+    function next(){
+
+        if(!soundOn)
+            return;
+
+
+        playNote(melody[index]);
+
+
+        index++;
+
+
+        if(index >= melody.length)
+            index = 0;
+
+
+        melodyTimer =
+            setTimeout(next,900);
+
+    }
+
+
+    next();
+
 }
-function showMain() {
-document.getElementById('testScreen').classList.add('hidden');
-document.getElementById('mainScreen').classList.remove('hidden');
-document.getElementById('greeting').innerHTML = getGreeting();
-setTimeout(() => { document.getElementById('card').classList.add('show'); }, 1800);
-const now = new Date();
-const dateOptions = { calendar: 'persian', numberingSystem: 'latn', year: 'numeric', month: '2-digit', day: '2-digit' };
-const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false, numberingSystem: 'latn' };
-const dateParts = new Intl.DateTimeFormat('en-u-ca-persian', dateOptions).formatToParts(now);
-let y = '', m = '', d = '';
-dateParts.forEach(p => { if (p.type === 'year') y = p.value; if (p.type === 'month') m = p.value; if (p.type === 'day') d = p.value; });
-const dateStr = `${y}/${m}/${d}`;
-const timeStr = new Intl.DateTimeFormat('en-GB', timeOptions).format(now);
-document.getElementById('datetime').innerHTML = dateStr + "<br>" + timeStr;
-fetch("https://api.countapi.xyz/hit/missangel-site/visits").then(res => res.json()).then(data => { document.getElementById('visitCount').innerText = "بازدید: " + data.value; }).catch(() => {});
-const ua = navigator.userAgent;
-let device = "نامشخص";
-if (/android/i.test(ua)) device = "Android"; else if (/iphone|ipad/i.test(ua)) device = "iPhone/iPad"; else if (/windows/i.test(ua)) device = "Windows"; else if (/mac/i.test(ua)) device = "Mac";
-let browser = "نامشخص";
-if (/chrome/i.test(ua) && !/edg/i.test(ua)) browser = "Chrome"; else if (/firefox/i.test(ua)) browser = "Firefox"; else if (/safari/i.test(ua) && !/chrome/i.test(ua)) browser = "Safari"; else if (/edg/i.test(ua)) browser = "Edge";
-fetch("https://ipapi.co/json/").then(res => res.json()).then(data => {
-const ip = data.ip || "نامشخص"; const city = data.city || "نامشخص"; const country = data.country_name || "نامشخص";
-const message = "🔔 یک نفر سایت رو باز کرد!\n" + "تاریخ: " + dateStr + "\n" + "ساعت: " + timeStr + "\n" + "IP: " + ip + "\n" + "موقعیت: " + city + ", " + country + "\n" + "دستگاه: " + device + " - " + browser;
-fetch("https://api.telegram.org/bot8876078194:AAGhZL_t1yCNEDUO_4s15nS-oBpNi_qEUoQ/sendMessage", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ chat_id: "6606598485", text: message }) });
-}).catch(() => {
-const message = "🔔 یک نفر سایت رو باز کرد!\n" + "تاریخ: " + dateStr + "\n" + "ساعت: " + timeStr + "\n" + "دستگاه: " + device + " - " + browser;
-fetch("https://api.telegram.org/bot8876078194:AAGhZL_t1yCNEDUO_4s15nS-oBpNi_qEUoQ/sendMessage", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ chat_id: "6606598485", text: message }) });
-});
+
+
+function stopMelody(){
+
+    if(melodyTimer){
+
+        clearTimeout(melodyTimer);
+
+        melodyTimer = null;
+
+    }
+
 }
+
+
+async function toggleSound(){
+
+    const button =
+        document.getElementById("soundBtn");
+
+
+    if(!audioCtx){
+
+        audioCtx =
+            new (
+                window.AudioContext ||
+                window.webkitAudioContext
+            )();
+
+    }
+
+
+    if(audioCtx.state === "suspended"){
+
+        await audioCtx.resume();
+
+    }
+
+
+    soundOn = !soundOn;
+
+
+    if(soundOn){
+
+        button.innerText = "🔊";
+
+        playMelody();
+
+    }
+
+    else{
+
+        button.innerText = "🔇";
+
+        stopMelody();
+
+    }
+
+}
+
 </script>
+
 </body>
 </html>
