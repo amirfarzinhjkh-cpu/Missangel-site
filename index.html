@@ -17,164 +17,51 @@
     height: 100vh;
     margin: 0;
     overflow: hidden;
-  }
-  #testScreen, #mainScreen {
-    animation: fadeIn 0.8s ease forwards;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  .box-wrapper {
     position: relative;
-    width: 300px;
-    height: 300px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
   }
-  .ring {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: #2196f3;
-    border-right-color: #64b5f6;
-    box-shadow: 0 0 20px rgba(33,150,243,0.5);
-    animation: spin 2s linear infinite;
-  }
-  @keyframes spin {
-    100% { transform: rotate(360deg); }
-  }
-  .box {
-    width: 240px;
-    height: 240px;
-    background: linear-gradient(145deg, #111827, #0a0e17);
-    border-radius: 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-    text-align: center;
-    z-index: 2;
-    box-shadow: inset 0 0 20px rgba(255,255,255,0.03);
-  }
-  .question {
-    font-size: 21px;
-    margin-bottom: 28px;
-    color: #ffffff;
-    font-weight: bold;
-  }
-  .options {
-    display: flex;
-    gap: 15px;
-  }
-  .option {
-    padding: 10px 28px;
-    border: 1px solid #2196f3;
-    border-radius: 12px;
-    cursor: pointer;
-    color: #90caf9;
-    transition: 0.25s;
-    background: rgba(33,150,243,0.08);
-    font-size: 15px;
-  }
-  .option:active {
-    background: #2196f3;
-    color: #fff;
-    transform: scale(0.96);
-  }
-  .result {
-    font-size: 20px;
-    color: #4caf50;
-    animation: fadeIn 0.5s ease;
-  }
-  .footer {
+  canvas#particles {
     position: fixed;
-    bottom: 15px;
-    right: 15px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: #888;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: 0;
   }
-  .footer a {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    text-decoration: none;
-    color: #8ab4f8;
-  }
+  #testScreen, #mainScreen { animation: fadeIn 0.8s ease forwards; z-index: 2; position: relative; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  .box-wrapper { position: relative; width: 300px; height: 300px; display: flex; justify-content: center; align-items: center; }
+  .ring { position: absolute; width: 100%; height: 100%; border-radius: 50%; border: 3px solid transparent; border-top-color: #2196f3; border-right-color: #64b5f6; box-shadow: 0 0 20px rgba(33,150,243,0.5); animation: spin 2s linear infinite; }
+  @keyframes spin { 100% { transform: rotate(360deg); } }
+  .box { width: 240px; height: 240px; background: linear-gradient(145deg, #111827, #0a0e17); border-radius: 24px; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; z-index: 2; box-shadow: inset 0 0 20px rgba(255,255,255,0.03); }
+  .question { font-size: 21px; margin-bottom: 28px; color: #ffffff; font-weight: bold; }
+  .options { display: flex; gap: 15px; }
+  .option { padding: 10px 28px; border: 1px solid #2196f3; border-radius: 12px; cursor: pointer; color: #90caf9; transition: 0.25s; background: rgba(33,150,243,0.08); font-size: 15px; }
+  .option:active { background: #2196f3; color: #fff; transform: scale(0.96); }
+  .result { font-size: 20px; color: #4caf50; animation: fadeIn 0.5s ease; }
+  .footer { position: fixed; bottom: 15px; right: 15px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #888; z-index: 3; }
+  .footer a { display: flex; align-items: center; gap: 5px; text-decoration: none; color: #8ab4f8; }
   .footer svg { width: 18px; height: 18px; }
-
-  .datetime {
-    position: absolute;
-    top: 20px;
-    text-align: center;
-    font-size: 14px;
-    color: #8ab4f8;
-    opacity: 0.85;
-    line-height: 1.6;
-  }
-  .heart {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    background: #2196f3;
-    transform: rotate(-45deg);
-    margin-bottom: 30px;
-    box-shadow: 0 0 40px #2196f3, 0 0 80px #1565c0;
-    animation: pulse 1.5s infinite ease-in-out;
-  }
-  .heart::before, .heart::after {
-    content: "";
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background: #2196f3;
-    border-radius: 50%;
-  }
+  .datetime { position: absolute; top: 20px; text-align: center; font-size: 14px; color: #8ab4f8; opacity: 0.85; line-height: 1.6; }
+  .heart { position: relative; width: 100px; height: 100px; background: #2196f3; transform: rotate(-45deg); margin-bottom: 30px; box-shadow: 0 0 40px #2196f3, 0 0 80px #1565c0; animation: pulse 1.5s infinite ease-in-out; }
+  .heart::before, .heart::after { content: ""; position: absolute; width: 100px; height: 100px; background: #2196f3; border-radius: 50%; }
   .heart::before { top: -50px; left: 0; }
   .heart::after { left: 50px; top: 0; }
-  @keyframes pulse {
-    0%, 100% { transform: rotate(-45deg) scale(1); }
-    50% { transform: rotate(-45deg) scale(1.08); }
-  }
-
-  .loading-bar-wrapper {
-    width: 180px;
-    height: 5px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 10px;
-    overflow: hidden;
-    margin-bottom: 30px;
-  }
-  .loading-bar {
-    width: 0%;
-    height: 100%;
-    background: linear-gradient(90deg, #2196f3, #64b5f6);
-    border-radius: 10px;
-    animation: loadBar 1.8s ease forwards;
-  }
-  @keyframes loadBar {
-    to { width: 100%; }
-  }
-
+  @keyframes pulse { 0%, 100% { transform: rotate(-45deg) scale(1); } 50% { transform: rotate(-45deg) scale(1.08); } }
+  .loading-bar-wrapper { width: 180px; height: 5px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin-bottom: 30px; }
+  .loading-bar { width: 0%; height: 100%; background: linear-gradient(90deg, #2196f3, #64b5f6); border-radius: 10px; animation: loadBar 1.8s ease forwards; }
+  @keyframes loadBar { to { width: 100%; } }
   .card { text-align: center; max-width: 90%; z-index: 2; opacity: 0; transition: opacity 0.6s ease; }
   .card.show { opacity: 1; }
-  .card p {
-    font-size: 18px;
-    line-height: 1.8;
-    color: #ffffff;
-    text-shadow: 0 0 10px rgba(255,255,255,0.3);
-  }
+  .card p { font-size: 18px; line-height: 1.8; color: #ffffff; text-shadow: 0 0 10px rgba(255,255,255,0.3); }
   .hidden { display: none; }
+  .visit-count { position: fixed; top: 20px; left: 15px; font-size: 12px; color: #666; z-index: 3; }
+  .sound-toggle { position: fixed; top: 15px; right: 15px; z-index: 3; background: rgba(255,255,255,0.08); border: 1px solid #444; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; color: #8ab4f8; }
 </style>
 </head>
 <body>
+
+  <canvas id="particles"></canvas>
+
+  <div class="visit-count" id="visitCount"></div>
+  <div class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔇</div>
 
   <div id="testScreen">
     <div class="box-wrapper">
@@ -191,12 +78,10 @@
 
   <div id="mainScreen" class="hidden">
     <div class="datetime" id="datetime"></div>
-    <div class="heart"></div>
-    <div class="loading-bar-wrapper">
-      <div class="loading-bar"></div>
-    </div>
+    <div class="heart" id="heart"></div>
+    <div class="loading-bar-wrapper"><div class="loading-bar"></div></div>
     <div class="card" id="card">
-      <p>سلاممم صبحت بخیر 🌸<br>امیدوارم امروز روز خوبی داشته باشی<br>یکم درگیرم، شاید کم پیدا باشم 😅<br>ولی همیشه به فکرتم 🤍</p>
+      <p id="greeting"></p>
     </div>
   </div>
 
@@ -208,79 +93,31 @@
   </div>
 
 <script>
-  function answer(choice) {
-    const box = document.getElementById('box');
-    if (choice === 'ماندن') {
-      box.innerHTML = '<div class="result">آفرین! جواب درست همینه 🤍</div>';
-      setTimeout(showMain, 1500);
-    } else {
-      box.innerHTML = '<div class="result" style="color:#e53935;">اشتباهه، دوباره فکر کن 😅</div>';
-    }
-  }
-
-  function showMain() {
-    document.getElementById('testScreen').classList.add('hidden');
-    document.getElementById('mainScreen').classList.remove('hidden');
-
-    setTimeout(() => {
-      document.getElementById('card').classList.add('show');
-    }, 1800);
-
-    const now = new Date();
-    const dateOptions = { calendar: 'persian', numberingSystem: 'latn', year: 'numeric', month: '2-digit', day: '2-digit' };
-    const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false, numberingSystem: 'latn' };
-    const dateParts = new Intl.DateTimeFormat('en-u-ca-persian', dateOptions).formatToParts(now);
-    let y = '', m = '', d = '';
-    dateParts.forEach(p => {
-      if (p.type === 'year') y = p.value;
-      if (p.type === 'month') m = p.value;
-      if (p.type === 'day') d = p.value;
+  // ---------- ذرات پس‌زمینه ----------
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  let particles = [];
+  for (let i = 0; i < 40; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 2 + 0.5,
+      dx: (Math.random() - 0.5) * 0.3,
+      dy: (Math.random() - 0.5) * 0.3,
+      alpha: Math.random() * 0.5 + 0.2
     });
-    const dateStr = `${y}/${m}/${d}`;
-    const timeStr = new Intl.DateTimeFormat('en-GB', timeOptions).format(now);
-    document.getElementById('datetime').innerHTML = dateStr + "<br>" + timeStr;
-
-    const ua = navigator.userAgent;
-    let device = "نامشخص";
-    if (/android/i.test(ua)) device = "Android";
-    else if (/iphone|ipad/i.test(ua)) device = "iPhone/iPad";
-    else if (/windows/i.test(ua)) device = "Windows";
-    else if (/mac/i.test(ua)) device = "Mac";
-
-    let browser = "نامشخص";
-    if (/chrome/i.test(ua) && !/edg/i.test(ua)) browser = "Chrome";
-    else if (/firefox/i.test(ua)) browser = "Firefox";
-    else if (/safari/i.test(ua) && !/chrome/i.test(ua)) browser = "Safari";
-    else if (/edg/i.test(ua)) browser = "Edge";
-
-    fetch("https://ipapi.co/json/")
-      .then(res => res.json())
-      .then(data => {
-        const ip = data.ip || "نامشخص";
-        const city = data.city || "نامشخص";
-        const country = data.country_name || "نامشخص";
-        const message = "🔔 یک نفر سایت رو باز کرد!\n" +
-          "تاریخ: " + dateStr + "\n" + "ساعت: " + timeStr + "\n" +
-          "IP: " + ip + "\n" + "موقعیت: " + city + ", " + country + "\n" +
-          "دستگاه: " + device + " - " + browser;
-        fetch("https://api.telegram.org/bot8876078194:AAGhZL_t1yCNEDUO_4s15nS-oBpNi_qEUoQ/sendMessage", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ chat_id: "6606598485", text: message })
-        });
-      })
-      .catch(() => {
-        const message = "🔔 یک نفر سایت رو باز کرد!\n" +
-          "تاریخ: " + dateStr + "\n" + "ساعت: " + timeStr + "\n" +
-          "دستگاه: " + device + " - " + browser;
-        fetch("https://api.telegram.org/bot8876078194:AAGhZL_t1yCNEDUO_4s15nS-oBpNi_qEUoQ/sendMessage", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ chat_id: "6606598485", text: message })
-        });
-      });
   }
-</script>
-
-</body>
-</html>
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(33,150,243,${p.alpha})`;
+      ctx.fill();
+      p.x += p.dx;
+      p.y += p.dy;
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y
