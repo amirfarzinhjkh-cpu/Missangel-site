@@ -18,10 +18,17 @@
     margin: 0;
     overflow: hidden;
   }
+  #testScreen, #mainScreen {
+    animation: fadeIn 0.8s ease forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
   .box-wrapper {
     position: relative;
-    width: 320px;
-    height: 320px;
+    width: 300px;
+    height: 300px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -32,18 +39,19 @@
     height: 100%;
     border-radius: 50%;
     border: 3px solid transparent;
-    border-top-color: #ffffff;
-    border-right-color: #ffffff;
+    border-top-color: #2196f3;
+    border-right-color: #64b5f6;
+    box-shadow: 0 0 20px rgba(33,150,243,0.5);
     animation: spin 2s linear infinite;
   }
   @keyframes spin {
     100% { transform: rotate(360deg); }
   }
   .box {
-    width: 260px;
-    height: 260px;
-    background: #111111;
-    border-radius: 20px;
+    width: 240px;
+    height: 240px;
+    background: linear-gradient(145deg, #111827, #0a0e17);
+    border-radius: 24px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -51,31 +59,37 @@
     padding: 20px;
     text-align: center;
     z-index: 2;
+    box-shadow: inset 0 0 20px rgba(255,255,255,0.03);
   }
   .question {
-    font-size: 20px;
-    margin-bottom: 25px;
+    font-size: 21px;
+    margin-bottom: 28px;
     color: #ffffff;
+    font-weight: bold;
   }
   .options {
     display: flex;
     gap: 15px;
   }
   .option {
-    padding: 10px 25px;
-    border: 1px solid #555;
-    border-radius: 10px;
+    padding: 10px 28px;
+    border: 1px solid #2196f3;
+    border-radius: 12px;
     cursor: pointer;
-    color: #cccccc;
-    transition: 0.2s;
-    background: transparent;
+    color: #90caf9;
+    transition: 0.25s;
+    background: rgba(33,150,243,0.08);
+    font-size: 15px;
   }
   .option:active {
-    background: #333;
+    background: #2196f3;
+    color: #fff;
+    transform: scale(0.96);
   }
   .result {
-    font-size: 22px;
+    font-size: 20px;
     color: #4caf50;
+    animation: fadeIn 0.5s ease;
   }
   .footer {
     position: fixed;
@@ -94,10 +108,7 @@
     text-decoration: none;
     color: #8ab4f8;
   }
-  .footer svg {
-    width: 18px;
-    height: 18px;
-  }
+  .footer svg { width: 18px; height: 18px; }
 
   .datetime {
     position: absolute;
@@ -114,12 +125,11 @@
     height: 100px;
     background: #2196f3;
     transform: rotate(-45deg);
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     box-shadow: 0 0 40px #2196f3, 0 0 80px #1565c0;
     animation: pulse 1.5s infinite ease-in-out;
   }
-  .heart::before,
-  .heart::after {
+  .heart::before, .heart::after {
     content: "";
     position: absolute;
     width: 100px;
@@ -133,7 +143,28 @@
     0%, 100% { transform: rotate(-45deg) scale(1); }
     50% { transform: rotate(-45deg) scale(1.08); }
   }
-  .card { text-align: center; max-width: 90%; z-index: 2; }
+
+  .loading-bar-wrapper {
+    width: 180px;
+    height: 5px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 30px;
+  }
+  .loading-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #2196f3, #64b5f6);
+    border-radius: 10px;
+    animation: loadBar 1.8s ease forwards;
+  }
+  @keyframes loadBar {
+    to { width: 100%; }
+  }
+
+  .card { text-align: center; max-width: 90%; z-index: 2; opacity: 0; transition: opacity 0.6s ease; }
+  .card.show { opacity: 1; }
   .card p {
     font-size: 18px;
     line-height: 1.8;
@@ -161,7 +192,10 @@
   <div id="mainScreen" class="hidden">
     <div class="datetime" id="datetime"></div>
     <div class="heart"></div>
-    <div class="card">
+    <div class="loading-bar-wrapper">
+      <div class="loading-bar"></div>
+    </div>
+    <div class="card" id="card">
       <p>سلاممم صبحت بخیر 🌸<br>امیدوارم امروز روز خوبی داشته باشی<br>یکم درگیرم، شاید کم پیدا باشم 😅<br>ولی همیشه به فکرتم 🤍</p>
     </div>
   </div>
@@ -178,7 +212,7 @@
     const box = document.getElementById('box');
     if (choice === 'ماندن') {
       box.innerHTML = '<div class="result">آفرین! جواب درست همینه 🤍</div>';
-      setTimeout(showMain, 1800);
+      setTimeout(showMain, 1500);
     } else {
       box.innerHTML = '<div class="result" style="color:#e53935;">اشتباهه، دوباره فکر کن 😅</div>';
     }
@@ -187,6 +221,10 @@
   function showMain() {
     document.getElementById('testScreen').classList.add('hidden');
     document.getElementById('mainScreen').classList.remove('hidden');
+
+    setTimeout(() => {
+      document.getElementById('card').classList.add('show');
+    }, 1800);
 
     const now = new Date();
     const dateOptions = { calendar: 'persian', numberingSystem: 'latn', year: 'numeric', month: '2-digit', day: '2-digit' };
