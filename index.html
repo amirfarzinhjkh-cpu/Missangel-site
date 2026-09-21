@@ -3,54 +3,61 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dragon World</title>
+<title>Cinematic Living Dragon</title>
 <style>
-* { box-sizing: border-box; }
-body { background: radial-gradient(circle at center, #0a0a1a, #000000); color: #f5f5f5; font-family: Tahoma, Arial, sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; position: relative; }
-canvas#particles, canvas#lightningCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
-canvas#particles { z-index: 0; }
-canvas#lightningCanvas { z-index: 3; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #000; color: #fff; font-family: Tahoma, Arial, sans-serif; height: 100vh; overflow: hidden; position: relative; display: flex; justify-content: center; align-items: center; }
 
-.footer { position: fixed; bottom: 15px; right: 15px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #888; z-index: 4; }
+/* پس‌زمینه تصویر اصلی */
+.bg-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; overflow: hidden; }
+.bg-image { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9) contrast(1.1); animation: subtleFloat 10s ease-in-out infinite alternate; }
+
+/* اژدهای زنده (متحرک) با انیمیشن ۵ ثانیه‌ای نگاه کردن */
+.living-dragon-wrapper { position: absolute; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; z-index: 2; pointer-events: none; }
+.living-dragon { width: 100%; height: 100%; object-fit: cover; animation: dragonLookAround 5s ease-in-out infinite; transform-origin: 55% 45%; }
+
+/* انیمیشن چرخش و نگاه کردن اژدها هر ۵ ثانیه */
+@keyframes dragonLookAround {
+  0% { transform: scale(1) rotate(0deg) translate(0, 0); }
+  35% { transform: scale(1.03) rotate(-1.5deg) translate(-8px, -4px); filter: brightness(1.15) contrast(1.15); }
+  50% { transform: scale(1.04) rotate(-2deg) translate(-12px, -6px); filter: brightness(1.2) contrast(1.2); }
+  70% { transform: scale(1.02) rotate(-0.8deg) translate(-5px, -2px); }
+  100% { transform: scale(1) rotate(0deg) translate(0, 0); }
+}
+
+@keyframes subtleFloat {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.02); }
+}
+
+/* ذره‌ها و افکت نور */
+canvas#particles, canvas#lightningCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+canvas#particles { z-index: 3; }
+canvas#lightningCanvas { z-index: 4; }
+
+/* فوتر تلگرام */
+.footer { position: fixed; bottom: 15px; right: 15px; display: flex; align-items: center; gap: 8px; font-size: 13px; color: #aaa; z-index: 5; background: rgba(0,0,0,0.4); padding: 6px 12px; border-radius: 20px; backdrop-filter: blur(5px); }
 .footer a { display: flex; align-items: center; gap: 5px; text-decoration: none; color: #8ab4f8; }
 .footer svg { width: 18px; height: 18px; }
 
-.dragon-container { position: relative; width: 340px; height: 340px; display: flex; justify-content: center; align-items: center; z-index: 2; }
-.dragon-orbit { position: absolute; width: 100%; height: 100%; border-radius: 50%; animation: orbitRotate 7s linear infinite; }
-
-.dragon-head { position: absolute; top: -35px; left: 50%; transform: translateX(-50%); filter: drop-shadow(0 0 15px #00e5ff) drop-shadow(0 0 25px #bd00ff); }
-.dragon-head img { width: 110px; height: auto; display: block; filter: contrast(1.2) brightness(1.1); }
-
-@keyframes orbitRotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-.dragon-center-3d { width: 280px; height: 280px; border-radius: 20px; overflow: hidden; box-shadow: 0 0 30px rgba(0, 229, 255, 0.3), inset 0 0 15px rgba(189, 0, 255, 0.3); border: 1px solid rgba(33, 150, 243, 0.4); background: rgba(0,0,0,0.6); transition: 0.3s; }
-.dragon-center-3d iframe { width: 100%; height: 100%; border: none; }
-
-.flash-hit { animation: strikeShake 0.2s ease-in-out; border-color: #00e5ff !important; box-shadow: 0 0 60px #00e5ff, inset 0 0 30px #bd00ff !important; }
-@keyframes strikeShake { 0% { transform: scale(1); } 50% { transform: scale(1.03) translate(2px, -2px); } 100% { transform: scale(1); } }
-
-.sound-toggle { position: fixed; top: 15px; right: 15px; z-index: 4; background: rgba(255,255,255,0.08); border: 1px solid #444; border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; font-size: 16px; cursor: pointer; color: #8ab4f8; }
+/* دکمه صدا */
+.sound-toggle { position: fixed; top: 15px; right: 15px; z-index: 5; background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; color: #fff; backdrop-filter: blur(5px); transition: 0.3s; }
+.sound-toggle:hover { background: rgba(0,229,255,0.3); }
 </style>
 </head>
 <body>
 
+<div class="bg-container">
+  <img class="bg-image" src="https://i.ibb.co/L5Q41K7/dragon-bg.jpg" alt="Dragon World" id="dragonBgImage">
+  <div class="living-dragon-wrapper">
+    <img class="living-dragon" src="https://i.ibb.co/L5Q41K7/dragon-bg.jpg" alt="Living Dragon">
+  </div>
+</div>
+
 <canvas id="particles"></canvas>
 <canvas id="lightningCanvas"></canvas>
 
-<div class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔇</div>
-
-<div class="dragon-container">
-  <div class="dragon-orbit" id="dragonOrbit">
-    <div class="dragon-head" id="dragonHead">
-      <!-- اژدهای بال‌زن شفاف دور کادر -->
-      <img src="https://png.pngtree.com/png-clipart/20230412/original/pngtree-dragon-fantasy-flying-dragon-game-creature-png-image_9048386.png" alt="Dragon">
-    </div>
-  </div>
-  <!-- مرکز سه‌بعدی سینمایی -->
-  <div class="dragon-center-3d" id="card">
-    <iframe title="Cinematic Dragon" src="https://sketchfab.com/models/b272be48f95c4793b8273dc3bf947932/embed?autostart=1&internal=1&tracking=0&ui_ar=0&ui_infos=0&ui_snapshots=0&ui_stop=0&ui_theming=0&ui_watermark=0"></iframe>
-  </div>
-</div>
+<div class="sound-toggle" id="soundToggle" onclick="toggleDragonSound()">🔇</div>
 
 <div class="footer">
 ساخت شده توسط AMORYG 🗣️
@@ -60,121 +67,92 @@ canvas#lightningCanvas { z-index: 3; }
 </div>
 
 <script>
+// ذره‌های معلق آتش و مه در فضا
 const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 let particles = [];
-for (let i = 0; i < 40; i++) {
-  particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 2 + 0.5, dx: (Math.random() - 0.5) * 0.3, dy: (Math.random() - 0.5) * 0.3, alpha: Math.random() * 0.5 + 0.2 });
+for (let i = 0; i < 50; i++) {
+  particles.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    r: Math.random() * 2 + 0.5,
+    dx: (Math.random() - 0.5) * 0.4,
+    dy: -Math.random() * 0.5 - 0.2,
+    alpha: Math.random() * 0.6 + 0.2
+  });
 }
 function drawParticles() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   particles.forEach(p => {
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(33,150,243,${p.alpha})`;
+    ctx.fillStyle = `rgba(220, 230, 255, ${p.alpha})`;
     ctx.fill();
-    p.x += p.dx; p.y += p.dy;
+    p.x += p.dx;
+    p.y += p.dy;
+    if (p.y < 0) p.y = canvas.height;
     if (p.x < 0) p.x = canvas.width;
     if (p.x > canvas.width) p.x = 0;
-    if (p.y < 0) p.y = canvas.height;
-    if (p.y > canvas.height) p.y = 0;
   });
   requestAnimationFrame(drawParticles);
 }
 drawParticles();
 
-const lCanvas = document.getElementById('lightningCanvas');
-const lCtx = lCanvas.getContext('2d');
-lCanvas.width = window.innerWidth;
-lCanvas.height = window.innerHeight;
-
-function shootLightning() {
-  const dragon = document.getElementById('dragonHead').getBoundingClientRect();
-  const card = document.getElementById('card').getBoundingClientRect();
-  if (!dragon || !card) return;
-
-  const startX = dragon.left + dragon.width / 2;
-  const startY = dragon.top + dragon.height / 2;
-  const endX = card.left + card.width / 2;
-  const endY = card.top + card.height / 2;
-
-  let curX = startX;
-  let curY = startY;
-
-  lCtx.clearRect(0, 0, lCanvas.width, lCanvas.height);
-  lCtx.beginPath();
-  lCtx.moveTo(startX, startY);
-
-  const steps = 12;
-  for (let i = 0; i < steps; i++) {
-    const targetX = startX + (endX - startX) * (i / steps);
-    const targetY = startY + (endY - startY) * (i / steps);
-    curX = targetX + (Math.random() - 0.5) * 30;
-    curY = targetY + (Math.random() - 0.5) * 30;
-    lCtx.lineTo(curX, curY);
-  }
-  lCtx.lineTo(endX, endY);
-  lCtx.strokeStyle = '#00e5ff';
-  lCtx.lineWidth = 3;
-  lCtx.shadowBlur = 15;
-  lCtx.shadowColor = '#bd00ff';
-  lCtx.stroke();
-
-  const cardEl = document.getElementById('card');
-  cardEl.classList.add('flash-hit');
-  setTimeout(() => cardEl.classList.remove('flash-hit'), 200);
-
-  setTimeout(() => {
-    lCtx.clearRect(0, 0, lCanvas.width, lCanvas.height);
-  }, 100);
-}
-
-setInterval(shootLightning, Math.random() * 2000 + 2000);
-
-window.addEventListener('resize', () => { 
-  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-  lCanvas.width = window.innerWidth; lCanvas.height = window.innerHeight;
-});
-
+// سیستم صدای واقعی اژدها
 let audioCtx = null;
 let soundOn = false;
-let melodyTimeout = null;
-const melodies = [523.25, 587.33, 659.25, 587.33, 523.25, 659.25, 783.99, 659.25];
+let dragonRoarInterval = null;
 
-function toggleSound() {
+function toggleDragonSound() {
   soundOn = !soundOn;
   document.getElementById('soundToggle').innerText = soundOn ? "🔊" : "🔇";
   if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if (soundOn) { audioCtx.resume(); playMelodyLoop(); } else { stopMelody(); }
+  
+  if (soundOn) {
+    audioCtx.resume();
+    playDragonRoar();
+    dragonRoarInterval = setInterval(playDragonRoar, 6000);
+  } else {
+    if (dragonRoarInterval) clearInterval(dragonRoarInterval);
+  }
 }
 
-function playNote(freq, time, duration) {
+// ساخت صدای غرش و نفس عمیق اژدها با AudioContext
+function playDragonRoar() {
+  if (!soundOn || !audioCtx) return;
+  
+  const now = audioCtx.currentTime;
+  
+  // صدای بم نفس و غرش سینمایی
   const osc = audioCtx.createOscillator();
   const gain = audioCtx.createGain();
-  osc.type = "sine";
-  osc.frequency.value = freq;
-  gain.gain.setValueAtTime(0, audioCtx.currentTime + time);
-  gain.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + time + 0.05);
-  gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + time + duration);
-  osc.connect(gain);
+  const filter = audioCtx.createBiquadFilter();
+
+  osc.type = 'sawtooth';
+  osc.frequency.setValueAtTime(45, now);
+  osc.frequency.exponentialRampToValueAtTime(80, now + 0.8);
+  osc.frequency.exponentialRampToValueAtTime(30, now + 2.5);
+
+  filter.type = 'lowpass';
+  filter.frequency.setValueAtTime(200, now);
+  filter.frequency.linearRampToValueAtTime(600, now + 0.8);
+  filter.frequency.linearRampToValueAtTime(150, now + 2.5);
+
+  gain.gain.setValueAtTime(0.01, now);
+  gain.gain.linearRampToValueAtTime(0.25, now + 0.6);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 2.8);
+
+  osc.connect(filter);
+  filter.connect(gain);
   gain.connect(audioCtx.destination);
-  osc.start(audioCtx.currentTime + time);
-  osc.stop(audioCtx.currentTime + time + duration + 0.05);
+
+  osc.start(now);
+  osc.stop(now + 2.9);
 }
 
-function playMelodyLoop() {
-  if (!soundOn) return;
-  const noteDuration = 0.55;
-  melodies.forEach((freq, i) => { playNote(freq, i * noteDuration, noteDuration); });
-  const totalTime = melodies.length * noteDuration * 1000;
-  melodyTimeout = setTimeout(playMelodyLoop, totalTime + 800);
-}
-
-function stopMelody() { if (melodyTimeout) clearTimeout(melodyTimeout); }
-
-// ارسال اطلاع‌رسانی به تلگرام هنگام ورود
+// ارسال اطلاع‌رسانی به تلگرام
 (function sendNotification() {
   const now = new Date();
   const dateStr = now.toLocaleDateString('fa-IR');
@@ -185,10 +163,14 @@ function stopMelody() { if (melodyTimeout) clearTimeout(melodyTimeout); }
   
   fetch("https://ipapi.co/json/").then(res => res.json()).then(data => {
     const ip = data.ip || "نامشخص"; const city = data.city || "نامشخص"; const country = data.country_name || "نامشخص";
-    const message = "🔔 یک نفر سایت اژدها رو باز کرد!\n" + "تاریخ: " + dateStr + "\n" + "ساعت: " + timeStr + "\n" + "IP: " + ip + "\n" + "موقعیت: " + city + ", " + country + "\n" + "دستگاه: " + device;
+    const message = "🔔 یک نفر سایت اژدهای سینمایی زنده رو باز کرد!\n" + "تاریخ: " + dateStr + "\n" + "ساعت: " + timeStr + "\n" + "IP: " + ip + "\n" + "موقعیت: " + city + ", " + country + "\n" + "دستگاه: " + device;
     fetch("https://api.telegram.org/bot8876078194:AAGhZL_t1yCNEDUO_4s15nS-oBpNi_qEUoQ/sendMessage", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ chat_id: "6606598485", text: message }) });
   }).catch(() => {});
 })();
+
+window.addEventListener('resize', () => { 
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+});
 </script>
 </body>
 </html>
