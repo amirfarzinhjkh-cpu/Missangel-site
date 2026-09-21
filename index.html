@@ -96,45 +96,65 @@ requestAnimationFrame(drawParticles);
 }
 drawParticles();
 window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+
 let audioCtx = null;
 let soundOn = false;
-let ambientOsc = null;
-let heartbeatInterval = null;
+let melodyTimeout = null;
+
+const melodies = {
+morning: [523.25, 587.33, 659.25, 587.33, 523.25, 659.25, 783.99, 659.25],
+afternoon: [440, 493.88, 523.25, 587.33, 523.25, 493.88, 440, 392],
+evening: [392, 440, 466.16, 523.25, 466.16, 440, 392, 349.23],
+night: [329.63, 349.23, 392, 349.23, 329.63, 293.66, 261.63, 293.66]
+};
+
+function getTimeSlot() {
+const hour = new Date().getHours();
+if (hour >= 5 && hour < 12) return "morning";
+if (hour >= 12 && hour < 18) return "afternoon";
+if (hour >= 18 && hour < 23) return "evening";
+return "night";
+}
+
 function toggleSound() {
 soundOn = !soundOn;
 document.getElementById('soundToggle').innerText = soundOn ? "🔊" : "🔇";
 if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-if (soundOn) { audioCtx.resume(); startAmbient(); startHeartbeat(); } else { stopAmbient(); stopHeartbeat(); }
+if (soundOn) { audioCtx.resume(); playMelodyLoop(); } else { stopMelody(); }
 }
-function startAmbient() {
-ambientOsc = audioCtx.createOscillator();
-const gain = audioCtx.createGain();
-ambientOsc.type = "sine";
-ambientOsc.frequency.value = 220;
-gain.gain.value = 0.02;
-ambientOsc.connect(gain);
-gain.connect(audioCtx.destination);
-ambientOsc.start();
-}
-function stopAmbient() { if (ambientOsc) { ambientOsc.stop(); ambientOsc = null; } }
-function playThump() {
+
+function playNote(freq, time, duration) {
 const osc = audioCtx.createOscillator();
 const gain = audioCtx.createGain();
 osc.type = "sine";
-osc.frequency.setValueAtTime(60, audioCtx.currentTime);
-gain.gain.setValueAtTime(0.25, audioCtx.currentTime);
-gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+osc.frequency.value = freq;
+gain.gain.setValueAtTime(0, audioCtx.currentTime + time);
+gain.gain.linearRampToValueAtTime(0.08, audioCtx.currentTime + time + 0.05);
+gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + time + duration);
 osc.connect(gain);
 gain.connect(audioCtx.destination);
-osc.start();
-osc.stop(audioCtx.currentTime + 0.3);
+osc.start(audioCtx.currentTime + time);
+osc.stop(audioCtx.currentTime + time + duration + 0.05);
 }
-function startHeartbeat() { playThump(); heartbeatInterval = setInterval(playThump, 1500); }
-function stopHeartbeat() { if (heartbeatInterval) clearInterval(heartbeatInterval); }
+
+function playMelodyLoop() {
+if (!soundOn) return;
+const notes = melodies[getTimeSlot()];
+const noteDuration = 0.55;
+notes.forEach((freq, i) => { playNote(freq, i * noteDuration, noteDuration); });
+const totalTime = notes.length * noteDuration * 1000;
+melodyTimeout = setTimeout(playMelodyLoop, totalTime + 800);
+}
+
+function stopMelody() {
+if (melodyTimeout) clearTimeout(melodyTimeout);
+}
+
 function answer(choice) {
 const box = document.getElementById('box');
 if (choice === 'ماندن') { box.innerHTML = '<div class="result">آفرین! جواب درست همینه 🤍</div>'; setTimeout(showMain, 1500); } else { box.innerHTML = '<div class="result" style="color:#e53935;">اشتباهه، دوباره فکر کن 😅</div>'; }
 }
+
 function getGreeting() {
 const hour = new Date().getHours();
 if (hour >= 5 && hour < 12) return "سلاممم صبحت بخیر 🌸<br>امیدوارم امروز روز خوبی داشته باشی<br>یکم درگیرم، شاید کم پیدا باشم 😅<br>ولی همیشه به فکرتم 🤍";
@@ -142,6 +162,7 @@ else if (hour >= 12 && hour < 18) return "سلام، ظهرت/عصرت بخیر 
 else if (hour >= 18 && hour < 23) return "سلام، شب بخیر 🌙<br>امیدوارم امروز روز خوبی بوده باشه<br>ولی همیشه به فکرتم 🤍";
 else return "سلام، نصفه‌شبی بیداری؟ 🌌<br>مراقب خودت باش، زود بخواب<br>ولی همیشه به فکرتم 🤍";
 }
+
 function showMain() {
 document.getElementById('testScreen').classList.add('hidden');
 document.getElementById('mainScreen').classList.remove('hidden');
