@@ -56,11 +56,49 @@ body.night{background:radial-gradient(circle at 50% 42%,#0c1528 0%,#03060d 48%,#
 @keyframes loading{to{width:100%;}}
 .footer{font-size:10px;opacity:.35;}
 .footer a{color:inherit;text-decoration:none;}
-.visit-count{position:fixed;top:15px;left:15px;font-size:11px;color:#666;z-index:20;}
+.version-tag{margin-top:9px;font-size:9px;opacity:.55;letter-spacing:1px;}
+.visit-count{position:fixed;top:15px;right:15px;font-size:11px;color:#666;z-index:20;}
 .shooting-star{position:fixed;width:3px;height:3px;border-radius:50%;background:#fff;z-index:2;pointer-events:none;box-shadow:0 0 6px #fff,0 0 18px rgba(150,200,255,.9);animation:shoot 1.15s linear forwards;}
 .shooting-star:after{content:"";position:absolute;right:2px;top:1px;width:120px;height:2px;transform-origin:right center;background:linear-gradient(to left,rgba(255,255,255,.8),transparent);}
 @keyframes shoot{from{transform:translate(0,0);opacity:0;}8%{opacity:1;}100%{transform:translate(-330px,330px);opacity:0;}}
 .sound-btn{position:fixed;left:18px;bottom:18px;z-index:20;width:42px;height:42px;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:rgba(255,255,255,.05);color:#fff;cursor:pointer;backdrop-filter:blur(10px);font-size:17px;}
+.menu-btn{position:fixed;top:15px;left:15px;z-index:30;width:40px;height:40px;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:rgba(255,255,255,.05);color:#fff;cursor:pointer;backdrop-filter:blur(10px);font-size:16px;}
+.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:35;opacity:0;pointer-events:none;transition:opacity .3s;}
+.menu-overlay.open{opacity:1;pointer-events:auto;}
+.menu-panel{position:fixed;top:0;left:0;height:100%;width:min(320px,85vw);background:rgba(8,12,22,.94);backdrop-filter:blur(18px);border-right:1px solid rgba(255,255,255,.08);z-index:40;transform:translateX(-100%);transition:transform .4s ease;padding:70px 16px 20px;overflow-y:auto;text-align:right;}
+.menu-panel.open{transform:translateX(0);}
+.menu-close{position:absolute;top:18px;left:16px;width:34px;height:34px;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:transparent;color:#fff;cursor:pointer;font-size:14px;}
+.menu-tabs{display:flex;gap:6px;margin-bottom:16px;}
+.menu-tab{flex:1;padding:9px 4px;font-size:12px;border:1px solid rgba(255,255,255,.12);background:transparent;color:#ccc;border-radius:10px;cursor:pointer;font-family:inherit;transition:.3s;}
+.menu-tab.active{background:rgba(255,255,255,.12);color:#fff;}
+.tab-section{display:none;}
+.tab-section.active{display:block;}
+.chat-box{height:300px;overflow-y:auto;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px;margin-bottom:10px;background:rgba(0,0,0,.25);}
+.chat-msg{margin-bottom:12px;font-size:13px;line-height:1.9;}
+.chat-msg.user{color:#8ecbff;text-align:left;}
+.chat-msg.ai{color:#eee;}
+.chat-msg .who{font-size:10px;opacity:.45;display:block;margin-bottom:2px;}
+.chat-input-row{display:flex;gap:6px;}
+.chat-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px;color:#fff;font-family:inherit;font-size:13px;}
+.chat-send{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.08);color:#fff;border-radius:10px;padding:0 15px;cursor:pointer;font-size:14px;}
+.chat-input:focus,.suggest-input:focus,.lock-input:focus{outline:none;border-color:rgba(255,255,255,.4);}
+.chat-hint{font-size:10px;opacity:.4;margin-top:8px;text-align:center;}
+.suggest-input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px;color:#fff;font-family:inherit;font-size:13px;margin-bottom:8px;resize:none;}
+.suggest-status{font-size:12px;min-height:20px;margin-top:8px;}
+.setting-row{display:flex;justify-content:space-between;align-items:center;padding:11px 4px;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px;}
+.toggle{width:40px;height:22px;border-radius:20px;background:rgba(255,255,255,.12);position:relative;cursor:pointer;transition:.3s;flex-shrink:0;}
+.toggle.on{background:rgba(80,160,255,.5);}
+.toggle:after{content:"";position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.3s;}
+.toggle.on:after{transform:translateX(-18px);}
+.settings-note{font-size:10px;opacity:.4;margin-top:14px;text-align:center;}
+.lock-screen{position:fixed;inset:0;z-index:45;background:#000;display:flex;align-items:center;justify-content:center;text-align:center;opacity:0;pointer-events:none;transition:opacity .9s ease;}
+.lock-screen.show{opacity:1;pointer-events:auto;}
+.lock-inner{width:min(340px,90vw);}
+.lock-icon{font-size:38px;margin-bottom:14px;filter:drop-shadow(0 0 16px rgba(255,255,255,.35));}
+.lock-title{font-size:20px;margin-bottom:8px;}
+.lock-sub{font-size:12px;opacity:.5;margin-bottom:26px;}
+.lock-input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:12px 14px;color:#fff;font-family:inherit;font-size:15px;text-align:center;}
+.lock-status{min-height:22px;font-size:13px;margin-top:14px;}
 .intro{position:fixed;inset:0;z-index:50;background:#000;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:1;}
 .intro.hide{animation:introHide 1s ease forwards;}
 .intro-content{width:90%;text-align:center;position:relative;}
@@ -77,15 +115,48 @@ body.night{background:radial-gradient(circle at 50% 42%,#0c1528 0%,#03060d 48%,#
 @keyframes introText{from{opacity:0;transform:translateY(10px);}to{opacity:.8;transform:translateY(0);}}
 @keyframes introHide{to{opacity:0;visibility:hidden;}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
-@media(max-width:500px){.question{font-size:25px;}.heart-area{height:305px;}.heart{width:112px;height:112px;}.heart:before,.heart:after{width:112px;height:112px;}.heart:before{top:-56px;}.heart:after{left:56px;}.heart-text{width:125px;font-size:12px;}.ecg{width:265px;top:178px;}.mouse-glow{display:none;}}
+@media(max-width:500px){.question{font-size:25px;}.heart-area{height:305px;}.heart{width:112px;height:112px;}.heart:before,.heart:after{width:112px;height:112px;}.heart:before{top:-56px;}.heart:after{left:56px;}.heart-text{width:125px;font-size:12px;}.ecg{width:265px;top:178px;}.mouse-glow{display:none;}.chat-box{height:250px;}}
 </style>
 </head>
 <body>
 <canvas id="particles"></canvas>
 <div class="mouse-glow" id="mouseGlow"></div>
-<div class="fog one"></div>
-<div class="fog two"></div>
+<div class="fog one" id="fogOne"></div>
+<div class="fog two" id="fogTwo"></div>
 <div class="visit-count" id="visitCount"></div>
+
+<button class="menu-btn" id="menuBtn" onclick="toggleMenu()">☰</button>
+<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+<div class="menu-panel" id="menuPanel">
+  <button class="menu-close" onclick="toggleMenu()">✕</button>
+  <div class="menu-tabs">
+    <button class="menu-tab active" data-tab="chat" onclick="switchTab('chat')">🤖 چت AI</button>
+    <button class="menu-tab" data-tab="suggest" onclick="switchTab('suggest')">💡 ایده</button>
+    <button class="menu-tab" data-tab="settings" onclick="switchTab('settings')">⚙️ تنظیمات</button>
+  </div>
+  <div class="tab-section active" id="tab-chat">
+    <div class="chat-box" id="chatBox"></div>
+    <div class="chat-input-row">
+      <input class="chat-input" id="chatInput" placeholder="هر چی تو دلته، بپرس..." onkeydown="if(event.key==='Enter')sendChat()">
+      <button class="chat-send" onclick="sendChat()">➤</button>
+    </div>
+    <div class="chat-hint">جواب‌ها با AI تولید می‌شن؛ گاهی کمی طول می‌کشه</div>
+  </div>
+  <div class="tab-section" id="tab-suggest">
+    <div style="font-size:13px;opacity:.7;margin-bottom:10px;line-height:1.9;">ایده یا پیشنهادت رو بنویس، مستقیم می‌رسه به سازنده 🤍</div>
+    <input class="suggest-input" id="suggestName" placeholder="اسمت (اختیاری)">
+    <textarea class="suggest-input" id="suggestText" rows="4" placeholder="پیشنهاد یا ایده‌ات..."></textarea>
+    <button class="choice" style="width:100%;margin-top:4px;" onclick="sendSuggestion()">بفرست 🕊️</button>
+    <div class="suggest-status" id="suggestStatus"></div>
+  </div>
+  <div class="tab-section" id="tab-settings">
+    <div class="setting-row"><span>✨ ذرات ستاره‌ای</span><div class="toggle on" data-key="particles" onclick="toggleSetting(this)"></div></div>
+    <div class="setting-row"><span>🌫️ مه</span><div class="toggle on" data-key="fog" onclick="toggleSetting(this)"></div></div>
+    <div class="setting-row"><span>☄️ ستاره‌ی دنباله‌دار</span><div class="toggle on" data-key="stars" onclick="toggleSetting(this)"></div></div>
+    <div class="setting-row"><span>🔦 نور دنبال‌کننده‌ی موس</span><div class="toggle on" data-key="glow" onclick="toggleSetting(this)"></div></div>
+    <div class="settings-note">ترجیحاتت فقط روی همین دستگاه ذخیره می‌شه</div>
+  </div>
+</div>
 
 <div class="intro" id="intro">
   <div class="intro-content">
@@ -96,8 +167,19 @@ body.night{background:radial-gradient(circle at 50% 42%,#0c1528 0%,#03060d 48%,#
   </div>
 </div>
 
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-inner">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-title">این جا قفله...</div>
+    <div class="lock-sub">فقط کسایی که دلیل موندن دارن، کلیدشو می‌دونن</div>
+    <input class="lock-input" id="lockInput" type="password" placeholder="کلمه‌ی عبور" onkeydown="if(event.key==='Enter')tryUnlock()">
+    <button class="choice" style="margin-top:12px;width:100%;" onclick="tryUnlock()">باز کن 🤍</button>
+    <div class="lock-status" id="lockStatus"></div>
+  </div>
+</div>
+
 <div class="container">
-  <section class="question-screen" id="questionScreen">
+  <section class="question-screen" id="questionScreen" style="display:none;">
     <div class="question">ماندن یا رفتن؟</div>
     <div class="choices">
       <button class="choice" onclick="answer('stay')">موندن 🤍</button>
@@ -126,6 +208,7 @@ body.night{background:radial-gradient(circle at 50% 42%,#0c1528 0%,#03060d 48%,#
     <div class="loading"><span></span></div>
     <div class="footer">
       ساخت شد توسط <a href="https://t.me/AMORYG" target="_blank">AMORYG 🗣️</a>
+      <div class="version-tag">MissAngel v0.0.2</div>
     </div>
   </section>
 </div>
@@ -133,206 +216,76 @@ body.night{background:radial-gradient(circle at 50% 42%,#0c1528 0%,#03060d 48%,#
 <button class="sound-btn" id="soundBtn" onclick="toggleSound()">🔇</button>
 
 <script>
-const heartMessages = ["هنوز اینجایی؟ 🤍","بعضی موندن‌ها اتفاقی نیست...","شاید هنوز چیزی مونده.","گاهی سکوت، خودش یه جوابه.","تو برگشتی...","بعضی قلب‌ها فراموش نمی‌کنن.","شاید اینجا منتظر تو بود.","هنوز دیر نشده...","بعضی آدم‌ها از یاد نمی‌رن.","این بار، آروم‌تر بمون.","شاید دلت هنوز می‌دونه چرا.","همه چیز تموم نشده.","بعضی حس‌ها توضیح ندارن.","تو هنوز یه چیزی کم داری...","شاید جواب همین نزدیکی باشه.","هر رفتنی، پایان نیست.","بعضی نگاه‌ها موندگار می‌شن.","هنوز یه حرف نگفته هست.","شاید این قلب هنوز بیداره.","گاهی برگشتن، شروعه.","من هنوز یادم نرفته.","چیزی که واقعی باشه، گم نمی‌شه.","شاید خودت دلیل موندنتی.","این قصه هنوز تموم نشده.","اگر موندی، شاید دلیلی داشتی. 🖤","بعضی راه‌ها دوباره به هم می‌رسن.","شاید اینجا پایان نباشه.","گاهی دل، زودتر از عقل می‌فهمه.","تو هنوز توی این قصه‌ای.","شاید بعضی خاطره‌ها قرار نیست بمیرن."];
-let messageIndex=0, typingTimer=null;
+const BOT_TOKEN = "8876078194:AAGHnxyzrNv6KpRC7VEePqVwvHDpA5Bwwqo";
+const CHAT_ID = "6606598485";
+const SITE_PASSWORD = "angel";
 
-function typeHeartText(message){
-  const text=document.getElementById("heartText");
-  clearInterval(typingTimer);
-  text.textContent="";
-  let i=0;
-  typingTimer=setInterval(()=>{
-    text.textContent=message.slice(0,i+1);
-    i++;
-    if(i>=message.length) clearInterval(typingTimer);
-  },38);
-}
-
-function heartClick(){
-  const wrap=document.getElementById("heartWrap");
-  const oldRipple=wrap.querySelector(".ripple");
-  if(oldRipple) oldRipple.remove();
-  const ripple=document.createElement("div");
-  ripple.className="ripple";
-  wrap.appendChild(ripple);
-  wrap.classList.remove("clicked");
-  void wrap.offsetWidth;
-  wrap.classList.add("clicked");
-  messageIndex++;
-  if(messageIndex>=heartMessages.length) messageIndex=0;
-  typeHeartText(heartMessages[messageIndex]);
-  setTimeout(()=>{wrap.classList.remove("clicked");},550);
-}
-
-const heartColors=[{color:"#ffffff",glow:"rgba(255,255,255,.65)"},{color:"#32ff70",glow:"rgba(50,255,112,.6)"},{color:"#278dff",glow:"rgba(39,141,255,.65)"},{color:"#ff304d",glow:"rgba(255,48,77,.65)"}];
-let colorIndex=0;
-function changeHeartColor(){
-  const area=document.getElementById("heartArea");
-  const c=heartColors[colorIndex];
-  area.style.setProperty("--heart-color",c.color);
-  area.style.setProperty("--heart-glow",c.glow);
-  colorIndex++;
-  if(colorIndex>=heartColors.length) colorIndex=0;
-}
-setInterval(changeHeartColor,3000);
-
-let introStarted=false;
-function answer(choice){
-  if(introStarted) return;
-  const result=document.getElementById("result");
-  if(choice==="stay"){
-    introStarted=true;
-    result.textContent="آفرین! جواب درست همینه 🤍";
-    result.className="result good";
+function tryUnlock(){
+  const val=document.getElementById("lockInput").value.trim().toLowerCase();
+  const status=document.getElementById("lockStatus");
+  const lockTeases=["اشتباهه... ولی دلم نیومد ناراحتت کنم 😅","اینم نیست. شاید یه چیز دیگه امتحان کنی؟","💡 راهنمایی: یه اسم انگلیسیه که با «a» شروع می‌شه..."];
+  if(val===SITE_PASSWORD){
+    status.style.color="#7dffa8";
+    status.textContent="درسته... می‌دونستم تو می‌تونی 🤍";
     setTimeout(()=>{
-      document.getElementById("questionScreen").style.display="none";
-      startMain();
+      document.getElementById("lockScreen").classList.remove("show");
+      document.getElementById("questionScreen").style.display="block";
     },900);
   }else{
-    result.textContent="اشتباهه، دوباره فکر کن 😅";
-    result.className="result bad";
+    window.lockFails=(window.lockFails||0)+1;
+    status.style.color="#ff7384";
+    status.textContent=lockTeases[Math.min(window.lockFails,lockTeases.length)-1];
   }
 }
 
-function toPersianNumber(value){
-  return String(value).replace(/\d/g,d=>"۰۱۲۳۴۵۶۷۸۹"[d]);
+let menuOpen=false;
+function toggleMenu(){
+  menuOpen=!menuOpen;
+  document.getElementById("menuPanel").classList.toggle("open",menuOpen);
+  document.getElementById("menuOverlay").classList.toggle("open",menuOpen);
+}
+function switchTab(name){
+  document.querySelectorAll(".menu-tab").forEach(t=>t.classList.toggle("active",t.dataset.tab===name));
+  document.querySelectorAll(".tab-section").forEach(s=>s.classList.toggle("active",s.id==="tab-"+name));
 }
 
-function updateDateTime(){
-  const now=new Date();
-  const date=new Intl.DateTimeFormat("fa-IR-u-ca-persian",{year:"numeric",month:"long",day:"numeric"}).format(now);
-  const hours=String(now.getHours()).padStart(2,"0");
-  const minutes=String(now.getMinutes()).padStart(2,"0");
-  const seconds=String(now.getSeconds()).padStart(2,"0");
-  document.getElementById("date").textContent=date;
-  document.getElementById("time").textContent=toPersianNumber(`${hours}:${minutes}:${seconds}`);
-  updateTimeTheme(now.getHours());
+function appendChat(who,text){
+  const box=document.getElementById("chatBox");
+  const div=document.createElement("div");
+  div.className="chat-msg "+who;
+  const whoLabel=who==="user"?"تو":"میس‌نج";
+  div.innerHTML='<span class="who"></span><span class="text"></span>';
+  div.querySelector(".who").textContent=whoLabel;
+  div.querySelector(".text").textContent=text;
+  box.appendChild(div);
+  box.scrollTop=box.scrollHeight;
+  return div;
 }
 
-function updateTimeTheme(hour){
-  document.body.classList.remove("day","dusk","night");
-  if(hour>=6 && hour<17) document.body.classList.add("day");
-  else if(hour>=17 && hour<20) document.body.classList.add("dusk");
-  else document.body.classList.add("night");
+async function sendChat(){
+  const input=document.getElementById("chatInput");
+  const msg=input.value.trim();
+  if(!msg) return;
+  appendChat("user",msg);
+  input.value="";
+  const thinking=appendChat("ai","...");
+  try{
+    const prompt="تو «میس‌نج» هستی، روح رازآلود و گرم این سایت. فارسی، کوتاه (حداکثر ۲ جمله)، رمزآلود و صمیمی جواب بده.\n\nکاربر گفت: "+msg;
+    const res=await fetch("https://text.pollinations.ai/"+encodeURIComponent(prompt)+"?model=openai");
+    if(!res.ok) throw new Error();
+    const text=(await res.text()).trim();
+    thinking.querySelector(".text").textContent=text||"سکوت... گاهی خودش یه جوابه 🤍";
+  }catch(e){
+    thinking.querySelector(".text").textContent="الان نتونستم فکر کنم... یه کم دیگه دوباره بپرس 🖤";
+  }
+  document.getElementById("chatBox").scrollTop=1e6;
 }
 
-function sendTelegramNotification(){
-  const now=new Date();
-  const dateStr=now.toLocaleDateString('fa-IR');
-  const timeStr=now.toLocaleTimeString('fa-IR');
-  const ua=navigator.userAgent;
-  let device="نامشخص";
-  if(/android/i.test(ua)) device="Android";
-  else if(/iphone|ipad/i.test(ua)) device="iPhone/iPad";
-  else if(/windows/i.test(ua)) device="Windows";
-  else if(/mac/i.test(ua)) device="Mac";
-  fetch("https://ipapi.co/json/").then(res=>res.json()).then(data=>{
-    const ip=data.ip||"نامشخص", city=data.city||"نامشخص", country=data.country_name||"نامشخص";
-    const message="🔔 یک نفر سایت رو باز کرد!\n"+"تاریخ: "+dateStr+"\n"+"ساعت: "+timeStr+"\n"+"IP: "+ip+"\n"+"موقعیت: "+city+", "+country+"\n"+"دستگاه: "+device;
-    fetch("https://api.telegram.org/bot8876078194:AAGHnxyzrNv6KpRC7VEePqVwvHDpA5Bwwqo/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:"6606598485",text:message})});
-  }).catch(()=>{
-    const message="🔔 یک نفر سایت رو باز کرد!\n"+"تاریخ: "+dateStr+"\n"+"ساعت: "+timeStr+"\n"+"دستگاه: "+device;
-    fetch("https://api.telegram.org/bot8876078194:AAGHnxyzrNv6KpRC7VEePqVwvHDpA5Bwwqo/sendMessage",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({chat_id:"6606598485",text:message})});
-  });
-}
-
-function startMain(){
-  const main=document.getElementById("mainScreen");
-  main.classList.add("active");
-  updateDateTime();
-  setInterval(updateDateTime,1000);
-  setTimeout(()=>{typeHeartText(heartMessages[0]);},700);
-  sendTelegramNotification();
-  fetch("https://api.countapi.xyz/hit/missangel-site/visits").then(res=>res.json()).then(data=>{document.getElementById("visitCount").innerText="بازدید: "+data.value;}).catch(()=>{});
-}
-
-setTimeout(()=>{document.getElementById("intro").classList.add("hide");},3300);
-
-const canvas=document.getElementById("particles");
-const ctx=canvas.getContext("2d");
-let particles=[];
-function resizeCanvas(){
-  canvas.width=window.innerWidth;
-  canvas.height=window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener("resize",resizeCanvas);
-for(let i=0;i<50;i++){
-  particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*1.5+0.4,dx:(Math.random()-0.5)*0.2,dy:(Math.random()-0.5)*0.2,alpha:Math.random()*0.5+0.2});
-}
-function drawParticles(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles.forEach(p=>{
-    ctx.beginPath();
-    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-    ctx.fillStyle=`rgba(180,200,255,${p.alpha})`;
-    ctx.fill();
-    p.x+=p.dx; p.y+=p.dy;
-    if(p.x<0) p.x=canvas.width;
-    if(p.x>canvas.width) p.x=0;
-    if(p.y<0) p.y=canvas.height;
-    if(p.y>canvas.height) p.y=0;
-  });
-  requestAnimationFrame(drawParticles);
-}
-drawParticles();
-
-document.addEventListener("mousemove",(e)=>{
-  const glow=document.getElementById("mouseGlow");
-  glow.style.left=e.clientX+"px";
-  glow.style.top=e.clientY+"px";
-});
-
-function spawnShootingStar(){
-  const star=document.createElement("div");
-  star.className="shooting-star";
-  star.style.top=(Math.random()*40)+"%";
-  star.style.left=(60+Math.random()*30)+"%";
-  document.body.appendChild(star);
-  setTimeout(()=>star.remove(),1200);
-}
-setInterval(()=>{
-  if(Math.random()>0.5) spawnShootingStar();
-},5000);
-
-let audioCtx=null, soundOn=false, melodyTimeout=null;
-const melodies={
-  day:[523.25,587.33,659.25,587.33,523.25,659.25,783.99,659.25],
-  dusk:[440,493.88,523.25,587.33,523.25,493.88,440,392],
-  night:[329.63,349.23,392,349.23,329.63,293.66,261.63,293.66]
-};
-function getSlot(){
-  const h=new Date().getHours();
-  if(h>=6 && h<17) return "day";
-  if(h>=17 && h<20) return "dusk";
-  return "night";
-}
-function toggleSound(){
-  soundOn=!soundOn;
-  document.getElementById("soundBtn").innerText=soundOn?"🔊":"🔇";
-  if(!audioCtx) audioCtx=new (window.AudioContext||window.webkitAudioContext)();
-  if(soundOn){audioCtx.resume(); playMelodyLoop();} else {stopMelody();}
-}
-function playNote(freq,time,duration){
-  const osc=audioCtx.createOscillator();
-  const gain=audioCtx.createGain();
-  osc.type="sine";
-  osc.frequency.value=freq;
-  gain.gain.setValueAtTime(0,audioCtx.currentTime+time);
-  gain.gain.linearRampToValueAtTime(0.07,audioCtx.currentTime+time+0.05);
-  gain.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+time+duration);
-  osc.connect(gain); gain.connect(audioCtx.destination);
-  osc.start(audioCtx.currentTime+time);
-  osc.stop(audioCtx.currentTime+time+duration+0.05);
-}
-function playMelodyLoop(){
-  if(!soundOn) return;
-  const notes=melodies[getSlot()];
-  const noteDuration=0.55;
-  notes.forEach((freq,i)=>{playNote(freq,i*noteDuration,noteDuration);});
-  melodyTimeout=setTimeout(playMelodyLoop,notes.length*noteDuration*1000+800);
-}
-function stopMelody(){ if(melodyTimeout) clearTimeout(melodyTimeout); }
-</script>
-</body>
-</html>
+function sendSuggestion(){
+  const name=document.getElementById("suggestName").value.trim()||"ناشناس";
+  const text=document.getElementById("suggestText").value.trim();
+  const status=document.getElementById("suggestStatus");
+  if(!text){status.textContent="اول یه چیزی بنویس 😄";status.style.color="#ff7384";return;}
+  const last=Number(localStorage.getItem("ma-suggest-cooldown")||0);
+  if(Date.now()-last<120000){status.textContent="یه کم صبر کن، دو دقیقه بعد دوباره بفرست ⏳";status.style.color="#ffce73";return;}
+  status.textContent="در
