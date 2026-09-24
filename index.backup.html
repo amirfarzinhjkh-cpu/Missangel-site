@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>پیام</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--heart-color:#fff;--heart-glow:rgba(255,255,255,.65);}
+html,body{width:100%;height:100%;overflow:hidden;}
+body{font-family:Tahoma,Arial,sans-serif;color:#fff;background:radial-gradient(circle at 50% 42%,#101c32 0%,#050912 48%,#000 100%);transition:background 1.8s ease;}
+body.day{background:radial-gradient(circle at 50% 40%,#182b45 0%,#08101d 48%,#020408 100%);}
+body.dusk{background:radial-gradient(circle at 50% 42%,#24192c 0%,#0c0b18 48%,#020205 100%);}
+body.night{background:radial-gradient(circle at 50% 42%,#0c1528 0%,#03060d 48%,#000 100%);}
+#particles{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;}
+.mouse-glow{position:fixed;width:260px;height:260px;border-radius:50%;pointer-events:none;z-index:1;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(70,130,255,.12) 0%,rgba(70,130,255,.045) 28%,transparent 70%);filter:blur(5px);}
+.fog{position:fixed;width:150%;height:35%;left:-25%;pointer-events:none;z-index:3;opacity:.13;filter:blur(35px);background:radial-gradient(ellipse,rgba(190,210,235,.25),transparent 68%);}
+.fog.one{bottom:8%;animation:fogMove 18s ease-in-out infinite alternate;}
+.fog.two{bottom:-5%;opacity:.08;animation:fogMove 25s ease-in-out infinite alternate-reverse;}
+@keyframes fogMove{from{transform:translateX(-7%) scale(1);}to{transform:translateX(7%) scale(1.08);}}
+.container{position:relative;z-index:5;width:min(430px,92vw);height:100%;margin:auto;display:flex;justify-content:center;align-items:center;text-align:center;}
+.question-screen{width:100%;animation:fadeIn 1s ease;}
+.question{font-size:28px;font-weight:bold;margin-bottom:35px;text-shadow:0 0 25px rgba(255,255,255,.25);}
+.choices{display:flex;justify-content:center;gap:15px;}
+.choice{border:1px solid rgba(255,255,255,.18);color:white;background:rgba(255,255,255,.06);backdrop-filter:blur(12px);padding:13px 28px;border-radius:30px;cursor:pointer;font-size:16px;transition:.3s;}
+.choice:hover{transform:translateY(-3px);background:rgba(255,255,255,.12);}
+.result{min-height:30px;margin-top:25px;font-size:15px;}
+.good{color:#fff;}
+.bad{color:#ff7384;}
+.main-screen{display:none;width:100%;animation:fadeIn 1.3s ease;}
+.main-screen.active{display:block;}
+.datetime{margin-bottom:22px;opacity:.85;text-shadow:0 0 15px rgba(255,255,255,.2);}
+.date{font-size:14px;margin-bottom:5px;}
+.time{font-size:24px;font-weight:bold;letter-spacing:1px;}
+.dragon{font-size:42px;margin-bottom:14px;filter:drop-shadow(0 0 14px rgba(80,150,255,.25));animation:dragonFloat 4s ease-in-out infinite;}
+@keyframes dragonFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+.heart-area{position:relative;width:100%;height:320px;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;}
+.heart-wrap{position:relative;width:170px;height:170px;margin-top:5px;display:flex;align-items:center;justify-content:center;}
+.heart{position:relative;width:125px;height:125px;background:var(--heart-color);transform:rotate(-45deg);border-radius:10px;cursor:pointer;box-shadow:0 0 20px var(--heart-glow),0 0 55px var(--heart-glow);animation:heartbeat 1.55s ease-in-out infinite;transition:background .7s ease,box-shadow .7s ease;z-index:3;}
+.heart:before,.heart:after{content:"";position:absolute;width:125px;height:125px;background:var(--heart-color);border-radius:50%;transition:background .7s ease;}
+.heart:before{top:-62px;left:0;}
+.heart:after{top:0;left:62px;}
+@keyframes heartbeat{0%,100%{transform:rotate(-45deg) scale(1);}8%{transform:rotate(-45deg) scale(1.08);}16%{transform:rotate(-45deg) scale(1);}24%{transform:rotate(-45deg) scale(1.06);}35%{transform:rotate(-45deg) scale(1);}}
+.heart-text{position:absolute;z-index:6;width:135px;min-height:70px;left:50%;top:50%;transform:translate(-50%,-50%);color:#111;font-size:13px;line-height:1.8;font-weight:bold;pointer-events:none;direction:rtl;}
+.heart-wrap.clicked{animation:heartShock .55s ease;}
+@keyframes heartShock{0%{transform:scale(1);}25%{transform:scale(1.22);}50%{transform:scale(.92);}75%{transform:scale(1.1);}100%{transform:scale(1);}}
+.ripple{position:absolute;width:145px;height:145px;border-radius:50%;border:2px solid var(--heart-color);opacity:.7;pointer-events:none;animation:ripple .75s ease-out forwards;z-index:1;}
+@keyframes ripple{from{transform:scale(.6);opacity:.7;}to{transform:scale(1.8);opacity:0;}}
+.ecg{position:absolute;top:185px;left:50%;transform:translateX(-50%);width:290px;height:75px;overflow:visible;filter:drop-shadow(0 0 5px var(--heart-glow));}
+.ecg path{fill:none;stroke:var(--heart-color);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:400;stroke-dashoffset:400;animation:ecgDraw 2.4s linear infinite;}
+@keyframes ecgDraw{to{stroke-dashoffset:0;}}
+.greeting{margin-top:2px;font-size:19px;font-weight:bold;opacity:.92;}
+.sub-greeting{margin-top:8px;font-size:12px;opacity:.5;}
+.loading{width:170px;height:3px;margin:24px auto 18px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden;}
+.loading span{display:block;width:0;height:100%;background:var(--heart-color);box-shadow:0 0 12px var(--heart-glow);animation:loading 3.5s ease forwards;}
+@keyframes loading{to{width:100%;}}
+.footer{font-size:10px;opacity:.35;}
+.footer a{color:inherit;text-decoration:none;}
+.version-tag{margin-top:9px;font-size:9px;opacity:.55;letter-spacing:1px;}
+.visit-count{position:fixed;top:15px;right:15px;font-size:11px;color:#666;z-index:20;}
+.shooting-star{position:fixed;width:3px;height:3px;border-radius:50%;background:#fff;z-index:2;pointer-events:none;box-shadow:0 0 6px #fff,0 0 18px rgba(150,200,255,.9);animation:shoot 1.15s linear forwards;}
+.shooting-star:after{content:"";position:absolute;right:2px;top:1px;width:120px;height:2px;transform-origin:right center;background:linear-gradient(to left,rgba(255,255,255,.8),transparent);}
+@keyframes shoot{from{transform:translate(0,0);opacity:0;}8%{opacity:1;}100%{transform:translate(-330px,330px);opacity:0;}}
+.sound-btn{position:fixed;left:18px;bottom:18px;z-index:20;width:42px;height:42px;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:rgba(255,255,255,.05);color:#fff;cursor:pointer;backdrop-filter:blur(10px);font-size:17px;}
+.menu-btn{position:fixed;top:15px;left:15px;z-index:30;width:40px;height:40px;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:rgba(255,255,255,.05);color:#fff;cursor:pointer;backdrop-filter:blur(10px);font-size:16px;}
+.menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:35;opacity:0;pointer-events:none;transition:opacity .3s;}
+.menu-overlay.open{opacity:1;pointer-events:auto;}
+.menu-panel{position:fixed;top:0;left:0;height:100%;width:min(320px,85vw);background:rgba(8,12,22,.94);backdrop-filter:blur(18px);border-right:1px solid rgba(255,255,255,.08);z-index:40;transform:translateX(-100%);transition:transform .4s ease;padding:70px 16px 20px;overflow-y:auto;text-align:right;}
+.menu-panel.open{transform:translateX(0);}
+.menu-close{position:absolute;top:18px;left:16px;width:34px;height:34px;border:1px solid rgba(255,255,255,.14);border-radius:50%;background:transparent;color:#fff;cursor:pointer;font-size:14px;}
+.menu-tabs{display:flex;gap:6px;margin-bottom:16px;}
+.menu-tab{flex:1;padding:9px 4px;font-size:12px;border:1px solid rgba(255,255,255,.12);background:transparent;color:#ccc;border-radius:10px;cursor:pointer;font-family:inherit;transition:.3s;}
+.menu-tab.active{background:rgba(255,255,255,.12);color:#fff;}
+.tab-section{display:none;}
+.tab-section.active{display:block;}
+.chat-box{height:300px;overflow-y:auto;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:10px;margin-bottom:10px;background:rgba(0,0,0,.25);}
+.chat-msg{margin-bottom:12px;font-size:13px;line-height:1.9;}
+.chat-msg.user{color:#8ecbff;text-align:left;}
+.chat-msg.ai{color:#eee;}
+.chat-msg .who{font-size:10px;opacity:.45;display:block;margin-bottom:2px;}
+.chat-input-row{display:flex;gap:6px;}
+.chat-input{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px;color:#fff;font-family:inherit;font-size:13px;}
+.chat-send{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.08);color:#fff;border-radius:10px;padding:0 15px;cursor:pointer;font-size:14px;}
+.chat-input:focus,.suggest-input:focus,.lock-input:focus{outline:none;border-color:rgba(255,255,255,.4);}
+.chat-hint{font-size:10px;opacity:.4;margin-top:8px;text-align:center;}
+.suggest-input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:10px;color:#fff;font-family:inherit;font-size:13px;margin-bottom:8px;resize:none;}
+.suggest-status{font-size:12px;min-height:20px;margin-top:8px;}
+.setting-row{display:flex;justify-content:space-between;align-items:center;padding:11px 4px;border-bottom:1px solid rgba(255,255,255,.06);font-size:13px;}
+.toggle{width:40px;height:22px;border-radius:20px;background:rgba(255,255,255,.12);position:relative;cursor:pointer;transition:.3s;flex-shrink:0;}
+.toggle.on{background:rgba(80,160,255,.5);}
+.toggle:after{content:"";position:absolute;top:3px;right:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:.3s;}
+.toggle.on:after{transform:translateX(-18px);}
+.settings-note{font-size:10px;opacity:.4;margin-top:14px;text-align:center;}
+.lock-screen{position:fixed;inset:0;z-index:45;background:#000;display:flex;align-items:center;justify-content:center;text-align:center;opacity:0;pointer-events:none;transition:opacity .9s ease;}
+.lock-screen.show{opacity:1;pointer-events:auto;}
+.lock-inner{width:min(340px,90vw);}
+.lock-icon{font-size:38px;margin-bottom:14px;filter:drop-shadow(0 0 16px rgba(255,255,255,.35));}
+.lock-title{font-size:20px;margin-bottom:8px;}
+.lock-sub{font-size:12px;opacity:.5;margin-bottom:26px;}
+.lock-input{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:12px 14px;color:#fff;font-family:inherit;font-size:15px;text-align:center;}
+.lock-status{min-height:22px;font-size:13px;margin-top:14px;}
+.intro{position:fixed;inset:0;z-index:50;background:#000;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:1;}
+.intro.hide{animation:introHide 1s ease forwards;}
+.intro-content{width:90%;text-align:center;position:relative;}
+.intro-line{width:0;height:1px;margin:auto;background:#fff;box-shadow:0 0 15px #fff;animation:introLine 1.2s ease forwards;}
+.intro-heart{margin:28px auto;width:70px;height:70px;background:#fff;transform:rotate(-45deg) scale(0);border-radius:8px;box-shadow:0 0 40px rgba(255,255,255,.6);animation:introHeart 1.1s .7s ease forwards;position:relative;}
+.intro-heart:before,.intro-heart:after{content:"";position:absolute;width:70px;height:70px;background:#fff;border-radius:50%;}
+.intro-heart:before{top:-35px;left:0;}
+.intro-heart:after{top:0;left:35px;}
+.intro-dragon{font-size:32px;opacity:0;animation:introDragon 1s .3s ease forwards;}
+.intro-title{margin-top:12px;font-size:22px;opacity:0;letter-spacing:2px;animation:introText 1s 1.8s ease forwards;}
+@keyframes introLine{to{width:180px;}}
+@keyframes introHeart{to{transform:rotate(-45deg) scale(1);}}
+@keyframes introDragon{to{opacity:1;}}
+@keyframes introText{from{opacity:0;transform:translateY(10px);}to{opacity:.8;transform:translateY(0);}}
+@keyframes introHide{to{opacity:0;visibility:hidden;}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+@media(max-width:500px){.question{font-size:25px;}.heart-area{height:305px;}.heart{width:112px;height:112px;}.heart:before,.heart:after{width:112px;height:112px;}.heart:before{top:-56px;}.heart:after{left:56px;}.heart-text{width:125px;font-size:12px;}.ecg{width:265px;top:178px;}.mouse-glow{display:none;}.chat-box{height:250px;}}
+</style>
+</head>
+<body>
+<canvas id="particles"></canvas>
+<div class="mouse-glow" id="mouseGlow"></div>
+<div class="fog one" id="fogOne"></div>
+<div class="fog two" id="fogTwo"></div>
+<div class="visit-count" id="visitCount"></div>
+
+<button class="menu-btn" id="menuBtn" onclick="toggleMenu()">☰</button>
+<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+<div class="menu-panel" id="menuPanel">
+  <button class="menu-close" onclick="toggleMenu()">✕</button>
+  <div class="menu-tabs">
+    <button class="menu-tab active" data-tab="chat" onclick="switchTab('chat')">🤖 چت AI</button>
+    <button class="menu-tab" data-tab="suggest" onclick="switchTab('suggest')">💡 ایده</button>
+    <button class="menu-tab" data-tab="settings" onclick="switchTab('settings')">⚙️ تنظیمات</button>
+  </div>
+  <div class="tab-section active" id="tab-chat">
+    <div class="chat-box" id="chatBox"></div>
+    <div class="chat-input-row">
+      <input class="chat-input" id="chatInput" placeholder="هر چی تو دلته، بپرس..." onkeydown="if(event.key==='Enter')sendChat()">
+      <button class="chat-send" onclick="sendChat()">➤</button>
+    </div>
+    <div class="chat-hint">جواب‌ها با AI تولید می‌شن؛ گاهی کمی طول می‌کشه</div>
+  </div>
+  <div class="tab-section" id="tab-suggest">
+    <div style="font-size:13px;opacity:.7;margin-bottom:10px;line-height:1.9;">ایده یا پیشنهادت رو بنویس، مستقیم می‌رسه به سازنده 🤍</div>
+    <input class="suggest-input" id="suggestName" placeholder="اسمت (اختیاری)">
+    <textarea class="suggest-input" id="suggestText" rows="4" placeholder="پیشنهاد یا ایده‌ات..."></textarea>
+    <button class="choice" style="width:100%;margin-top:4px;" onclick="sendSuggestion()">بفرست 🕊️</button>
+    <div class="suggest-status" id="suggestStatus"></div>
+  </div>
+  <div class="tab-section" id="tab-settings">
+    <div class="setting-row"><span>✨ ذرات ستاره‌ای</span><div class="toggle on" data-key="particles" onclick="toggleSetting(this)"></div></div>
+    <div class="setting-row"><span>🌫️ مه</span><div class="toggle on" data-key="fog" onclick="toggleSetting(this)"></div></div>
+    <div class="setting-row"><span>☄️ ستاره‌ی دنباله‌دار</span><div class="toggle on" data-key="stars" onclick="toggleSetting(this)"></div></div>
+    <div class="setting-row"><span>🔦 نور دنبال‌کننده‌ی موس</span><div class="toggle on" data-key="glow" onclick="toggleSetting(this)"></div></div>
+    <div class="settings-note">ترجیحاتت فقط روی همین دستگاه ذخیره می‌شه</div>
+  </div>
+</div>
+
+<div class="intro" id="intro">
+  <div class="intro-content">
+    <div class="intro-line"></div>
+    <div class="intro-dragon">🐉</div>
+    <div class="intro-heart"></div>
+    <div class="intro-title">بعضی چیزها اتفاقی نیستند...</div>
+  </div>
+</div>
+
+<div class="lock-screen" id="lockScreen">
+  <div class="lock-inner">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-title">این جا قفله...</div>
+    <div class="lock-sub">فقط کسایی که دلیل موندن دارن، کلیدشو می‌دونن</div>
+    <input class="lock-input" id="lockInput" type="password" placeholder="کلمه‌ی عبور" onkeydown="if(event.key==='Enter')tryUnlock()">
+    <button class="choice" style="margin-top:12px;width:100%;" onclick="tryUnlock()">باز کن 🤍</button>
+    <div class="lock-status" id="lockStatus"></div>
+  </div>
+</div>
+
+<div class="container">
+  <section class="question-screen" id="questionScreen" style="display:none;">
+    <div class="question">ماندن یا رفتن؟</div>
+    <div class="choices">
+      <button class="choice" onclick="answer('stay')">موندن 🤍</button>
+      <button class="choice" onclick="answer('leave')">رفتن 🖤</button>
+    </div>
+    <div class="result" id="result"></div>
+  </section>
+
+  <section class="main-screen" id="mainScreen">
+    <div class="datetime">
+      <div class="date" id="date"></div>
+      <div class="time" id="time"></div>
+    </div>
+    <div class="dragon">🐉</div>
+    <div class="heart-area" id="heartArea">
+      <div class="heart-wrap" id="heartWrap">
+        <div class="heart" id="heart" onclick="heartClick()"></div>
+        <div class="heart-text" id="heartText">هنوز اینجایی؟ 🤍</div>
+      </div>
+      <svg class="ecg" viewBox="0 0 300 80">
+        <path d="M0 42 L55 42 L65 42 L72 20 L79 62 L87 42 L110 42 L120 42 L128 30 L135 52 L142 42 L170 42 L180 42 L188 17 L196 65 L204 42 L235 42 L245 42 L255 30 L262 53 L270 42 L300 42"/>
+      </svg>
+      <div class="greeting">خوش اومدی 🖤</div>
+      <div class="sub-greeting">بعضی موندن‌ها دلیل خودشونو دارن...</div>
+    </div>
+    <div class="loading"><span></span></div>
+    <div class="footer">
+      ساخت شد توسط <a href="https://t.me/AMORYG" target="_blank">AMORYG 🗣️</a>
+      <div class="version-tag">MissAngel v0.0.2</div>
+    </div>
+  </section>
+</div>
+
+<button class="sound-btn" id="soundBtn" onclick="toggleSound()">🔇</button>
+
+<script>
+const BOT_TOKEN = "8876078194:AAGHnxyzrNv6KpRC7VEePqVwvHDpA5Bwwqo";
+const CHAT_ID = "6606598485";
+const SITE_PASSWORD = "angel";
+
+function tryUnlock(){
+  const val=document.getElementById("lockInput").value.trim().toLowerCase();
+  const status=document.getElementById("lockStatus");
+  const lockTeases=["اشتباهه... ولی دلم نیومد ناراحتت کنم 😅","اینم نیست. شاید یه چیز دیگه امتحان کنی؟","💡 راهنمایی: یه اسم انگلیسیه که با «a» شروع می‌شه..."];
+  if(val===SITE_PASSWORD){
+    status.style.color="#7dffa8";
+    status.textContent="درسته... می‌دونستم تو می‌تونی 🤍";
+    setTimeout(()=>{
+      document.getElementById("lockScreen").classList.remove("show");
+      document.getElementById("questionScreen").style.display="block";
+    },900);
+  }else{
+    window.lockFails=(window.lockFails||0)+1;
+    status.style.color="#ff7384";
+    status.textContent=lockTeases[Math.min(window.lockFails,lockTeases.length)-1];
+  }
+}
+
+let menuOpen=false;
+function toggleMenu(){
+  menuOpen=!menuOpen;
+  document.getElementById("menuPanel").classList.toggle("open",menuOpen);
+  document.getElementById("menuOverlay").classList.toggle("open",menuOpen);
+}
+function switchTab(name){
+  document.querySelectorAll(".menu-tab").forEach(t=>t.classList.toggle("active",t.dataset.tab===name));
+  document.querySelectorAll(".tab-section").forEach(s=>s.classList.toggle("active",s.id==="tab-"+name));
+}
+
+function appendChat(who,text){
+  const box=document.getElementById("chatBox");
+  const div=document.createElement("div");
+  div.className="chat-msg "+who;
+  const whoLabel=who==="user"?"تو":"میس‌نج";
+  div.innerHTML='<span class="who"></span><span class="text"></span>';
+  div.querySelector(".who").textContent=whoLabel;
+  div.querySelector(".text").textContent=text;
+  box.appendChild(div);
+  box.scrollTop=box.scrollHeight;
+  return div;
+}
+
+async function sendChat(){
+  const input=document.getElementById("chatInput");
+  const msg=input.value.trim();
+  if(!msg) return;
+  appendChat("user",msg);
+  input.value="";
+  const thinking=appendChat("ai","...");
+  try{
+    const prompt="تو «میس‌نج» هستی، روح رازآلود و گرم این سایت. فارسی، کوتاه (حداکثر ۲ جمله)، رمزآلود و صمیمی جواب بده.\n\nکاربر گفت: "+msg;
+    const res=await fetch("https://text.pollinations.ai/"+encodeURIComponent(prompt)+"?model=openai");
+    if(!res.ok) throw new Error();
+    const text=(await res.text()).trim();
+    thinking.querySelector(".text").textContent=text||"سکوت... گاهی خودش یه جوابه 🤍";
+  }catch(e){
+    thinking.querySelector(".text").textContent="الان نتونستم فکر کنم... یه کم دیگه دوباره بپرس 🖤";
+  }
+  document.getElementById("chatBox").scrollTop=1e6;
+}
+
+function sendSuggestion(){
+  const name=document.getElementById("suggestName").value.trim()||"ناشناس";
+  const text=document.getElementById("suggestText").value.trim();
+  const status=document.getElementById("suggestStatus");
+  if(!text){status.textContent="اول یه چیزی بنویس 😄";status.style.color="#ff7384";return;}
+  const last=Number(localStorage.getItem("ma-suggest-cooldown")||0);
+  if(Date.now()-last<120000){status.textContent="یه کم صبر کن، دو دقیقه بعد دوباره بفرست ⏳";status.style.color="#ffce73";return;}
+  status.textContent="در
