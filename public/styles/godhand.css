@@ -369,3 +369,62 @@ body { isolation: isolate; }
 @media (max-width:390px) {
   .ai-trace { letter-spacing: 1.2px; }
 }
+
+
+/* THE BLACK SWORDSMAN — a world shaped by endurance, not imitation. */
+:root { --red:#761b29; --red-bright:#c74755; --rose:#b8a5a1; --line:#d8c3c018; }
+.hero {
+  min-height:min(960px,100svh);
+  background:
+    radial-gradient(ellipse at 72% 48%,#4b101b55 0%,transparent 42%),
+    linear-gradient(105deg,#050507 5%,#0b080b 56%,#16090e 100%);
+}
+.hero-grid { opacity:.08; background-size:120px 120px; mask-image:linear-gradient(90deg,transparent,#000 65%); }
+.hero::before {
+  position:absolute; inset:0; z-index:1; content:"";
+  background:linear-gradient(90deg,#050507 0%,#050507b8 35%,transparent 75%),linear-gradient(0deg,#070609 0%,transparent 35%);
+  pointer-events:none;
+}
+.moon-scene { right:5%; width:min(53vw,650px); opacity:.88; filter:saturate(.82) contrast(1.12); }
+.moon-aura { inset:-4%; background:radial-gradient(circle,#a51c2c30 0 36%,#77132118 52%,transparent 72%); filter:blur(34px); }
+.moon { width:59%; height:59%; background:radial-gradient(circle at 38% 28%,#d78b80 0,#8f303b 26%,#4b1724 62%,#120910 100%); box-shadow:inset -45px -30px 65px #050407,0 0 85px #a51d2b55,0 0 210px #8e102b38; }
+.moon::after { position:absolute; inset:-3%; border:1px solid #d45c6538; border-radius:50%; content:""; box-shadow:0 0 0 12px #9f273016,0 0 0 28px #9f27300b; }
+.orbit-line { border-color:#b94b5630; }
+.hero-content { max-width:650px; }
+h1 { font-weight:500; line-height:1.38; letter-spacing:-2.6px; }
+h1 em { color:#b8aaa7; font-weight:300; }
+h1 strong { color:#d45b64; text-shadow:0 0 34px #a72b3940; font-weight:500; }
+.hero-description { max-width:490px; color:#b0a2a3; line-height:2.35; }
+.eyebrow { color:#c08b8c; letter-spacing:2.3px; }
+.live-dot { background:#e15c65; box-shadow:0 0 15px #e34b58; }
+.button-primary { background:linear-gradient(110deg,#651622,#a42b3b); border:1px solid #c34c583d; box-shadow:0 10px 42px #6f14252e; }
+.button-primary:hover { box-shadow:0 15px 48px #a42b3b55; }
+.ash-drift { position:absolute; z-index:2; inset:0; pointer-events:none; opacity:.5; overflow:hidden; }
+.ash-drift::before,.ash-drift::after { position:absolute; inset:-30%; content:""; background-image:radial-gradient(ellipse,#c7a8a0 0 1px,transparent 1.6px),radial-gradient(ellipse,#9b555b 0 1px,transparent 1.8px); background-size:83px 113px,137px 171px; animation:ash-fall 28s linear infinite; mask-image:linear-gradient(90deg,transparent,#000 30%,#000 80%,transparent); }
+.ash-drift::after { opacity:.45; background-size:51px 79px,101px 139px; animation-duration:41s; animation-direction:reverse; }
+@keyframes ash-fall { from { transform:translate3d(0,-3%,0) rotate(-4deg); } to { transform:translate3d(-5%,8%,0) rotate(4deg); } }
+.blade-shadow { position:absolute; z-index:1; right:23%; bottom:-20%; width:clamp(28px,4vw,58px); height:90%; opacity:.16; transform:rotate(24deg); transform-origin:bottom; background:linear-gradient(90deg,transparent,#c6b8b322 42%,#050507 52%,transparent 72%); filter:drop-shadow(0 0 30px #b42d3b44); clip-path:polygon(43% 0,57% 0,67% 76%,100% 83%,100% 87%,61% 84%,57% 100%,43% 100%,39% 84%,0 87%,0 83%,33% 76%); }
+.section { isolation:isolate; }
+.intro-section { background:linear-gradient(180deg,#09070a,#0d090d 55%,#09080b); }
+.intro-copy p { color:#c0b1b0; }
+.signals-section { background:linear-gradient(180deg,#080709,#0d080c 55%,#080709); }
+.signal-card { border-color:#ffffff13; background:linear-gradient(145deg,#171116,#0a080b 82%); }
+.signal-card:hover { border-color:#a83c49aa; box-shadow:0 24px 60px #0009,0 0 35px #741a2920; }
+.card-art { background:radial-gradient(circle,#43131d55,transparent 68%); }
+.quote-section { background:radial-gradient(ellipse at 50% 42%,#40101c 0%,#150a11 48%,#070609 100%); }
+.quote-section > p { color:#e5d7d3; }
+.gateway-frame { background:radial-gradient(ellipse at center,#3b101b 0%,#10090f 54%,#080709 100%); }
+.gateway-frame::before,.gateway-frame::after { border-color:#b34b5625; }
+.footer { background:#050507; }
+@media (max-width:760px) {
+  .hero { min-height:min(850px,100svh); padding-top:130px; }
+  .hero::before { background:linear-gradient(0deg,#070609 3%,#070609df 42%,#07060938 100%); }
+  .moon-scene { top:5%; right:-15%; width:100vw; opacity:.52; }
+  .blade-shadow { right:18%; bottom:-24%; height:78%; opacity:.11; }
+  .hero-content { max-width:100%; }
+  .hero-description { max-width:360px; }
+  .ash-drift { opacity:.3; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .ash-drift::before,.ash-drift::after { animation:none !important; }
+}
