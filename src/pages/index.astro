@@ -107,13 +107,25 @@ const title = "GODHAND — فراتر از معمول";
       const langButton = document.querySelector<HTMLButtonElement>('#language')!;
       let lang: 'fa' | 'en' = 'fa';
       try { lang = localStorage.getItem('godhand-language') === 'en' ? 'en' : 'fa'; } catch { /* Storage may be disabled. */ }
+      const renderSafeText = (element: HTMLElement, value: string) => {
+        const fragment = document.createDocumentFragment();
+        let emphasis: HTMLElement | null = null;
+        for (const part of value.split(/(<br\\s*\\/?\\s*>|<\\/?em>)/gi)) {
+          if (/^<br\\s*\\/?\\s*>$/i.test(part)) (emphasis ?? fragment).append(document.createElement('br'));
+          else if (part.toLowerCase() === '<em>') { emphasis = document.createElement('em'); fragment.append(emphasis); }
+          else if (part.toLowerCase() === '</em>') emphasis = null;
+          else (emphasis ?? fragment).append(document.createTextNode(part));
+        }
+        element.replaceChildren(fragment);
+      };
+
       const applyLanguage = (next: 'fa' | 'en') => {
         lang = next;
         root.lang = next;
         root.dir = next === 'fa' ? 'rtl' : 'ltr';
         document.querySelectorAll<HTMLElement>('[data-fa][data-en]').forEach((el) => {
           const value = el.dataset[next];
-          if (value) el.innerHTML = value;
+          if (value) renderSafeText(el, value);
         });
         langButton.textContent = next === 'fa' ? 'EN' : 'FA';
         try { localStorage.setItem('godhand-language', next); } catch { /* Language still works for this session. */ }
