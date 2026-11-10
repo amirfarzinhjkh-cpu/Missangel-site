@@ -188,7 +188,8 @@ h2 em { color: #c64a56; font-style: normal; }
 /* Floating sound control stays clear of the header and content. */
 .sound-toggle { position: fixed; z-index: 26; right: 22px; bottom: 22px; display: grid; place-items: center; width: 46px; height: 46px; padding: 0; border: 1px solid #ffffff28; border-radius: 50%; background: #100c11c9; color: #cbaeb0; cursor: pointer; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 8px 30px #0007; transition: border-color .2s ease,background .2s ease,color .2s ease,transform .2s ease; }
 .sound-toggle:hover,.sound-toggle.playing { border-color: #a84b56; background: #24131bdc; color: #e0b8b7; transform: translateY(-2px); }
-.sound-state { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }\n.sound-bars { display: flex; align-items: center; gap: 3px; height: 16px; }
+.sound-state { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.sound-bars { display: flex; align-items: center; gap: 3px; height: 16px; }
 .sound-bars i { display: block; width: 2px; height: 5px; background: #c86a72; }
 .sound-toggle.playing .sound-bars i { animation: soundwave .75s ease-in-out infinite alternate; }
 .sound-bars i:nth-child(2) { animation-delay: .2s; }
