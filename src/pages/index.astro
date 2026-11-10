@@ -110,8 +110,8 @@ const title = "GODHAND — فراتر از معمول";
       const renderSafeText = (element: HTMLElement, value: string) => {
         const fragment = document.createDocumentFragment();
         let emphasis: HTMLElement | null = null;
-        for (const part of value.split(/(<br\\s*\\/?\\s*>|<\\/?em>)/gi)) {
-          if (/^<br\\s*\\/?\\s*>$/i.test(part)) (emphasis ?? fragment).append(document.createElement('br'));
+        for (const part of value.split(/(<br\s*\/?\s*>|<\/?em>)/gi)) {
+          if (/^<br\s*\/?\s*>$/i.test(part)) (emphasis ?? fragment).append(document.createElement('br'));
           else if (part.toLowerCase() === '<em>') { emphasis = document.createElement('em'); fragment.append(emphasis); }
           else if (part.toLowerCase() === '</em>') emphasis = null;
           else (emphasis ?? fragment).append(document.createTextNode(part));
