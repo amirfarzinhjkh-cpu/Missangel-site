@@ -1,0 +1,8 @@
+name = "godhand-api"
+main = "src/index.ts"
+compatibility_date = "2026-11-01"
+
+[vars]
+ALLOWED_ORIGIN = "https://godhand.example"
+GEMINI_MODEL = "gemini-2.5-flash"
+OPENROUTER_MODEL = "openai/gpt-4o-mini"
