@@ -509,3 +509,9 @@ h1 strong { color:#d45b64; text-shadow:0 0 34px #a72b3940; font-weight:500; }
   .gateway-frame::before,.gateway-frame::after { animation:none !important; }
   .signal-card { transform:none !important; }
 }
+
+/* Interactive routes into the Archive and Idea Lab. */
+.card-arrow { display:inline-grid; place-items:center; min-width:28px; min-height:28px; text-decoration:none; transition:transform .3s ease,color .3s ease; }
+.card-arrow:hover { color:#f0a0a3; transform:translate(3px,-3px); }
+.status-pill[href] { display:inline-flex; align-items:center; text-decoration:none; transition:background .25s ease,border-color .25s ease,color .25s ease; }
+.status-pill[href]:hover { background:#8e253326; border-color:#c45a65; color:#f0b5b5; }
