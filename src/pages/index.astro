@@ -104,13 +104,13 @@ const title = "GODHAND — فراتر از معمول";
 
     <script>
       const root = document.documentElement;
-      const langButton = document.querySelector('#language');
-      let lang = localStorage.getItem('godhand-language') === 'en' ? 'en' : 'fa';
-      const applyLanguage = (next) => {
+      const langButton = document.querySelector<HTMLButtonElement>('#language')!;
+      let lang: 'fa' | 'en' = localStorage.getItem('godhand-language') === 'en' ? 'en' : 'fa';
+      const applyLanguage = (next: 'fa' | 'en') => {
         lang = next;
         root.lang = next;
         root.dir = next === 'fa' ? 'rtl' : 'ltr';
-        document.querySelectorAll('[data-fa][data-en]').forEach((el) => {
+        document.querySelectorAll<HTMLElement>('[data-fa][data-en]').forEach((el) => {
           const value = el.dataset[next];
           if (value) el.innerHTML = value;
         });
@@ -120,8 +120,8 @@ const title = "GODHAND — فراتر از معمول";
       langButton.addEventListener('click', () => applyLanguage(lang === 'fa' ? 'en' : 'fa'));
       applyLanguage(lang);
 
-      const menuToggle = document.querySelector('#menuToggle');
-      const nav = document.querySelector('#nav');
+      const menuToggle = document.querySelector<HTMLButtonElement>('#menuToggle')!;
+      const nav = document.querySelector<HTMLElement>('#nav')!;
       menuToggle.addEventListener('click', () => {
         nav.classList.toggle('open');
         menuToggle.classList.toggle('active');
@@ -131,36 +131,36 @@ const title = "GODHAND — فراتر از معمول";
         menuToggle.classList.remove('active');
       }));
 
-      const progress = document.querySelector('#progress');
+      const progress = document.querySelector<HTMLElement>('#progress')!;
       window.addEventListener('scroll', () => {
         const max = document.documentElement.scrollHeight - window.innerHeight;
         progress.style.width = (max > 0 ? window.scrollY / max * 100 : 0) + '%';
       }, { passive: true });
 
-      const quotes = {
+      const quotes: Record<'fa' | 'en', string[]> = {
         fa: ['قرار نیست نور را دنبال کنی؛ گاهی باید خودت روشنایی باشی.','آینده جایی نیست که به آن می‌رسی؛ چیزی‌ست که می‌سازی.','از ناشناخته نترس؛ شاید همان‌جا خود واقعی‌ات منتظر باشد.','هر تغییر بزرگی با یک تصمیم کوچک شروع می‌شود.'],
         en: ["Don't just follow the light. Sometimes, become it.","The future isn't where you arrive. It's what you create.","Don't fear the unknown. Your next self may be waiting there.","Every great change begins with one small decision."]
       };
       let quoteIndex = 0;
-      document.querySelector('#newQuote').addEventListener('click', () => {
+      document.querySelector<HTMLButtonElement>('#newQuote')!.addEventListener('click', () => {
         quoteIndex = (quoteIndex + 1) % quotes[lang].length;
-        const quote = document.querySelector('#quoteText');
+        const quote = document.querySelector<HTMLElement>('#quoteText')!;
         quote.classList.add('fade');
         window.setTimeout(() => {
           quote.textContent = quotes[lang][quoteIndex];
-          document.querySelector('#quoteNumber').textContent = String(quoteIndex + 1).padStart(3, '0');
+          document.querySelector<HTMLElement>('#quoteNumber')!.textContent = String(quoteIndex + 1).padStart(3, '0');
           quote.classList.remove('fade');
         }, 180);
       });
 
-      const clock = document.querySelector('#clock');
+      const clock = document.querySelector<HTMLElement>('#clock')!;
       const updateClock = () => clock.textContent = new Intl.DateTimeFormat(lang === 'fa' ? 'fa-IR' : 'en-GB', {hour:'2-digit',minute:'2-digit',second:'2-digit'}).format(new Date());
       updateClock();
       window.setInterval(updateClock, 1000);
 
-      const canvas = document.querySelector('#stars');
-      const ctx = canvas.getContext('2d');
-      let particles = [];
+      const canvas = document.querySelector<HTMLCanvasElement>('#stars')!;
+      const ctx = canvas.getContext('2d')!;
+      let particles: Array<{x:number;y:number;r:number;a:number;s:number}> = [];
       let width = 0, height = 0, pixelRatio = 1;
       const resizeStars = () => {
         pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
