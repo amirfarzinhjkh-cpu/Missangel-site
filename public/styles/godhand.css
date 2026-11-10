@@ -248,7 +248,7 @@ h2 em { color: #c64a56; font-style: normal; }
   .footer-brand { grid-column: 1/-1; }
   .footer-note strong { font-size: 23px; letter-spacing: 1px; }
   .footer-social > a { grid-template-columns: 20px minmax(0,1fr); gap: 8px; }
-  .footer-social > a b,.footer-social > a i { display: none; }
+  .footer-social > a b { display: inline; } .footer-social > a i { display: inline; }
   .footer-bottom { flex-wrap: wrap; font-size: 7px; }
   .footer-bottom span:nth-child(2) { order: 3; width: 100%; }
   .section-dots { right: 6px; gap: 9px; }
@@ -427,4 +427,85 @@ h1 strong { color:#d45b64; text-shadow:0 0 34px #a72b3940; font-weight:500; }
 }
 @media (prefers-reduced-motion:reduce) {
   .ash-drift::before,.ash-drift::after { animation:none !important; }
+}
+
+
+/* GOTHIC ARCHITECTURE — carved stone, iron ribs, depth and restrained motion. */
+.gateway-frame {
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 82%,#6f202b30,transparent 44%),
+    linear-gradient(90deg,#08070a 0%,#171016 18%,#0b080d 50%,#171016 82%,#08070a 100%);
+  box-shadow: inset 0 0 0 1px #d4b4a51c, inset 0 0 90px #000b, 0 35px 100px #0008;
+}
+.gateway-frame::before {
+  inset: 5% 13%;
+  border: 1px solid #c18c8730;
+  border-radius: 48% 48% 3px 3px / 26% 26% 3px 3px;
+  box-shadow: 0 0 0 12px #8c45400b, 0 0 0 24px #8c454008, inset 0 0 55px #b33b4710;
+}
+.gateway-frame::after {
+  inset: 0;
+  border: 0;
+  background:
+    linear-gradient(90deg,transparent 12%,#c7a49b18 12.2%,transparent 12.5%,transparent 87.5%,#c7a49b18 87.8%,transparent 88%),
+    repeating-linear-gradient(90deg,transparent 0 8.1%,#d1aaa514 8.2% 8.35%,transparent 8.45% 16.2%);
+  clip-path: polygon(0 0,100% 0,100% 100%,0 100%);
+  opacity:.38;
+  pointer-events:none;
+}
+.gateway-frame .gateway-content { position:relative; z-index:2; }
+.gateway-frame .gateway-content::before,
+.gateway-frame .gateway-content::after {
+  position:absolute; z-index:-1; top:-110px; width:clamp(42px,8vw,110px); height:300px;
+  content:""; opacity:.5; pointer-events:none;
+  background:
+    linear-gradient(90deg,#050407 0 13%,#6e5150 16%,#21151a 27%,#9c7770 34%,#100c11 48%,#6c4a4b 66%,#08070a 83%),
+    repeating-linear-gradient(0deg,#d0a69a18 0 2px,transparent 2px 17px);
+  clip-path:polygon(0 0,100% 0,100% 100%,0 100%,0 22%,50% 0,100% 22%);
+  filter:drop-shadow(0 15px 18px #000b);
+}
+.gateway-frame .gateway-content::before { left:-13%; }
+.gateway-frame .gateway-content::after { right:-13%; transform:scaleX(-1); }
+.gateway-content h2 { text-shadow:0 8px 28px #000b,0 0 42px #8f293522; }
+.signal-card {
+  background:
+    linear-gradient(145deg,#21171b 0%,#100c10 45%,#09080b 100%);
+  box-shadow: inset 0 1px #ffffff10, inset 0 -24px 50px #0005, 0 18px 45px #0004;
+}
+.signal-card::after {
+  position:absolute; inset:0; z-index:-1; content:""; opacity:.24; pointer-events:none;
+  background:repeating-linear-gradient(112deg,transparent 0 17px,#d9b7a008 18px,transparent 19px 37px);
+}
+.card-art { filter:drop-shadow(0 12px 18px #0008); }
+.moon { position:relative; overflow:hidden; }
+.moon::before {
+  position:absolute; inset:0; content:""; border-radius:inherit; opacity:.34;
+  background:
+    radial-gradient(ellipse at 30% 34%,#d9a49a55 0 4%,transparent 5%),
+    radial-gradient(ellipse at 62% 55%,#140b1255 0 11%,transparent 12%),
+    radial-gradient(ellipse at 42% 76%,#e6b0a033 0 8%,transparent 9%),
+    repeating-radial-gradient(ellipse at 45% 45%,transparent 0 13px,#e7b4a00b 14px 15px);
+  mix-blend-mode:soft-light;
+}
+.footer-credit { display:inline-flex; align-items:center; gap:9px; color:#9b8588; font:8px "DM Sans",sans-serif; letter-spacing:1.45px; white-space:nowrap; }
+.footer-credit svg { width:20px; height:20px; fill:#b5a5a5; opacity:.9; filter:drop-shadow(0 0 8px #a53b492e); }
+.footer-credit b { color:#d8c1bd; font-weight:600; }
+@media (hover:hover) and (pointer:fine) {
+  .signal-card { transition:transform .65s cubic-bezier(.16,1,.3,1),border-color .35s ease,box-shadow .4s ease; }
+  .signal-card:hover { transform:translateY(-7px) perspective(900px) rotateX(1deg); }
+  .gateway-frame { transform:translateZ(0); }
+}
+@media (max-width:760px) {
+  .footer-social > a { grid-template-columns:20px minmax(0,1fr) auto; }
+  .footer-social > a b { font-size:9px; }
+  .footer-bottom { align-items:center; }
+  .footer-credit { order:2; width:100%; justify-content:flex-start; padding-top:4px; }
+  .footer-bottom > a { order:3; }
+  .gateway-frame .gateway-content::before { left:-8%; opacity:.3; }
+  .gateway-frame .gateway-content::after { right:-8%; opacity:.3; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .gateway-frame::before,.gateway-frame::after { animation:none !important; }
+  .signal-card { transform:none !important; }
 }
