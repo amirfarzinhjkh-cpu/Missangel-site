@@ -61,7 +61,8 @@ function applyLanguage(next) {
   document.documentElement.dir = next === "fa" ? "rtl" : "ltr";
   document.querySelectorAll("[data-i]").forEach((node) => {
     const key = node.getAttribute("data-i");
-    const value = messages[next][key];
+    const copy = messages[next] as Record<string, string>;
+    const value = copy[key];
     if (value) node.textContent = value;
   });
   langButton.textContent = messages[next].language;
