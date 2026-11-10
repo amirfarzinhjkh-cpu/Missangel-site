@@ -105,7 +105,8 @@ const title = "GODHAND — فراتر از معمول";
     <script>
       const root = document.documentElement;
       const langButton = document.querySelector<HTMLButtonElement>('#language')!;
-      let lang: 'fa' | 'en' = localStorage.getItem('godhand-language') === 'en' ? 'en' : 'fa';
+      let lang: 'fa' | 'en' = 'fa';
+      try { lang = localStorage.getItem('godhand-language') === 'en' ? 'en' : 'fa'; } catch { /* Storage may be disabled. */ }
       const applyLanguage = (next: 'fa' | 'en') => {
         lang = next;
         root.lang = next;
@@ -115,7 +116,7 @@ const title = "GODHAND — فراتر از معمول";
           if (value) el.innerHTML = value;
         });
         langButton.textContent = next === 'fa' ? 'EN' : 'FA';
-        localStorage.setItem('godhand-language', next);
+        try { localStorage.setItem('godhand-language', next); } catch { /* Language still works for this session. */ }
       };
       langButton.addEventListener('click', () => applyLanguage(lang === 'fa' ? 'en' : 'fa'));
       applyLanguage(lang);
@@ -181,7 +182,7 @@ const title = "GODHAND — فراتر از معمول";
           ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
           ctx.fillStyle = 'rgba(224,176,170,' + p.a + ')'; ctx.fill();
         });
-        requestAnimationFrame(drawStars);
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) requestAnimationFrame(drawStars);
       };
       resizeStars(); drawStars();
       window.addEventListener('resize', resizeStars, {passive:true});
