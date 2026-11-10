@@ -205,9 +205,9 @@ const title = "GODHAND — فراتر از معمول";
         });
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && !document.hidden) starsFrame = requestAnimationFrame(drawStars);
       };
+      let starsFrame = 0;
       resizeStars(); drawStars();
       window.addEventListener('resize', resizeStars, {passive:true});
-      let starsFrame = 0;
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) cancelAnimationFrame(starsFrame);
         else if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) starsFrame = requestAnimationFrame(drawStars);
