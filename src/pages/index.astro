@@ -1,0 +1,72 @@
+---
+import { messages } from "../i18n";
+const fa = messages.fa;
+---
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080707" />
+    <meta name="description" content="GODHAND — جهانی برای اندیشه، گفت‌وگو و ساختن." />
+    <title>GODHAND — Beyond the Ordinary</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="topbar">
+      <a class="brand" href="#home" aria-label="GODHAND home"><span class="brand-mark">G</span><span>GODHAND</span></a>
+      <nav aria-label="Main navigation"><a href="#home" data-i="navHome">{fa.navHome}</a><a href="#hand" data-i="navChat">{fa.navChat}</a><a href="#archive" data-i="navArchive">{fa.navArchive}</a><a href="#about" data-i="navAbout">{fa.navAbout}</a></nav>
+      <button class="lang" id="lang" type="button" aria-label="Switch language">EN</button>
+    </header>
+    <main>
+      <section class="hero" id="home">
+        <div class="moon-wrap" aria-hidden="true"><div class="moon"></div><div class="moon-halo"></div></div>
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span><span data-i="eyebrow">{fa.eyebrow}</span></p>
+          <h1><span data-i="titleA">{fa.titleA}</span><br /><em data-i="titleB">{fa.titleB}</em><br /><span class="red" data-i="titleC">{fa.titleC}</span></h1>
+          <p class="intro" data-i="description">{fa.description}</p>
+          <div class="actions"><a class="primary" href="#hand" data-i="enter">{fa.enter}</a><a class="secondary" href="#archive" data-i="explore">{fa.explore}<span>↗</span></a></div>
+        </div>
+        <div class="hero-foot"><span data-i="status">{fa.status}</span><span>01 — 03</span></div>
+        <div class="vertical-note">A NEW WORLD BEGINS</div>
+      </section>
+      <section class="manifesto" id="hand">
+        <div class="section-index"><span>01</span><i></i><span data-i="chapter">{fa.chapter}</span></div>
+        <div class="manifesto-content"><h2 data-i="chapterTitle">{fa.chapterTitle}</h2><p data-i="chapterText">{fa.chapterText}</p></div>
+        <div class="orbit" aria-hidden="true"><span></span><b>✳</b></div>
+      </section>
+      <section class="features" id="archive">
+        <article class="feature"><span class="feature-no">I.</span><div class="feature-symbol">◉</div><h3 data-i="featureAI">{fa.featureAI}</h3><p data-i="featureAIText">{fa.featureAIText}</p></article>
+        <article class="feature"><span class="feature-no">II.</span><div class="feature-symbol">⌘</div><h3 data-i="featureArchive">{fa.featureArchive}</h3><p data-i="featureArchiveText">{fa.featureArchiveText}</p></article>
+        <article class="feature"><span class="feature-no">III.</span><div class="feature-symbol">⟡</div><h3 data-i="featureWorld">{fa.featureWorld}</h3><p data-i="featureWorldText">{fa.featureWorldText}</p></article>
+      </section>
+    </main>
+    <footer id="about"><a class="brand" href="#home"><span class="brand-mark">G</span><span>GODHAND</span></a><p data-i="footer">{fa.footer}</p><span>© 2026 GODHAND</span></footer>
+  </body>
+</html>
+<style>
+:root{color-scheme:dark;--bg:#080707;--panel:#100d0d;--text:#eee9e5;--muted:#928984;--red:#a52b32;--line:#302222}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:"Vazirmatn",sans-serif;font-weight:300}.grain{position:fixed;inset:0;pointer-events:none;z-index:10;opacity:.09;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E")}.topbar{height:82px;padding:0 7vw;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff0c;position:absolute;z-index:4;top:0;width:100%}.brand{display:flex;gap:10px;align-items:center;color:var(--text);text-decoration:none;font:600 16px "Cormorant Garamond",serif;letter-spacing:3px}.brand-mark{width:30px;height:30px;border:1px solid #853139;color:#c65a60;display:grid;place-items:center;font:600 20px "Cormorant Garamond",serif}.topbar nav{display:flex;gap:35px}.topbar nav a{color:#b9b0aa;text-decoration:none;font-size:12px;transition:color .25s}.topbar nav a:hover{color:#fff}.lang{border:1px solid #ffffff2b;background:transparent;color:#eee;padding:8px 14px;font:500 11px "Cormorant Garamond",serif;letter-spacing:1px;cursor:pointer}.hero{min-height:760px;height:100svh;max-height:1000px;position:relative;display:flex;align-items:center;padding:120px 12vw 75px;overflow:hidden;background:radial-gradient(ellipse at 72% 45%,#32101455 0%,transparent 38%),linear-gradient(115deg,#090707 25%,#10090a 100%)}.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#080707 0%,transparent 70%),linear-gradient(0deg,#080707 0%,transparent 25%);pointer-events:none}.hero-copy{position:relative;z-index:2;max-width:600px}.eyebrow{display:flex;align-items:center;gap:12px;color:#c18c89;font-size:11px;letter-spacing:1px;margin:0 0 25px}.eyebrow span:first-child{width:30px;height:1px;background:var(--red)}h1{font-size:clamp(58px,8vw,112px);line-height:.98;letter-spacing:-3px;font-weight:500;margin:0;font-family:"Cormorant Garamond","Vazirmatn",serif}html[lang=fa] h1{font-family:"Vazirmatn",sans-serif;line-height:1.35;letter-spacing:-2px;font-size:clamp(48px,7vw,90px)}h1 em{font-style:normal;color:#b7a7a1;font-weight:300}.red{color:#a63a40}.intro{max-width:390px;color:#9e928d;font-size:14px;line-height:2.2;margin:24px 0 30px}.actions{display:flex;align-items:center;gap:28px}.primary{background:#8e252c;color:#fff;text-decoration:none;padding:13px 24px;font-size:12px;box-shadow:0 8px 35px #9a20252b;transition:.3s}.primary:hover{background:#b63840;transform:translateY(-2px)}.secondary{color:#c9bfba;text-decoration:none;font-size:12px}.secondary span{margin-inline-start:10px;color:#a94349}.moon-wrap{position:absolute;z-index:1;right:13%;top:23%;width:min(39vw,480px);aspect-ratio:1;display:grid;place-items:center}.moon{width:70%;height:70%;border-radius:50%;background:radial-gradient(circle at 38% 35%,#a34b4b 0%,#63252b 34%,#301317 68%,#12090b 100%);box-shadow:0 0 35px #7e252b55,0 0 110px #711b2430,inset -30px -18px 50px #050304;animation:moonPulse 9s ease-in-out infinite}.moon:after{content:"";display:block;width:100%;height:100%;border-radius:50%;background:radial-gradient(ellipse at 30% 25%,#d28a7b22,transparent 48%),repeating-radial-gradient(ellipse at 55% 45%,transparent 0 18px,#1b090a22 19px 21px)}.moon-halo{position:absolute;inset:0;border:1px solid #a8444830;border-radius:50%;box-shadow:0 0 70px #9b303022;animation:halo 22s linear infinite}.moon-halo:before,.moon-halo:after{content:"";position:absolute;inset:8%;border:1px solid #b15a5520;border-radius:50%}.moon-halo:after{inset:17%;border-style:dashed;opacity:.5}@keyframes moonPulse{50%{filter:brightness(1.15);box-shadow:0 0 55px #a22c3555,0 0 140px #711b243c,inset -30px -18px 50px #050304}}@keyframes halo{to{transform:rotate(360deg)}}.hero-foot{position:absolute;bottom:36px;left:7vw;right:7vw;display:flex;justify-content:space-between;color:#675c58;font:10px "Cormorant Garamond",serif;letter-spacing:2px;z-index:2}.vertical-note{position:absolute;right:3vw;top:48%;writing-mode:vertical-rl;font:9px "Cormorant Garamond",serif;letter-spacing:4px;color:#6b4b4b;z-index:2}.manifesto{position:relative;min-height:370px;padding:100px 12vw;display:grid;grid-template-columns:1fr 2fr;gap:7vw;align-items:start;background:linear-gradient(110deg,#0b0909,#100b0c);border-top:1px solid #ffffff0a;border-bottom:1px solid #ffffff0a;overflow:hidden}.section-index{display:flex;align-items:center;gap:13px;color:#8c7772;font-size:11px}.section-index span:first-child{color:#b44a4f;font:18px "Cormorant Garamond",serif}.section-index i{width:35px;height:1px;background:#673137}.manifesto-content{max-width:600px}.manifesto h2{font-size:clamp(28px,4vw,44px);font-weight:400;margin:0 0 18px}.manifesto p{font-size:14px;color:#988b85;line-height:2.2;max-width:520px}.orbit{position:absolute;left:8%;bottom:-100px;width:240px;height:240px;border:1px solid #8c343522;border-radius:50%;display:grid;place-items:center;color:#a34a4f;font-size:32px}.orbit span{position:absolute;inset:25px;border:1px dashed #8c343522;border-radius:50%}.features{padding:95px 12vw;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.feature{position:relative;min-height:210px;padding:27px 25px;border:1px solid #ffffff12;background:linear-gradient(145deg,#151010,#0c0909);transition:transform .3s,border-color .3s}.feature:hover{transform:translateY(-5px);border-color:#85343a88}.feature-no{color:#9f464b;font:16px "Cormorant Garamond",serif}.feature-symbol{font-size:27px;color:#a94a50;margin:22px 0 14px}.feature h3{font-size:16px;font-weight:500;margin:0 0 8px}.feature p{font-size:12px;color:#8d827d;line-height:2;margin:0}footer{border-top:1px solid #ffffff12;padding:28px 7vw;display:flex;justify-content:space-between;align-items:center;color:#776d68;font-size:11px}footer p{margin:0}@media(max-width:760px){.topbar{height:70px;padding:0 5vw}.topbar nav{gap:13px}.topbar nav a{font-size:10px}.brand{font-size:13px;letter-spacing:2px}.brand-mark{width:26px;height:26px}.hero{min-height:720px;padding:125px 8vw 80px;align-items:flex-end}.hero-copy{margin-bottom:60px}.moon-wrap{width:78vw;right:5%;top:14%;opacity:.78}.hero:after{background:linear-gradient(0deg,#080707 5%,#080707dd 35%,transparent 85%)}.vertical-note{display:none}.hero-foot{bottom:22px}.manifesto{padding:70px 8vw;grid-template-columns:1fr;gap:30px}.features{padding:65px 8vw;grid-template-columns:1fr}.feature{min-height:170px}footer{padding:25px 6vw;gap:12px;flex-wrap:wrap}footer p{order:3;width:100%}}@media(max-width:420px){.topbar nav{gap:9px}.topbar nav a{font-size:9px}.lang{padding:7px 9px}.hero{min-height:690px}html[lang=fa] h1{font-size:47px}.intro{font-size:12px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+<script>
+import { messages } from "../i18n";
+const langButton = document.querySelector("#lang");
+let language = localStorage.getItem("godhand-language") === "en" ? "en" : "fa";
+function applyLanguage(next) {
+  language = next;
+  document.documentElement.lang = next;
+  document.documentElement.dir = next === "fa" ? "rtl" : "ltr";
+  document.querySelectorAll("[data-i]").forEach((node) => {
+    const key = node.getAttribute("data-i");
+    const value = messages[next][key];
+    if (value) node.textContent = value;
+  });
+  langButton.textContent = messages[next].language;
+  localStorage.setItem("godhand-language", next);
+}
+langButton?.addEventListener("click", () => applyLanguage(language === "fa" ? "en" : "fa"));
+applyLanguage(language);
+</script>
