@@ -37,7 +37,7 @@ const title = "GODHAND — فراتر از معمول";
       <div class="header-actions">
         <button class="language" id="language" type="button" aria-label="Change language">EN</button>
         <a class="header-cta" href="#gateway"><span data-fa="ورود" data-en="Enter">ورود</span><span>↗</span></a>
-        <button class="menu-toggle" id="menuToggle" aria-label="Open menu" type="button"><i></i><i></i></button>
+        <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav" type="button"><i></i><i></i></button>
       </div>
     </header>
 
@@ -141,10 +141,12 @@ const title = "GODHAND — فراتر از معمول";
       menuToggle.addEventListener('click', () => {
         nav.classList.toggle('open');
         menuToggle.classList.toggle('active');
+        menuToggle.setAttribute('aria-expanded', String(nav.classList.contains('open')));
       });
       nav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
         nav.classList.remove('open');
         menuToggle.classList.remove('active');
+        menuToggle.setAttribute('aria-expanded', 'false');
       }));
 
       const progress = document.querySelector<HTMLElement>('#progress')!;
@@ -172,7 +174,11 @@ const title = "GODHAND — فراتر از معمول";
       const clock = document.querySelector<HTMLElement>('#clock')!;
       const updateClock = () => clock.textContent = new Intl.DateTimeFormat(lang === 'fa' ? 'fa-IR' : 'en-GB', {hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date());
       updateClock();
-      window.setInterval(updateClock, 1000);
+      let clockTimer: number | undefined;
+      const startClock = () => { if (clockTimer === undefined) { updateClock(); clockTimer = window.setInterval(updateClock, 1000); } };
+      const stopClock = () => { if (clockTimer !== undefined) { window.clearInterval(clockTimer); clockTimer = undefined; } };
+      startClock();
+      document.addEventListener('visibilitychange', () => document.hidden ? stopClock() : startClock());
 
       const canvas = document.querySelector<HTMLCanvasElement>('#stars')!;
       const ctx = canvas.getContext('2d')!;
@@ -197,10 +203,15 @@ const title = "GODHAND — فراتر از معمول";
           ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
           ctx.fillStyle = 'rgba(224,176,170,' + p.a + ')'; ctx.fill();
         });
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) requestAnimationFrame(drawStars);
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && !document.hidden) starsFrame = requestAnimationFrame(drawStars);
       };
       resizeStars(); drawStars();
       window.addEventListener('resize', resizeStars, {passive:true});
+      let starsFrame = 0;
+      document.addEventListener('visibilitychange', () => {
+        if (document.hidden) cancelAnimationFrame(starsFrame);
+        else if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) starsFrame = requestAnimationFrame(drawStars);
+      });
 
       // Subtle magnetic response on pointer devices only.
       if (window.matchMedia('(hover: hover) and (pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -303,10 +314,10 @@ const title = "GODHAND — فراتر از معمول";
           });
           soundButton.classList.add('playing');
           soundButton.setAttribute('aria-pressed', 'true');
-          soundButton.querySelector('small')!.textContent = lang === 'fa' ? 'صدا روشن' : 'SOUND ON';
+          soundButton.querySelector<HTMLElement>('.sound-state')!.textContent = lang === 'fa' ? 'صدا روشن' : 'SOUND ON';
         } catch {
           stopAmbient();
-          soundButton.querySelector('small')!.textContent = lang === 'fa' ? 'صدا پشتیبانی نشد' : 'AUDIO UNAVAILABLE';
+          soundButton.querySelector<HTMLElement>('.sound-state')!.textContent = lang === 'fa' ? 'صدا پشتیبانی نشد' : 'AUDIO UNAVAILABLE';
         }
       });
       document.addEventListener('visibilitychange', () => { if (document.hidden && soundNodes.length) stopAmbient(); });
@@ -314,7 +325,7 @@ const title = "GODHAND — فراتر از معمول";
       const observer = new IntersectionObserver(entries => entries.forEach(entry => {
         if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
       }), {threshold:.12});
-      document.querySelectorAll('.section, .signal-card, .quote-section, .gateway-frame').forEach(el => {
+      document.querySelectorAll('.section, .signal-card, .quote-section, .gateway-frame, .intro-layout, .signals-heading').forEach(el => {
         el.classList.add('reveal'); observer.observe(el);
       });
     </script>
