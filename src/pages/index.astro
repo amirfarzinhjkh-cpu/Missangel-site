@@ -156,20 +156,37 @@ const title = "GODHAND — فراتر از معمول";
       }, { passive: true });
 
       const quotes: Record<'fa' | 'en', string[]> = {
-        fa: ['وقتی دنیا تو را به زانو درمی‌آورد، برخاستن تبدیل به پاسخ می‌شود.','زخم، پایان داستان نیست؛ نشانه‌ی عبور از آن است.','لازم نیست شکست‌ناپذیر باشی؛ کافی‌ست تسلیم نشوی.','در تاریکی هم می‌توان مسیر خودت را ساخت.'],
-        en: ["When the world brings you to your knees, standing becomes your answer.","A scar is not the end of the story. It is proof you crossed it.","You do not have to be invincible. You only have to keep going.","Even in darkness, you can carve your own path."]
+        fa: ['وقتی دنیا تو را به زانو درمی‌آورد، برخاستن تبدیل به پاسخ می‌شود.','زخم، پایان داستان نیست؛ نشانه‌ی عبور از آن است.','لازم نیست شکست‌ناپذیر باشی؛ کافی‌ست تسلیم نشوی.','در تاریکی هم می‌توان مسیر خودت را ساخت.','گاهی تنها پیروزی این است که اجازه ندهی تلخی، شبیهت کند.','راهی که خودت انتخاب کرده‌ای، حتی در مه هم راه توست.','قدرت، فریاد نیست؛ تصمیمی‌ست که هر روز تکرار می‌کنی.','هیچ‌کس جای قدم‌هایی را که برنداشته‌ای پر نمی‌کند.','از خاکستر، اگر اراده باشد، می‌شود آغاز دیگری ساخت.','ترس را حذف نکن؛ یاد بگیر با وجودش حرکت کنی.','شکست وقتی پایان می‌شود که دیگر چیزی از آن نیاموزی.','در سکوت هم می‌توان چیزی ساخت که جهان نتواند نادیده بگیرد.'],
+        en: ["When the world brings you to your knees, standing becomes your answer.","A scar is not the end of the story. It is proof you crossed it.","You do not have to be invincible. You only have to keep going.","Even in darkness, you can carve your own path.","Do not let bitterness turn you into what hurt you.","The road you chose is still yours, even when hidden by fog.","Strength is not a shout; it is a decision repeated each day.","No one can take the steps you keep refusing to make.","With enough will, even ash can become a beginning.","Do not wait for fear to disappear. Move with it.","Failure becomes final only when you stop learning from it.","Silence can build things the world cannot ignore."]
       };
-      let quoteIndex = 0;
-      document.querySelector<HTMLButtonElement>('#newQuote')!.addEventListener('click', () => {
-        quoteIndex = (quoteIndex + 1) % quotes[lang].length;
-        const quote = document.querySelector<HTMLElement>('#quoteText')!;
-        quote.classList.add('fade');
+      const quoteKey = 'godhand-quote-cycle-v2';
+      let quoteBag: number[] = [];
+      let lastQuote = -1;
+      try { const saved = JSON.parse(localStorage.getItem(quoteKey) || '{}'); quoteBag = Array.isArray(saved.bag) ? saved.bag.filter((n:number) => Number.isInteger(n) && n >= 0 && n < quotes.fa.length) : []; lastQuote = Number.isInteger(saved.last) ? saved.last : -1; } catch { quoteBag = []; }
+      const nextQuote = () => {
+        if (!quoteBag.length) {
+          quoteBag = quotes.fa.map((_, i) => i);
+          for (let i = quoteBag.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [quoteBag[i], quoteBag[j]] = [quoteBag[j], quoteBag[i]]; }
+          if (quoteBag.length > 1 && quoteBag[quoteBag.length - 1] === lastQuote) [quoteBag[0], quoteBag[quoteBag.length - 1]] = [quoteBag[quoteBag.length - 1], quoteBag[0]];
+        }
+        const next = quoteBag.pop()!;
+        lastQuote = next;
+        try { localStorage.setItem(quoteKey, JSON.stringify({bag: quoteBag, last: lastQuote})); } catch { /* Rotation still works for this visit. */ }
+        return next;
+      };
+      let quoteIndex = nextQuote();
+      const quote = document.querySelector<HTMLElement>('#quoteText')!;
+      const quoteNumber = document.querySelector<HTMLElement>('#quoteNumber')!;
+      const showQuote = (animate = false) => {
+        if (animate) quote.classList.add('fade');
         window.setTimeout(() => {
           quote.textContent = quotes[lang][quoteIndex];
-          document.querySelector<HTMLElement>('#quoteNumber')!.textContent = String(quoteIndex + 1).padStart(3, '0');
+          quoteNumber.textContent = String(quoteIndex + 1).padStart(3, '0');
           quote.classList.remove('fade');
-        }, 180);
-      });
+        }, animate ? 180 : 0);
+      };
+      showQuote();
+      document.querySelector<HTMLButtonElement>('#newQuote')!.addEventListener('click', () => { quoteIndex = nextQuote(); showQuote(true); });
 
       const clock = document.querySelector<HTMLElement>('#clock')!;
       const updateClock = () => clock.textContent = new Intl.DateTimeFormat(lang === 'fa' ? 'fa-IR' : 'en-GB', {hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false}).format(new Date());
