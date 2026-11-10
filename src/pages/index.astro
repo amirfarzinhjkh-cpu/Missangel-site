@@ -52,20 +52,20 @@ const fa = messages.fa;
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 </style>
 <script>
-import { messages } from "../i18n";
-const langButton = document.querySelector("#lang");
-let language = localStorage.getItem("godhand-language") === "en" ? "en" : "fa";
-function applyLanguage(next) {
+import { messages, type Language } from "../i18n";
+const langButton = document.querySelector<HTMLButtonElement>("#lang");
+let language: Language = localStorage.getItem("godhand-language") === "en" ? "en" : "fa";
+function applyLanguage(next: Language) {
   language = next;
   document.documentElement.lang = next;
   document.documentElement.dir = next === "fa" ? "rtl" : "ltr";
-  document.querySelectorAll("[data-i]").forEach((node) => {
+  document.querySelectorAll<HTMLElement>("[data-i]").forEach((node) => {
     const key = node.getAttribute("data-i");
-    const copy = messages[next] as Record<string, string>;
-    const value = copy[key];
+    const copy = messages[next] as unknown as Record<string, string>;
+    const value = key ? copy[key] : undefined;
     if (value) node.textContent = value;
   });
-  langButton.textContent = messages[next].language;
+  if (langButton) langButton.textContent = messages[next].language;
   localStorage.setItem("godhand-language", next);
 }
 langButton?.addEventListener("click", () => applyLanguage(language === "fa" ? "en" : "fa"));
