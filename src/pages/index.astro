@@ -226,6 +226,54 @@ const title = "GODHAND — فراتر از معمول";
         });
       }
 
+      // Cinematic parallax is pointer/scroll driven, frame-limited, and disabled for reduced motion.
+      const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
+      const hero = document.querySelector<HTMLElement>('.hero');
+      const moonScene = document.querySelector<HTMLElement>('.moon-scene');
+      const heroGrid = document.querySelector<HTMLElement>('.hero-grid');
+      let motionFrame = 0;
+      let pointerX = 0, pointerY = 0;
+      let targetX = 0, targetY = 0;
+      const renderMotion = () => {
+        motionFrame = 0;
+        if (motionPreference.matches || document.hidden) return;
+        if (hero && moonScene && heroGrid) {
+          const bounds = hero.getBoundingClientRect();
+          const progress = Math.max(-1, Math.min(1, -bounds.top / Math.max(bounds.height, 1)));
+          const x = finePointer.matches ? pointerX : 0;
+          const y = finePointer.matches ? pointerY : 0;
+          moonScene.style.setProperty('--scene-x', (x * 10).toFixed(1) + 'px');
+          moonScene.style.setProperty('--scene-y', (y * 8 - progress * 26).toFixed(1) + 'px');
+          heroGrid.style.setProperty('--grid-y', (progress * -18).toFixed(1) + 'px');
+        }
+      };
+      const requestMotion = () => { if (!motionFrame && !motionPreference.matches) motionFrame = requestAnimationFrame(renderMotion); };
+      if (!motionPreference.matches) {
+        window.addEventListener('scroll', requestMotion, {passive:true});
+        window.addEventListener('resize', requestMotion, {passive:true});
+        if (finePointer.matches && hero) {
+          hero.addEventListener('pointermove', event => {
+            const rect = hero.getBoundingClientRect();
+            targetX = ((event.clientX - rect.left) / rect.width - .5) * 2;
+            targetY = ((event.clientY - rect.top) / rect.height - .5) * 2;
+            pointerX += (targetX - pointerX) * .18;
+            pointerY += (targetY - pointerY) * .18;
+            requestMotion();
+          }, {passive:true});
+          hero.addEventListener('pointerleave', () => { targetX = 0; targetY = 0; pointerX = 0; pointerY = 0; requestMotion(); });
+        }
+        document.querySelectorAll<HTMLElement>('.signal-card').forEach(card => {
+          card.addEventListener('pointermove', event => {
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty('--pointer-x', (event.clientX - rect.left) + 'px');
+            card.style.setProperty('--pointer-y', (event.clientY - rect.top) + 'px');
+          }, {passive:true});
+        });
+        document.addEventListener('visibilitychange', requestMotion);
+      }
+      document.querySelectorAll<HTMLElement>('.signal-card.reveal').forEach((card,index) => card.style.setProperty('--reveal-delay', (index * 90) + 'ms'));
+
       // Active section indicator.
       const sectionLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.section-dots a'));
       const sectionObserver = new IntersectionObserver(entries => {
