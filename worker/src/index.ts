@@ -80,8 +80,9 @@ export default {
     if (typeof body.message !== "string" || !body.message.trim() || body.message.length > 4000) {
       return json({ error: "invalid_message" }, 400, headers);
     }
+    const message = body.message.trim();
     try {
-      const answer = await askGemini(body.message.trim(), env).catch(() => askOpenRouter(body.message!.trim(), env));
+      const answer = await askGemini(message, env).catch(() => askOpenRouter(message, env));
       return json({ answer }, 200, headers);
     } catch {
       return json({ error: "providers_unavailable", message: "The AI service is temporarily unavailable." }, 503, headers);
