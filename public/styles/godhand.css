@@ -515,3 +515,42 @@ h1 strong { color:#d45b64; text-shadow:0 0 34px #a72b3940; font-weight:500; }
 .card-arrow:hover { color:#f0a0a3; transform:translate(3px,-3px); }
 .status-pill[href] { display:inline-flex; align-items:center; text-decoration:none; transition:background .25s ease,border-color .25s ease,color .25s ease; }
 .status-pill[href]:hover { background:#8e253326; border-color:#c45a65; color:#f0b5b5; }
+
+
+/* GODHAND — cinematic motion pass: restrained depth, atmospheric ash, smooth scroll response */
+.hero { perspective: 1100px; }
+.moon-scene { transform: translate3d(var(--scene-x,0px),var(--scene-y,0px),0) scale(1); will-change: transform; }
+.hero-grid { transform: translate3d(0,var(--grid-y,0px),0); }
+.ash-drift {
+  position:absolute; z-index:2; inset:-12% -5%; pointer-events:none; opacity:.32;
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 24%,#e5b6a566 50%,transparent 100%),
+    radial-gradient(1px 1px at 34% 68%,#d78b8b88 50%,transparent 100%),
+    radial-gradient(2px 2px at 76% 35%,#c96a7555 50%,transparent 100%),
+    radial-gradient(1px 1px at 88% 79%,#e8c1b866 50%,transparent 100%);
+  background-size: 310px 270px,390px 330px,470px 410px,350px 300px;
+  animation: ash-fall 32s linear infinite;
+}
+@keyframes ash-fall { from { background-position:0 -260px,0 -330px,0 -410px,0 -300px; } to { background-position:120px 900px,-90px 1000px,150px 1100px,-70px 950px; } }
+.hero::before {
+  position:absolute; z-index:1; inset:0; pointer-events:none; content:"";
+  background:radial-gradient(ellipse at 52% 45%,transparent 35%,#05040766 100%);
+}
+.section, .quote-section, .gateway-frame { scroll-margin-top: 6rem; }
+.reveal { opacity:0; transform:translate3d(0,34px,0) scale(.985); filter:blur(3px); }
+.reveal.visible { opacity:1; transform:translate3d(0,0,0) scale(1); filter:blur(0); }
+.signal-card.reveal { transition-delay:var(--reveal-delay,0ms); }
+@media (hover:hover) and (pointer:fine) {
+  .signal-card { transition:transform .55s var(--ease-cinematic),border-color .35s ease,box-shadow .45s ease; }
+  .signal-card:hover { transform:translate3d(0,-7px,0) rotateX(.6deg); }
+}
+@media (max-width:760px) {
+  .moon-scene { transform:translate3d(0,var(--scene-y,0px),0); }
+  .ash-drift { opacity:.2; animation-duration:46s; }
+  .reveal { filter:none; transform:translate3d(0,20px,0); }
+}
+@media (prefers-reduced-motion:reduce) {
+  .ash-drift { animation:none !important; }
+  .moon-scene,.hero-grid { transform:none !important; }
+  .reveal,.reveal.visible { opacity:1 !important; transform:none !important; filter:none !important; }
+}
