@@ -225,10 +225,11 @@ const title = "GODHAND — فراتر از معمول";
       document.addEventListener('visibilitychange', () => document.hidden ? stopClock() : startClock());
 
       const canvas = document.querySelector<HTMLCanvasElement>('#stars')!;
-      const ctx = canvas.getContext('2d')!;
+      const ctx = canvas.getContext('2d');
       let particles: Array<{x:number;y:number;r:number;a:number;s:number}> = [];
       let width = 0, height = 0, pixelRatio = 1;
       const resizeStars = () => {
+        if (!ctx) return;
         pixelRatio = Math.min(window.devicePixelRatio || 1, 1.5);
         width = window.innerWidth; height = window.innerHeight;
         canvas.width = width * pixelRatio; canvas.height = height * pixelRatio;
@@ -240,6 +241,7 @@ const title = "GODHAND — فراتر از معمول";
         }));
       };
       const drawStars = () => {
+        if (!ctx) return;
         ctx.clearRect(0, 0, width, height);
         particles.forEach(p => {
           p.y -= p.s;
@@ -250,7 +252,8 @@ const title = "GODHAND — فراتر از معمول";
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && !document.hidden) starsFrame = requestAnimationFrame(drawStars);
       };
       let starsFrame = 0;
-      resizeStars(); drawStars();
+      resizeStars();
+      if (ctx) drawStars(); else canvas.hidden = true;
       window.addEventListener('resize', resizeStars, {passive:true});
       document.addEventListener('visibilitychange', () => {
         if (document.hidden) cancelAnimationFrame(starsFrame);
@@ -414,12 +417,15 @@ const title = "GODHAND — فراتر از معمول";
       });
       document.addEventListener('visibilitychange', () => { if (document.hidden && soundNodes.length) stopAmbient(); });
 
-      const observer = new IntersectionObserver(entries => entries.forEach(entry => {
-        if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
-      }), {threshold:.12});
-      document.querySelectorAll('.section, .signal-card, .quote-section, .gateway-frame, .intro-layout, .signals-heading').forEach(el => {
-        el.classList.add('reveal'); observer.observe(el);
-      });
+      const revealTargets = document.querySelectorAll('.section, .signal-card, .quote-section, .gateway-frame, .intro-layout, .signals-heading');
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+          if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+        }), {threshold:.12});
+        revealTargets.forEach(el => { el.classList.add('reveal'); observer.observe(el); });
+      } else {
+        revealTargets.forEach(el => el.classList.add('visible'));
+      }
     </script>
       <script src="/scripts/ashen-atmosphere.js" defer></script>
   </body>
