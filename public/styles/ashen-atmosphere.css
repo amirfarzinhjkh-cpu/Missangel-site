@@ -44,3 +44,40 @@ body:has(#godhand-atmosphere)::before{content:"";position:fixed;inset:0;z-index:
 body:has(#soundToggle) #soundToggle{display:flex!important;z-index:40;backdrop-filter:blur(12px)}
 body:has(#soundToggle) #soundToggle.playing{border-color:#91444a;color:#e2c7bd}
 @media(max-width:700px){body:has(#soundToggle) #soundToggle{bottom:14px;right:14px}}
+
+
+/* GODHAND signature pass: make the eclipse and motion legible at first glance. */
+#godhand-atmosphere{opacity:.92;filter:saturate(1.3) contrast(1.12)}
+.ashen-grain{opacity:.045}
+.ashen-vignette{background:radial-gradient(ellipse at 52% 42%,transparent 34%,rgba(0,0,0,.48) 100%)}
+.hero .ash-drift{opacity:.78}
+.hero .ash-drift::before,.hero .ash-drift::after{background-size:61px 87px,109px 137px;animation-duration:19s}
+.hero .ash-drift::after{opacity:.7;animation-duration:29s}
+.moon-scene{filter:drop-shadow(0 0 34px rgba(155,42,56,.16))}
+.moon-scene::before{content:"";position:absolute;width:78%;height:78%;border:1px solid rgba(220,103,111,.34);border-radius:50%;box-shadow:0 0 35px rgba(174,45,59,.2),inset 0 0 28px rgba(174,45,59,.08);animation:eclipse-pulse 6s ease-in-out infinite}
+.moon-scene::after{content:"";position:absolute;width:68%;height:68%;border:1px solid rgba(224,149,139,.18);border-radius:50%;transform:rotate(-24deg) scaleY(.34);animation:eclipse-orbit 24s linear infinite}
+.moon{box-shadow:inset -35px -24px 55px #08060b,0 0 70px #c13b4c66,0 0 190px #8e1d2a38;animation:moon-breath 7s ease-in-out infinite}
+.moon::after{content:"";position:absolute;z-index:2;top:7%;left:32%;width:78%;height:78%;border-radius:50%;background:radial-gradient(circle at 34% 30%,#271018 0,#0a070d 58%,#030306 100%);box-shadow:-13px 0 28px rgba(236,128,126,.28);animation:eclipse-cross 12s cubic-bezier(.55,.05,.35,1) infinite alternate}
+.orbit-a{animation:orbit-drift 22s linear infinite}
+.orbit-b{animation:orbit-drift 34s linear infinite reverse}
+.dot-a{animation:ember-blink 2.4s ease-in-out infinite}
+.dot-b{animation:ember-blink 3.1s ease-in-out infinite reverse}
+.ashen-ember-field{position:fixed;inset:0;z-index:2;overflow:hidden;pointer-events:none;mix-blend-mode:screen}
+.ashen-ember{position:absolute;bottom:-8%;left:var(--x);width:var(--s);height:var(--s);border-radius:50%;background:#e28a78;box-shadow:0 0 9px 2px rgba(207,75,77,.5);opacity:0;animation:ember-rise var(--d) linear var(--delay) infinite}
+.ashen-ember:nth-child(3n){background:#b9a09a;box-shadow:0 0 7px rgba(200,170,160,.45)}
+.ashen-ember:nth-child(4n){width:2px;height:2px}
+.signal-card,.gateway-frame,.panel,.entry{transition:transform .48s cubic-bezier(.2,.75,.2,1),border-color .35s ease,box-shadow .35s ease}
+.signal-card:hover,.gateway-frame:hover{box-shadow:0 24px 70px rgba(0,0,0,.5),0 0 38px rgba(150,42,57,.14)}
+.button-primary{box-shadow:0 8px 35px #9b26352c,0 0 0 1px rgba(236,119,125,.12);transition:transform .35s cubic-bezier(.2,.75,.2,1),box-shadow .35s,filter .35s}
+.button-primary:hover{filter:brightness(1.13);box-shadow:0 14px 48px #b62f3d66,0 0 22px #b62f3d33}
+.scroll-cue i{animation:scroll-pulse 1.7s ease-in-out infinite}
+@keyframes eclipse-pulse{50%{transform:scale(1.055);opacity:.55;box-shadow:0 0 55px rgba(174,45,59,.34),inset 0 0 35px rgba(174,45,59,.14)}}
+@keyframes eclipse-orbit{to{transform:rotate(336deg) scaleY(.34)}}
+@keyframes eclipse-cross{0%{transform:translateX(20%) scale(.96)}100%{transform:translateX(-23%) scale(1.04)}}
+@keyframes moon-breath{50%{filter:brightness(1.13) saturate(1.16)}}
+@keyframes orbit-drift{to{transform:rotate(333deg)}}
+@keyframes ember-blink{50%{opacity:.45;box-shadow:0 0 23px #e56b75}}
+@keyframes ember-rise{0%{transform:translate3d(0,0,0) scale(.65);opacity:0}12%{opacity:.65}75%{opacity:.42}100%{transform:translate3d(42px,-115vh,0) scale(1.3);opacity:0}}
+@keyframes scroll-pulse{0%,100%{transform:scaleY(.65);opacity:.45;transform-origin:top}50%{transform:scaleY(1);opacity:1;transform-origin:top}}
+@media(max-width:700px){#godhand-atmosphere{opacity:.68}.ashen-grain{opacity:.025}.hero .ash-drift{opacity:.64}.moon-scene{top:9%;right:0;width:min(78vw,430px);opacity:.92}.moon-scene::before{width:82%;height:82%}.ashen-ember-field{opacity:.68}.ashen-cursor,.ashen-cursor-core{display:none}}
+@media(prefers-reduced-motion:reduce){.moon-scene::before,.moon-scene::after,.moon,.moon::after,.orbit-a,.orbit-b,.dot-a,.dot-b,.ashen-ember,.scroll-cue i{animation:none!important}.ashen-ember-field{display:none}}
