@@ -11,7 +11,7 @@
   float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1.,0.)),f.x),mix(h(i+vec2(0.,1.)),h(i+vec2(1.,1.)),f.x),f.y);}
   float fb(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*n(p);p*=2.02;a*=.5;}return v;}
   void main(){vec2 uv=gl_FragCoord.xy/r;vec2 p=(uv-.5)*vec2(r.x/r.y,1.);p-=mouse*.018;
-  float clouds=fb(p*3.1+vec2(t*.008,-t*.012));float veil=smoothstep(.24,.82,clouds)*smoothstep(1.0,.12,length(p-vec2(.3,.12)));
+  float clouds=fb(p*3.1+vec2(t*.008,-t*.012));float veil=smoothstep(.24,.82,clouds)*(1.0-smoothstep(.12,1.0,length(p-vec2(.3,.12))));
   float d=length((p-vec2(.3,.12))*vec2(1.,1.08));float eclipse=smoothstep(.36,.28,d)*(1.-smoothstep(.28,.32,d));
   float ash=pow(n(uv*r.y*.31+vec2(t*.015)),8.)*.2;
   vec3 c=vec3(.012,.014,.016)+vec3(.15,.035,.044)*(veil*.55+eclipse*.35)+vec3(.32,.28,.25)*(veil*.045+ash);
@@ -30,8 +30,7 @@
   if('IntersectionObserver'in window&&!reduce.matches){const io=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('ashen-reveal');requestAnimationFrame(()=>e.target.classList.add('is-visible'));io.unobserve(e.target);}}),{threshold:.07,rootMargin:'0px 0px -28px'});targets.forEach((el,i)=>{el.dataset.delay=i%4;io.observe(el);});}else targets.forEach(el=>el.classList.add('is-visible'));
   if(fine.matches&&!reduce.matches){
     const ring=document.createElement('div'),core=document.createElement('div');ring.className='ashen-cursor';core.className='ashen-cursor-core';document.body.append(ring,core);
-    let x=-50,y=-50,rx=-50,ry=-50;addEventListener('pointermove',e=>{x=e.clientX;y=e.clientY;ring.classList.add('is-active');core.classList.add('is-active');core.style.left=x+'px';core.style.top=y+'px';},{passive:true});
-    const follow=()=>{rx+=(x-rx)*.22;ry+=(y-ry)*.22;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(follow);};requestAnimationFrame(follow);
+    addEventListener('pointermove',e=>{ring.classList.add('is-active');core.classList.add('is-active');ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';core.style.left=e.clientX+'px';core.style.top=e.clientY+'px';},{passive:true});
     document.querySelectorAll('a,button,input,textarea,select,[role=button]').forEach(el=>{el.addEventListener('pointerenter',()=>ring.classList.add('is-hover'));el.addEventListener('pointerleave',()=>ring.classList.remove('is-hover'));});
     document.querySelectorAll('.signal-card,.panel,.entry,.button-primary,.header-cta').forEach(el=>{el.classList.add('ashen-pointer-glow');el.addEventListener('pointermove',e=>{const b=el.getBoundingClientRect();el.style.setProperty('--px',(e.clientX-b.left)+'px');el.style.setProperty('--py',(e.clientY-b.top)+'px');},{passive:true});});
     const depth=document.querySelectorAll('.moon-scene,.gateway-frame,.card-art');depth.forEach(el=>{el.classList.add('ashen-depth');el.addEventListener('pointermove',e=>{const b=el.getBoundingClientRect(),px=(e.clientX-b.left)/b.width-.5,py=(e.clientY-b.top)/b.height-.5;el.style.transform='perspective(900px) rotateX('+(-py*3)+'deg) rotateY('+(px*4)+'deg) translateZ(0)';},{passive:true});el.addEventListener('pointerleave',()=>{el.style.transform='';});});
