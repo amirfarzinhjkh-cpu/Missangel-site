@@ -959,3 +959,47 @@ h2 em{color:#b17b5c}
  .button-primary,.signal-card,.footer-social>a{transition:none}
  .dragonslayer-scene,.dragonslayer{animation:none}
 }
+
+
+/* BLACK SUN — eclipse replaces the blade */
+.dragonslayer-scene{display:none!important}
+.black-sun-scene{
+  position:absolute;z-index:2;right:5%;top:5%;width:min(54vw,690px);aspect-ratio:1;
+  display:grid;place-items:center;pointer-events:none;opacity:.9;
+  animation:sun-arrive 1.5s cubic-bezier(.16,.75,.22,1) both;
+}
+.black-sun-aura{
+  position:absolute;inset:7%;border-radius:50%;
+  background:radial-gradient(circle,#a34d321c 0%,#6e342015 42%,transparent 72%);
+  filter:blur(30px);animation:sun-breathe 8s ease-in-out infinite;
+}
+.black-sun{position:relative;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 22px 35px #000c)}
+.sun-caption{position:absolute;right:9%;bottom:8%;font:8px "DM Sans",sans-serif;letter-spacing:3px;color:#a88a72;opacity:.7}
+@keyframes sun-arrive{from{opacity:0;transform:translateY(16px) scale(.94)}to{opacity:.9;transform:translateY(0) scale(1)}}
+@keyframes sun-breathe{0%,100%{opacity:.55;transform:scale(.96)}50%{opacity:1;transform:scale(1.04)}}
+
+/* Let the atmosphere show through the content surfaces. */
+.intro-section,.signals-section,.gateway-section{background:rgba(8,13,14,.28)!important}
+.signal-card,.gateway-frame,.intro-copy,.quote-section,
+.workspace-page .panel,.workspace-page .entry{
+  background:rgba(12,18,19,.48)!important;
+  -webkit-backdrop-filter:blur(5px);
+  backdrop-filter:blur(5px);
+  border-color:rgba(197,201,189,.2);
+}
+.signal-card:hover,.workspace-page .entry:hover{
+  background:rgba(18,25,25,.58)!important;
+}
+.quote-section{
+  background:linear-gradient(120deg,rgba(10,16,17,.5),rgba(20,23,21,.42),rgba(10,15,16,.5))!important;
+}
+.gateway-frame{
+  background:radial-gradient(ellipse at 50% 35%,rgba(37,34,27,.5),rgba(17,23,23,.48) 48%,rgba(11,16,17,.5) 100%)!important;
+}
+.workspace-page .panel,.workspace-page .entry{box-shadow:0 12px 40px rgba(0,0,0,.12)!important}
+@media(max-width:760px){
+  .black-sun-scene{top:1%;right:7%;width:min(86vw,440px);opacity:.78}
+  .hero-content{padding-top:270px}
+  .sun-caption{right:2%;bottom:7%;font-size:7px}
+}
+@media(prefers-reduced-motion:reduce){.black-sun-scene,.black-sun-aura{animation:none}}
