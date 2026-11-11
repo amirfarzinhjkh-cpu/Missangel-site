@@ -45,42 +45,33 @@ const title = "GODHAND — فراتر از معمول";
     <main>
       <section class="hero" id="home">
         <div class="ash-drift" aria-hidden="true"></div>
-        <div class="dragonslayer-scene" aria-hidden="true">
-          <div class="blade-backlight"></div>
-          <svg class="dragonslayer" viewBox="0 0 520 900" role="presentation" focusable="false">
+        <div class="black-sun-scene" aria-hidden="true">
+          <div class="black-sun-aura"></div>
+          <svg class="black-sun" viewBox="0 0 600 600" role="presentation" focusable="false">
             <defs>
-              <linearGradient id="iron" x1="0" y1="0" x2="1" y2=".15"><stop offset="0" stop-color="#111719"/><stop offset=".16" stop-color="#394347"/><stop offset=".32" stop-color="#171f22"/><stop offset=".56" stop-color="#596166"/><stop offset=".72" stop-color="#242d30"/><stop offset=".9" stop-color="#0c1113"/><stop offset="1" stop-color="#050809"/></linearGradient>
-              <linearGradient id="edge" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#aab0a9" stop-opacity=".05"/><stop offset=".48" stop-color="#d1d0c5" stop-opacity=".5"/><stop offset="1" stop-color="#89918d" stop-opacity=".04"/></linearGradient>
-              <linearGradient id="grip" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#090b0c"/><stop offset=".5" stop-color="#514a3e"/><stop offset="1" stop-color="#0a0c0d"/></linearGradient>
-              <filter id="blade-shadow-filter" x="-50%" y="-30%" width="200%" height="180%"><feGaussianBlur stdDeviation="15"/></filter>
-              <filter id="steel-texture"><feTurbulence type="fractalNoise" baseFrequency=".72" numOctaves="2" seed="8"/><feColorMatrix values=".35 0 0 0 .1 .35 0 0 0 .1 .35 0 0 0 .1 0 0 0 .18 0"/><feBlend in="SourceGraphic" mode="screen"/></filter>
+              <radialGradient id="sun-core" cx="50%" cy="48%" r="52%">
+                <stop offset="0" stop-color="#020304"/>
+                <stop offset=".72" stop-color="#050607"/>
+                <stop offset=".91" stop-color="#100d0c"/>
+                <stop offset="1" stop-color="#24100d"/>
+              </radialGradient>
+              <linearGradient id="sun-corona" x1="0" y1="0" x2="1" y2="1">
+                <stop stop-color="#a85c43" stop-opacity=".08"/>
+                <stop offset=".5" stop-color="#c07850" stop-opacity=".72"/>
+                <stop offset="1" stop-color="#6d3028" stop-opacity=".12"/>
+              </linearGradient>
+              <filter id="sun-blur"><feGaussianBlur stdDeviation="13"/></filter>
             </defs>
-            <path d="M255 26 L330 120 L351 690 L288 760 L218 748 L157 690 L177 122 Z" fill="#000" opacity=".7" filter="url(#blade-shadow-filter)"/>
-            <path d="M260 26 L336 116 L350 675 L303 742 L216 742 L169 675 L184 116 Z" fill="url(#iron)" stroke="#87908b" stroke-opacity=".55" stroke-width="3"/>
-            <path d="M260 26 L184 116 L169 675 L216 742 L247 710 L229 133 Z" fill="#080d0f" opacity=".65"/>
-            <path d="M260 26 L336 116 L350 675 L303 742 L260 710 Z" fill="#aab0aa" opacity=".12"/>
-            <path d="M260 40 L321 128 L330 664 L290 710 L260 698 Z" fill="url(#edge)" opacity=".8"/>
-            <path d="M260 28 L336 116 L350 675 L303 742 L216 742 L169 675 L184 116 Z" fill="#c4c9c2" opacity=".22" filter="url(#steel-texture)"/>
-            <path d="M260 48 L321 132 L329 650" fill="none" stroke="#d9ded4" stroke-opacity=".34" stroke-width="2"/>
-            <path d="M193 155 L180 650 M327 155 L340 650" fill="none" stroke="#05090a" stroke-opacity=".72" stroke-width="5"/>
-            <path d="M205 350 L224 370 M296 405 L313 386 M208 535 L225 551" fill="none" stroke="#c0b6a2" stroke-opacity=".22" stroke-width="3"/>
-            <path d="M198 146 L260 75 L315 146 M188 630 L217 704 M332 620 L302 704" fill="none" stroke="#c1c2b8" stroke-opacity=".28" stroke-width="2"/>
-            <g stroke="#b6b9af" stroke-opacity=".23" stroke-width="2" fill="none">
-              <path d="M205 188 l21 36 -13 22 18 33 -8 29 14 22 -9 31"/>
-              <path d="M302 248 l-17 25 12 31 -16 24 9 36 -14 22"/>
-              <path d="M195 442 l18 19 -10 30 16 18 -7 29"/>
-              <path d="M314 475 l-15 24 11 25 -16 22"/>
-              <path d="M235 105 l-15 42 22 24 -13 35"/>
-            </g>
-            <path d="M169 660 L351 660 L370 700 L329 729 L191 729 L150 700 Z" fill="#171c1d" stroke="#77807a" stroke-width="4"/>
-            <path d="M183 679 L337 679 M192 697 L328 697" stroke="#a0a49b" stroke-opacity=".45" stroke-width="3"/>
-            <path d="M238 722 L282 722 L291 844 L270 877 L249 844 Z" fill="url(#grip)" stroke="#77756b" stroke-width="3"/>
-            <path d="M239 742 L282 754 M240 762 L285 775 M242 783 L287 796 M244 804 L289 817 M247 825 L286 838" stroke="#b4a58e" stroke-opacity=".55" stroke-width="8"/>
-            <path d="M241 742 L282 754 M240 762 L285 775 M242 783 L287 796 M244 804 L289 817 M247 825 L286 838" stroke="#171b1b" stroke-width="3"/>
-            <path d="M245 870 L275 870 L283 891 L237 891 Z" fill="#171c1d" stroke="#81877f" stroke-width="3"/>
-            <path d="M184 116 L260 26 L336 116" fill="none" stroke="#c3c5bc" stroke-opacity=".4" stroke-width="2"/>
+            <circle cx="300" cy="300" r="244" fill="none" stroke="#9a4e37" stroke-opacity=".18" stroke-width="2"/>
+            <path d="M300 18 L314 67 341 31 346 83 382 54 376 106 423 86 407 137 458 126 432 172 484 174 448 213 497 229 452 260 497 289 449 308 484 353 434 357 455 409 405 399 411 452 366 426 357 478 321 439 300 488 279 439 243 478 234 426 189 452 195 399 145 409 166 357 116 353 151 308 103 289 148 260 103 229 152 213 116 174 168 172 142 126 193 137 177 86 224 106 218 54 254 83 259 31 286 67 Z" fill="none" stroke="url(#sun-corona)" stroke-width="3" stroke-linejoin="round"/>
+            <circle cx="300" cy="300" r="190" fill="#a84e35" opacity=".16" filter="url(#sun-blur)"/>
+            <circle cx="300" cy="300" r="174" fill="url(#sun-core)" stroke="#b36b4a" stroke-opacity=".64" stroke-width="2"/>
+            <circle cx="300" cy="300" r="183" fill="none" stroke="#d08a5c" stroke-opacity=".24" stroke-width="1"/>
+            <path d="M300 116 A184 184 0 0 1 484 300" fill="none" stroke="#d28b61" stroke-opacity=".7" stroke-width="2"/>
+            <path d="M300 132 A168 168 0 0 0 132 300" fill="none" stroke="#8e4636" stroke-opacity=".4" stroke-width="1"/>
+            <circle cx="300" cy="300" r="202" fill="none" stroke="#c17a52" stroke-opacity=".12" stroke-dasharray="1 12"/>
           </svg>
-          <span class="sword-caption">IRON DOES NOT FORGET</span>
+          <span class="sun-caption">THE BLACK SUN / 001</span>
         </div>
         <div class="hero-content">
           <div class="eyebrow"><span class="live-dot"></span><span data-fa="در جهانی که رحم نمی‌کند" data-en="IN A WORLD THAT SHOWS NO MERCY">در جهانی که رحم نمی‌کند</span></div>
