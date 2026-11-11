@@ -814,3 +814,44 @@ h2 em{color:#a84449}
  .workspace-page .panel{position:static}
  .workspace-page .hero h1{font-size:clamp(42px,11vw,58px)}
 }
+
+/* GODHAND — iron / ash / restrained ember art direction */
+:root{--bg:#080b0c;--surface:#101516;--surface-raised:#171d1e;--text:#e4e2d9;--muted:#9a9b91;--line:#c4c6b51c;--red:#84342e;--red-bright:#b35b43;--rose:#aaa99b}
+body{background:#080b0c;color:#e4e2d9}
+.hero{position:relative;min-height:min(900px,100svh);padding:145px clamp(7%,10vw,150px) 100px;background:radial-gradient(ellipse at 76% 52%,#5d34221c 0,transparent 42%),linear-gradient(110deg,#080b0c 0%,#0b1011 60%,#10100e 100%);overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,#080b0c 0%,#080b0cdd 42%,transparent 78%),linear-gradient(0deg,#080b0c 0%,transparent 32%)}
+.hero-content{position:relative;z-index:4;width:min(54%,650px)}
+.hero h1 strong{color:#b35b43}
+.hero h1 em{color:#c7c6b9}
+.hero-description{color:#b0b1a8}
+.eyebrow,.kicker,.micro-label{color:#a5a596}
+.live-dot{background:#b35b43;box-shadow:0 0 10px #b35b4366}
+.button-primary{background:#79362f;color:#f0e9dc;box-shadow:0 8px 30px #6f302b30}
+.button-primary:hover{background:#9a4637;box-shadow:0 10px 36px #9a463744}
+.dragonslayer-scene{position:absolute;z-index:2;right:8%;top:4%;height:92%;width:min(49vw,620px);display:grid;place-items:center;pointer-events:none;filter:drop-shadow(0 24px 32px #000b);animation:sword-arrive 1.6s cubic-bezier(.16,.75,.22,1) both}
+.dragonslayer{height:100%;width:100%;overflow:visible;transform:rotate(7deg);animation:sword-weight 8s ease-in-out infinite}
+.blade-backlight{position:absolute;width:55%;height:70%;background:radial-gradient(ellipse,#8e49301c 0%,#66706b0b 42%,transparent 72%);filter:blur(30px)}
+.sword-caption{position:absolute;bottom:5%;right:8%;font:9px "DM Sans",sans-serif;letter-spacing:3px;color:#9c8972;opacity:.72}
+.ash-drift{opacity:.28}
+.hero-grid,.hero-orbit,.orbit-line,.moon-dot,.moon-scene,.blade-shadow{display:none!important}
+.side-label{color:#8e8d80}
+.scroll-cue{color:#a4a398}
+.scroll-cue i{background:linear-gradient(#b35b43,transparent)}
+.intro-section,.signals-section,.gateway-section{background-color:#0b1011}
+.signal-card,.gateway-frame{background:#101617;border-color:#d1d0c21c}
+.signal-card:hover,.gateway-frame:hover{border-color:#9a6a4c66;box-shadow:0 24px 70px #0009,0 0 30px #75412b16}
+.quote-section{background:linear-gradient(135deg,#111718,#0b0f10);border-color:#d1d0c218}
+.quote-mark{color:#a65a43}
+.quote-section button{color:#c4b9a4}
+.footer{background:#080b0c;border-color:#d1d0c218}
+@keyframes sword-arrive{from{opacity:0;transform:translateX(45px) scale(.94)}to{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes sword-weight{0%,100%{transform:rotate(7deg) translateY(0)}50%{transform:rotate(6.2deg) translateY(-7px)}}
+@media(max-width:760px){
+ .hero{min-height:880px;padding:112px 7% 88px}
+ .hero-content{width:100%;padding-top:250px}
+ .dragonslayer-scene{top:1%;right:4%;height:54%;width:min(84vw,420px);opacity:.9}
+ .dragonslayer{transform:rotate(8deg)}
+ .hero::after{background:linear-gradient(180deg,transparent 0%,#080b0c30 35%,#080b0c 74%)}
+ .sword-caption{bottom:4%;right:0;font-size:8px}
+}
+@media(prefers-reduced-motion:reduce){.dragonslayer-scene,.dragonslayer{animation:none}}
