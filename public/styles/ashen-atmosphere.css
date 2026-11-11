@@ -39,3 +39,8 @@ body:has(#godhand-atmosphere)::before{content:"";position:fixed;inset:0;z-index:
 }
 @media(max-width:700px){#godhand-atmosphere{opacity:.44}.ashen-grain{opacity:.02}.ashen-reveal{transform:translate3d(0,14px,0)}.ashen-audio-toggle{right:14px;bottom:14px;padding:9px 11px}.ashen-cursor,.ashen-cursor-core{display:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ashen-reveal,.ashen-reveal.is-visible{opacity:1;transform:none;transition:none}#godhand-atmosphere,.ashen-cursor,.ashen-cursor-core{display:none}.ashen-audio-toggle i{animation:none!important}}
+
+/* Homepage ambience control was previously hidden by a legacy rule. */
+body:has(#soundToggle) #soundToggle{display:flex!important;z-index:40;backdrop-filter:blur(12px)}
+body:has(#soundToggle) #soundToggle.playing{border-color:#91444a;color:#e2c7bd}
+@media(max-width:700px){body:has(#soundToggle) #soundToggle{bottom:14px;right:14px}}
