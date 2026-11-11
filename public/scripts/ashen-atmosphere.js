@@ -24,6 +24,14 @@
   if(gl&&program){const b=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,b);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);gl.useProgram(program);const a=gl.getAttribLocation(program,'p');gl.enableVertexAttribArray(a);gl.vertexAttribPointer(a,2,gl.FLOAT,false,0,0);uniforms.r=gl.getUniformLocation(program,'r');uniforms.t=gl.getUniformLocation(program,'t');uniforms.mouse=gl.getUniformLocation(program,'mouse');resize();if(!reduce.matches)frame=requestAnimationFrame(render);}else canvas.remove();
   addEventListener('resize',resize,{passive:true});
   if(fine.matches)addEventListener('pointermove',e=>{tx=(e.clientX/w-.5)*2;ty=(e.clientY/hg-.5)*2;},{passive:true});
+
+  // A restrained ember field gives the atmosphere a visible signature without a heavy particle engine.
+  if(!reduce.matches){
+    const field=document.createElement('div');field.className='ashen-ember-field';field.setAttribute('aria-hidden','true');
+    for(let i=0;i<22;i++){const ember=document.createElement('i');ember.className='ashen-ember';ember.style.setProperty('--x',((i*47)%97)+'%');ember.style.setProperty('--s',(i%5===0?3:2)+'px');ember.style.setProperty('--d',(13+(i%7)*3)+'s');ember.style.setProperty('--delay',(-((i*3)%19))+'s');field.append(ember);}
+    document.body.append(field);
+  }
+
   const grain=document.createElement('div');grain.className='ashen-grain';grain.setAttribute('aria-hidden','true');document.body.append(grain);
   const vignette=document.createElement('div');vignette.className='ashen-vignette';vignette.setAttribute('aria-hidden','true');document.body.append(vignette);
   const targets=document.querySelectorAll('main section,.signal-card,.panel,.entry,.gateway-frame,.intro-layout,.signals-heading');
