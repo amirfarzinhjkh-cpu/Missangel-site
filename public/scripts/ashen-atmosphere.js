@@ -53,4 +53,16 @@
   }
   document.addEventListener('visibilitychange',()=>{if(document.hidden&&frame){cancelAnimationFrame(frame);frame=0;}else if(!document.hidden&&program&&!reduce.matches&&!frame)frame=requestAnimationFrame(render);});
   reduce.addEventListener?.('change',()=>{if(reduce.matches&&frame){cancelAnimationFrame(frame);frame=0;}else if(!reduce.matches&&program&&!frame)frame=requestAnimationFrame(render);});
+
+  // GODHAND v2: expose the Forge from the primary navigation without changing page markup.
+  const primaryNav=document.querySelector('.nav');
+  if(primaryNav&&!primaryNav.querySelector('[data-forge-link]')){
+    const link=document.createElement('a');
+    link.href='/forge';
+    link.textContent='کارگاه تازه';
+    link.dataset.fa='کارگاه تازه';
+    link.dataset.en='The Forge';
+    link.dataset.forgeLink='true';
+    primaryNav.append(link);
+  }
 })();
