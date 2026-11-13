@@ -81,3 +81,25 @@ body:has(#soundToggle) #soundToggle.playing{border-color:#91444a;color:#e2c7bd}
 @keyframes scroll-pulse{0%,100%{transform:scaleY(.65);opacity:.45;transform-origin:top}50%{transform:scaleY(1);opacity:1;transform-origin:top}}
 @media(max-width:700px){#godhand-atmosphere{opacity:.68}.ashen-grain{opacity:.025}.hero .ash-drift{opacity:.64}.moon-scene{top:9%;right:0;width:min(78vw,430px);opacity:.92}.moon-scene::before{width:82%;height:82%}.ashen-ember-field{opacity:.68}.ashen-cursor,.ashen-cursor-core{display:none}}
 @media(prefers-reduced-motion:reduce){.moon-scene::before,.moon-scene::after,.moon,.moon::after,.orbit-a,.orbit-b,.dot-a,.dot-b,.ashen-ember,.scroll-cue i{animation:none!important}.ashen-ember-field{display:none}}
+
+
+/* SCROLLTIDE-inspired motion layer — restrained, responsive, and native to GODHAND. */
+.black-sun-scene{
+  translate:0 var(--scroll-y,0px);
+  scale:var(--scroll-scale,1);
+  opacity:var(--scroll-opacity,.9);
+  transform-origin:50% 50%;
+  will-change:translate,scale,opacity;
+}
+.intro-heading,.signals-heading,.gateway-content{
+  translate:0 var(--chapter-drift,0px);
+  will-change:translate;
+}
+.progress{transition:width .08s linear;transform-origin:left center}
+@media(max-width:760px){
+  .black-sun-scene{translate:0 calc(var(--scroll-y,0px)*.62);scale:var(--scroll-scale,1)}
+  .intro-heading,.signals-heading,.gateway-content{translate:0 calc(var(--chapter-drift,0px)*.55)}
+}
+@media(prefers-reduced-motion:reduce){
+  .black-sun-scene,.intro-heading,.signals-heading,.gateway-content{translate:none!important;scale:1!important;will-change:auto}
+}
