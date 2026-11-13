@@ -54,15 +54,36 @@
   document.addEventListener('visibilitychange',()=>{if(document.hidden&&frame){cancelAnimationFrame(frame);frame=0;}else if(!document.hidden&&program&&!reduce.matches&&!frame)frame=requestAnimationFrame(render);});
   reduce.addEventListener?.('change',()=>{if(reduce.matches&&frame){cancelAnimationFrame(frame);frame=0;}else if(!reduce.matches&&program&&!frame)frame=requestAnimationFrame(render);});
 
-  // GODHAND v2: expose the Forge from the primary navigation without changing page markup.
-  const primaryNav=document.querySelector('.nav');
-  if(primaryNav&&!primaryNav.querySelector('[data-forge-link]')){
-    const link=document.createElement('a');
-    link.href='/forge';
-    link.textContent='کارگاه تازه';
-    link.dataset.fa='کارگاه تازه';
-    link.dataset.en='The Forge';
-    link.dataset.forgeLink='true';
-    primaryNav.append(link);
+  // SCROLLTIDE-inspired chapter motion, adapted to GODHAND's existing visual language.
+  // One frame loop keeps scroll effects synchronized and inexpensive.
+  const scrollSun=document.querySelector('.black-sun-scene');
+  const progressBar=document.querySelector('#progress');
+  const driftTargets=document.querySelectorAll('.intro-heading,.signals-heading,.gateway-content');
+  let scrollFrame=0;
+  const paintScrollScene=()=>{
+    scrollFrame=0;
+    if(document.hidden||reduce.matches)return;
+    const maxScroll=Math.max(1,document.documentElement.scrollHeight-innerHeight);
+    const pageProgress=Math.min(1,Math.max(0,scrollY/maxScroll));
+    if(progressBar)progressBar.style.width=(pageProgress*100).toFixed(2)+'%';
+    if(scrollSun){
+      const heroHeight=Math.max(1,document.querySelector('.hero')?.getBoundingClientRect().height||innerHeight);
+      const p=Math.min(1,Math.max(0,scrollY/heroHeight));
+      scrollSun.style.setProperty('--scroll-y',(p*92).toFixed(1)+'px');
+      scrollSun.style.setProperty('--scroll-scale',(1-p*.19).toFixed(3));
+      scrollSun.style.setProperty('--scroll-opacity',(1-p*.72).toFixed(3));
+    }
+    driftTargets.forEach(el=>{
+      const rect=el.getBoundingClientRect();
+      const center=(rect.top+rect.height*.5-innerHeight*.5)/Math.max(innerHeight,1);
+      el.style.setProperty('--chapter-drift',(Math.max(-1,Math.min(1,center))*-13).toFixed(1)+'px');
+    });
+  };
+  const requestScrollScene=()=>{if(!scrollFrame&&!reduce.matches)scrollFrame=requestAnimationFrame(paintScrollScene);};
+  if(!reduce.matches){
+    addEventListener('scroll',requestScrollScene,{passive:true});
+    addEventListener('resize',requestScrollScene,{passive:true});
+    document.addEventListener('visibilitychange',requestScrollScene);
+    requestScrollScene();
   }
 })();
