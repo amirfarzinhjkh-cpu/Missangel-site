@@ -1,0 +1,108 @@
+/* GODHAND — Obsidian / cold-silver color direction */
+:root {
+  --bg:#050608;
+  --surface:#0b0e12;
+  --surface-raised:#11151b;
+  --text:#e7e9ec;
+  --muted:#858d98;
+  --line:#cbd3df18;
+  --red:#762b35;
+  --red-bright:#b64b57;
+  --rose:#aeb8c5;
+}
+body { background:#050608; color:#e7e9ec; }
+.header { border-color:#cbd3df12; background:linear-gradient(#050608e8,transparent); }
+.brand-symbol { border-color:#8793a3; color:#dce2ea; }
+.brand-symbol span,.live-dot,.meta-line,.card-arrow,.intro-bottom span:last-child,
+.footer-bottom a { color:#b64b57; }
+.nav a,.text-link,.language { color:#aeb7c3; }
+.nav a:hover,.footer-social>a:hover { color:#f2f4f7; }
+.header-cta { border-color:#77849388; color:#dce2e9; }
+.header-cta:hover { border-color:#c5ced9; background:#252b34; }
+.header-cta span:last-child { color:#c2ccd8; }
+.hero {
+  background:
+    radial-gradient(ellipse at 76% 46%,#aebdce12,transparent 38%),
+    radial-gradient(ellipse at 52% 100%,#6d26300c,transparent 48%),
+    linear-gradient(110deg,#050608 15%,#0b0e13 100%);
+}
+.hero-grid { opacity:.11; background-image:linear-gradient(#dbe3ed0b 1px,transparent 1px),linear-gradient(90deg,#dbe3ed0b 1px,transparent 1px); }
+.eyebrow,.micro-label,.kicker,.section-top { color:#9ba7b6; }
+h1 em,.outline-word { color:#c3ccd7; -webkit-text-stroke-color:#9da9b8; }
+h1 strong { color:#aeb8c5; }
+.hero-description,.signals-heading>p,.gateway-content p { color:#929ba8; }
+.button-primary {
+  background:linear-gradient(120deg,#596574,#aeb8c5);
+  color:#090b0e;
+  box-shadow:0 8px 35px #aeb8c51c;
+}
+.button-primary:hover { box-shadow:0 12px 45px #c7d0dc35; }
+.button-primary b { color:#171b21; }
+.text-link span:last-child { color:#b64b57; }
+.hero-meta,.scroll-cue,.side-label { color:#788391; }
+.meta-line { background:#8491a1; }
+.moon-aura { background:#aebdce18; }
+.moon {
+  background:radial-gradient(circle at 34% 29%,#e1e5eb 0,#9da8b6 20%,#5b6674 49%,#242b35 78%,#0b0e13 100%);
+  box-shadow:inset -35px -24px 55px #050608,0 0 55px #aebdce30,0 0 150px #8b9bad20;
+}
+.moon::before { background:radial-gradient(ellipse at 65% 30%,#10151d44 0 8%,transparent 9%),radial-gradient(ellipse at 35% 65%,#10151d44 0 13%,transparent 14%),radial-gradient(ellipse at 70% 75%,#10151d44 0 8%,transparent 9%),repeating-radial-gradient(ellipse at 45% 45%,transparent 0 22px,#10151d22 23px 25px); }
+.moon span { border-color:#e4eaf022; }
+.orbit-line { border-color:#b8c4d233; }
+.moon-dot { background:#d9e0e9; box-shadow:0 0 16px #cbd6e5; }
+.hero-orbit { border-color:#c5d0df12; }
+.intro-section { border-color:#cbd3df12; background:linear-gradient(180deg,#080a0e,#0d1117); }
+h2 em,.micro-label { color:#aeb8c5; }
+.big-quote,.intro-bottom span:first-child { color:#9ba8b8; }
+.intro-copy p { color:#b0b7c1; }
+.signature,.intro-bottom { color:#7e8997; }
+.signals-section,.gateway-section { background:#06080b; }
+.signal-card { border-color:#cbd3df20; background:linear-gradient(150deg,#141922,#090c11); }
+.signal-card:hover { border-color:#aebdce99; box-shadow:0 20px 50px #000b,0 0 28px #aebdce12; }
+.card-top,.card-info p { color:#8d98a7; }
+.card-art { background:radial-gradient(circle,#9eacbd18,transparent 65%); }
+.art-chat::before,.art-archive::before,.art-creation::before { background-image:radial-gradient(#c5d0df55 .7px,transparent .7px); }
+.chat-orb { background:radial-gradient(circle at 35% 30%,#dce2e9,#667382 48%,#171d26 78%); box-shadow:0 0 55px #aebdce40,inset -15px -12px 25px #090b10; }
+.art-cross,.archive-star,.creation-star { color:#d4dce6; }
+.art-ring,.creation-orbit { border-color:#b8c4d244; }
+.archive-rings { border-color:#9eacbd; box-shadow:inset 0 0 25px #9eacbd22,0 0 35px #9eacbd22; }
+.archive-rings::before,.archive-rings::after { border-color:#c2ccda66; }
+.archive-glyph { color:#d2dae4; }
+.creation-shape { background:linear-gradient(135deg,#e0e5eb,#778493 65%,#171d26); filter:drop-shadow(0 0 22px #aebdce55); }
+.status-pill { border-color:#8794a466; color:#b9c4d1; }
+.waitlist label { color:#aeb8c5; }
+.waitlist-field { border-color:#647181; }
+.waitlist-field:focus-within { border-color:#d0d8e2; }
+.waitlist-field button { color:#c2ccd8; }
+.waitlist-message.success { color:#b9c5d2; }
+.quote-section { background:radial-gradient(ellipse at center,#202833 0%,#0b0e13 50%,#050608 100%); }
+.quote-glow { background:#aebdce1c; }
+.quote-mark,.quote-bottom b { color:#b6c1cf; }
+.quote-section>p { color:#e0e4e9; }
+.quote-bottom { color:#8994a2; }
+.quote-bottom button { color:#c3ccd7; }
+.gateway-frame { border-color:#cbd3df20; background:radial-gradient(ellipse at center,#1b222c 0%,#0b0f15 52%,#07090d 100%); }
+.gateway-frame::before,.gateway-frame::after { border-color:#b8c4d222; }
+.gateway-orbit { border-color:#aebdce30; }
+.gateway-symbol { color:#e0e5ec; }
+.gateway-symbol span,.gateway-content h2 em { color:#b64b57; }
+.back-top { border-color:#aeb8c5; color:#d2dae4; }
+.back-top b { color:#c0cad6; }
+.footer { border-color:#cbd3df18; background:#040507; }
+.footer-label { color:#9ba7b6; }
+.footer-social svg { stroke:#aeb8c5; }
+.footer-social svg .fill-dot { fill:#aeb8c5; }
+.footer-social>a b { color:#aeb8c5; }
+.footer-social>a i { color:#b64b57; }
+.footer-note strong { color:#d5dce5; }
+.footer-bottom { border-color:#cbd3df18; color:#7d8794; }
+.progress { background:linear-gradient(90deg,#697687,#d5dce5); box-shadow:0 0 12px #aebdce88; }
+.section-dots a::before { background:#778493; }
+.section-dots a::after { background:#0c1016ed; color:#d5dce5; }
+.section-dots a.active { border-color:#aeb8c5; }
+.section-dots a.active::before { background:#d5dce5; box-shadow:0 0 12px #c5d0df; }
+.sound-toggle { border-color:#aeb8c544; background:#0b0f15d9; color:#c7d0dc; }
+.sound-toggle.playing { border-color:#d5dce5; box-shadow:0 0 24px #aebdce35; }
+@media (prefers-reduced-motion: reduce) {
+  .moon-aura,.chat-orb,.creation-shape { animation:none; }
+}
